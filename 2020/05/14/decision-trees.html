@@ -1,0 +1,1678 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Decision Trees | Wes Barnett, PhD</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Decision Trees" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Blog of Wes Barnett" />
+<meta property="og:description" content="Blog of Wes Barnett" />
+<link rel="canonical" href="https://barnett.science/2020/05/14/decision-trees.html" />
+<meta property="og:url" content="https://barnett.science/2020/05/14/decision-trees.html" />
+<meta property="og:site_name" content="Wes Barnett, PhD" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-05-14T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"Blog of Wes Barnett","@type":"BlogPosting","headline":"Decision Trees","dateModified":"2020-05-14T00:00:00-05:00","datePublished":"2020-05-14T00:00:00-05:00","url":"https://barnett.science/2020/05/14/decision-trees.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://barnett.science/2020/05/14/decision-trees.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://barnett.science/feed.xml" title="Wes Barnett, PhD" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Decision Trees | Wes Barnett, PhD</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Decision Trees" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Blog of Wes Barnett" />
+<meta property="og:description" content="Blog of Wes Barnett" />
+<link rel="canonical" href="https://barnett.science/2020/05/14/decision-trees.html" />
+<meta property="og:url" content="https://barnett.science/2020/05/14/decision-trees.html" />
+<meta property="og:site_name" content="Wes Barnett, PhD" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-05-14T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"Blog of Wes Barnett","@type":"BlogPosting","headline":"Decision Trees","dateModified":"2020-05-14T00:00:00-05:00","datePublished":"2020-05-14T00:00:00-05:00","url":"https://barnett.science/2020/05/14/decision-trees.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://barnett.science/2020/05/14/decision-trees.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://barnett.science/feed.xml" title="Wes Barnett, PhD" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+<script type="text/javascript">
+require.config({
+  paths: {
+    jquery: 'https://code.jquery.com/jquery-3.5.0.min',
+    plotly: 'https://cdn.plot.ly/plotly-latest.min'
+  },
+
+  shim: {
+    plotly: {
+      deps: ['jquery'],
+      exports: 'plotly'
+    }
+  }
+});
+</script>
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Wes Barnett, PhD</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Decision Trees</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-05-14T00:00:00-05:00" itemprop="datePublished">
+        May 14, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      10 min read
+    
+</span></p>
+
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/wesbarnett//tree/master/_notebooks/2020-05-14-decision-trees.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/wesbarnett//master?filepath=_notebooks%2F2020-05-14-decision-trees.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/wesbarnett//blob/master/_notebooks/2020-05-14-decision-trees.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2020-05-14-decision-trees.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span><span class="p">,</span> <span class="n">plot_tree</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">tree</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">import</span> <span class="nn">graphviz</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>scikit-learn now comes with a way to plot trees, but I prefer using <code>graphviz</code> so here is a quick function to plot a tree, which we monkey-patch into the <code>DecisionTreeClassifier</code> and <code>DecisionTreeRegressor</code> classes.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">display_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">dot_data</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">export_graphviz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">out_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">rounded</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">special_characters</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">graphviz</span><span class="o">.</span><span class="n">Source</span><span class="p">(</span><span class="n">dot_data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">graph</span>
+
+<span class="n">DecisionTreeClassifier</span><span class="o">.</span><span class="n">plot</span> <span class="o">=</span> <span class="n">display_tree</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Classification">Classification<a class="anchor-link" href="#Classification"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We'll use the Iris dataset as a quick way to discuss classification trees. To learn more about this dataset use <code>help(load_iris)</code>.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Fitting">Fitting<a class="anchor-link" href="#Fitting"> </a></h3><p>Decision trees search over all possible ways to split up features and find the split that is most informative about the target variable. The parent node splits into two child nodes based on this split. From there the children also split in the same manner until all leaves are pure, unless another stopping condition is specified. A leaf is a node that has no children. A pure leaf is a leaf with only one class of items in it.</p>
+<p>Classifications trees split using the GINI impurity which is defined as:</p>
+<p>$I_{G}(p) = \sum_{i=1}^{J}p_{i}(1-p_{i})$</p>
+<p>Here $p_{i}$ is the probability of an item with label $i$ being chosen and $1 - p_{i}$ is the probability of a mistake in categorizing that item. $J$ is the number of classes. Gini reaches zero when all cases in the node fall into a single target category.</p>
+<p>Alternatively, one can use information gain to decide where to split, where information gain is defined as the difference in entropy of the parent and the weighted sum of the entropies of the children. Entropy is defined as:</p>
+<p>$H_(p) = -\sum_{i=1}^{J}p_{i}\log_{2}(p_{i})$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's train a decision tree:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">clf</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="s2">&quot;entropy&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">clf</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_svg output_subarea output_execute_result">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+&lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
+<!-- Generated by graphviz version 2.44.0 (0)
+ -->
+<!-- Title: Tree Pages: 1 -->
+<svg width="521pt" height="461pt" viewBox="0.00 0.00 521.00 461.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 457)">
+<title>Tree</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-457 517,-457 517,4 -4,4" />
+<!-- 0 -->
+<g id="node1" class="node">
+<title>0</title>
+<path fill="#f8f4fe" stroke="black" d="M240.5,-453C240.5,-453 132.5,-453 132.5,-453 126.5,-453 120.5,-447 120.5,-441 120.5,-441 120.5,-401 120.5,-401 120.5,-395 126.5,-389 132.5,-389 132.5,-389 240.5,-389 240.5,-389 246.5,-389 252.5,-395 252.5,-401 252.5,-401 252.5,-441 252.5,-441 252.5,-447 246.5,-453 240.5,-453" />
+<text text-anchor="start" x="161" y="-438.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text>
+<text text-anchor="start" x="171" y="-438.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">3</text>
+<text text-anchor="start" x="178" y="-438.8" font-family="Helvetica,sans-Serif" font-size="14.00"> ≤ 0.8</text>
+<text text-anchor="start" x="139" y="-424.8" font-family="Helvetica,sans-Serif" font-size="14.00">entropy = 1.581</text>
+<text text-anchor="start" x="141.5" y="-410.8" font-family="Helvetica,sans-Serif" font-size="14.00">samples = 112</text>
+<text text-anchor="start" x="128.5" y="-396.8" font-family="Helvetica,sans-Serif" font-size="14.00">value = [37, 34, 41]</text>
+</g>
+<!-- 1 -->
+<g id="node2" class="node">
+<title>1</title>
+<path fill="#e58139" stroke="black" d="M164,-347.5C164,-347.5 71,-347.5 71,-347.5 65,-347.5 59,-341.5 59,-335.5 59,-335.5 59,-306.5 59,-306.5 59,-300.5 65,-294.5 71,-294.5 71,-294.5 164,-294.5 164,-294.5 170,-294.5 176,-300.5 176,-306.5 176,-306.5 176,-335.5 176,-335.5 176,-341.5 170,-347.5 164,-347.5" />
+<text text-anchor="start" x="77.5" y="-332.3" font-family="Helvetica,sans-Serif" font-size="14.00">entropy = 0.0</text>
+<text text-anchor="start" x="76.5" y="-317.3" font-family="Helvetica,sans-Serif" font-size="14.00">samples = 37</text>
+<text text-anchor="start" x="67" y="-302.3" font-family="Helvetica,sans-Serif" font-size="14.00">value = [37, 0, 0]</text>
+</g>
+<!-- 0&#45;&gt;1 -->
+<g id="edge1" class="edge">
+<title>0&#45;&gt;1</title>
+<path fill="none" stroke="black" d="M164.67,-388.99C157.25,-378.46 148.93,-366.64 141.37,-355.9" />
+<polygon fill="black" stroke="black" points="144.11,-353.72 135.49,-347.56 138.39,-357.75 144.11,-353.72" />
+<text text-anchor="middle" x="131.22" y="-368.49" font-family="Helvetica,sans-Serif" font-size="14.00">True</text>
+</g>
+<!-- 2 -->
+<g id="node3" class="node">
+<title>2</title>
+<path fill="#e9ddfb" stroke="black" d="M307,-353C307,-353 206,-353 206,-353 200,-353 194,-347 194,-341 194,-341 194,-301 194,-301 194,-295 200,-289 206,-289 206,-289 307,-289 307,-289 313,-289 319,-295 319,-301 319,-301 319,-341 319,-341 319,-347 313,-353 307,-353" />
+<text text-anchor="start" x="227" y="-338.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text>
+<text text-anchor="start" x="237" y="-338.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">2</text>
+<text text-anchor="start" x="244" y="-338.8" font-family="Helvetica,sans-Serif" font-size="14.00"> ≤ 4.95</text>
+<text text-anchor="start" x="209" y="-324.8" font-family="Helvetica,sans-Serif" font-size="14.00">entropy = 0.994</text>
+<text text-anchor="start" x="215.5" y="-310.8" font-family="Helvetica,sans-Serif" font-size="14.00">samples = 75</text>
+<text text-anchor="start" x="202" y="-296.8" font-family="Helvetica,sans-Serif" font-size="14.00">value = [0, 34, 41]</text>
+</g>
+<!-- 0&#45;&gt;2 -->
+<g id="edge2" class="edge">
+<title>0&#45;&gt;2</title>
+<path fill="none" stroke="black" d="M208.65,-388.99C214.9,-380.23 221.8,-370.58 228.35,-361.4" />
+<polygon fill="black" stroke="black" points="231.29,-363.31 234.26,-353.14 225.59,-359.25 231.29,-363.31" />
+<text text-anchor="middle" x="238.37" y="-374.1" font-family="Helvetica,sans-Serif" font-size="14.00">False</text>
+</g>
+<!-- 3 -->
+<g id="node4" class="node">
+<title>3</title>
+<path fill="#4be78c" stroke="black" d="M235,-253C235,-253 142,-253 142,-253 136,-253 130,-247 130,-241 130,-241 130,-201 130,-201 130,-195 136,-189 142,-189 142,-189 235,-189 235,-189 241,-189 247,-195 247,-201 247,-201 247,-241 247,-241 247,-247 241,-253 235,-253" />
+<text text-anchor="start" x="159" y="-238.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text>
+<text text-anchor="start" x="169" y="-238.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">3</text>
+<text text-anchor="start" x="176" y="-238.8" font-family="Helvetica,sans-Serif" font-size="14.00"> ≤ 1.65</text>
+<text text-anchor="start" x="141" y="-224.8" font-family="Helvetica,sans-Serif" font-size="14.00">entropy = 0.414</text>
+<text text-anchor="start" x="147.5" y="-210.8" font-family="Helvetica,sans-Serif" font-size="14.00">samples = 36</text>
+<text text-anchor="start" x="138" y="-196.8" font-family="Helvetica,sans-Serif" font-size="14.00">value = [0, 33, 3]</text>
+</g>
+<!-- 2&#45;&gt;3 -->
+<g id="edge3" class="edge">
+<title>2&#45;&gt;3</title>
+<path fill="none" stroke="black" d="M234.98,-288.99C228.91,-280.23 222.21,-270.58 215.84,-261.4" />
+<polygon fill="black" stroke="black" points="218.69,-259.36 210.11,-253.14 212.93,-263.35 218.69,-259.36" />
+</g>
+<!-- 8 -->
+<g id="node9" class="node">
+<title>8</title>
+<path fill="#843ee6" stroke="black" d="M370,-253C370,-253 277,-253 277,-253 271,-253 265,-247 265,-241 265,-241 265,-201 265,-201 265,-195 271,-189 277,-189 277,-189 370,-189 370,-189 376,-189 382,-195 382,-201 382,-201 382,-241 382,-241 382,-247 376,-253 370,-253" />
+<text text-anchor="start" x="294" y="-238.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text>
+<text text-anchor="start" x="304" y="-238.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">2</text>
+<text text-anchor="start" x="311" y="-238.8" font-family="Helvetica,sans-Serif" font-size="14.00"> ≤ 5.05</text>
+<text text-anchor="start" x="276" y="-224.8" font-family="Helvetica,sans-Serif" font-size="14.00">entropy = 0.172</text>
+<text text-anchor="start" x="282.5" y="-210.8" font-family="Helvetica,sans-Serif" font-size="14.00">samples = 39</text>
+<text text-anchor="start" x="273" y="-196.8" font-family="Helvetica,sans-Serif" font-size="14.00">value = [0, 1, 38]</text>
+</g>
+<!-- 2&#45;&gt;8 -->
+<g id="edge8" class="edge">
+<title>2&#45;&gt;8</title>
+<path fill="none" stroke="black" d="M277.7,-288.99C283.69,-280.23 290.28,-270.58 296.56,-261.4" />
+<polygon fill="black" stroke="black" points="299.45,-263.37 302.21,-253.14 293.68,-259.42 299.45,-263.37" />
+</g>
+<!-- 4 -->
+<g id="node5" class="node">
+<title>4</title>
+<path fill="#39e581" stroke="black" d="M105,-147.5C105,-147.5 12,-147.5 12,-147.5 6,-147.5 0,-141.5 0,-135.5 0,-135.5 0,-106.5 0,-106.5 0,-100.5 6,-94.5 12,-94.5 12,-94.5 105,-94.5 105,-94.5 111,-94.5 117,-100.5 117,-106.5 117,-106.5 117,-135.5 117,-135.5 117,-141.5 111,-147.5 105,-147.5" />
+<text text-anchor="start" x="18.5" y="-132.3" font-family="Helvetica,sans-Serif" font-size="14.00">entropy = 0.0</text>
+<text text-anchor="start" x="17.5" y="-117.3" font-family="Helvetica,sans-Serif" font-size="14.00">samples = 32</text>
+<text text-anchor="start" x="8" y="-102.3" font-family="Helvetica,sans-Serif" font-size="14.00">value = [0, 32, 0]</text>
+</g>
+<!-- 3&#45;&gt;4 -->
+<g id="edge4" class="edge">
+<title>3&#45;&gt;4</title>
+<path fill="none" stroke="black" d="M147.37,-188.99C132.43,-177.73 115.54,-165 100.52,-153.68" />
+<polygon fill="black" stroke="black" points="102.49,-150.78 92.4,-147.56 98.28,-156.37 102.49,-150.78" />
+</g>
+<!-- 5 -->
+<g id="node6" class="node">
+<title>5</title>
+<path fill="#ab7bee" stroke="black" d="M234,-153C234,-153 147,-153 147,-153 141,-153 135,-147 135,-141 135,-141 135,-101 135,-101 135,-95 141,-89 147,-89 147,-89 234,-89 234,-89 240,-89 246,-95 246,-101 246,-101 246,-141 246,-141 246,-147 240,-153 234,-153" />
+<text text-anchor="start" x="165" y="-138.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text>
+<text text-anchor="start" x="175" y="-138.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">1</text>
+<text text-anchor="start" x="182" y="-138.8" font-family="Helvetica,sans-Serif" font-size="14.00"> ≤ 3.1</text>
+<text text-anchor="start" x="143" y="-124.8" font-family="Helvetica,sans-Serif" font-size="14.00">entropy = 0.811</text>
+<text text-anchor="start" x="153" y="-110.8" font-family="Helvetica,sans-Serif" font-size="14.00">samples = 4</text>
+<text text-anchor="start" x="143.5" y="-96.8" font-family="Helvetica,sans-Serif" font-size="14.00">value = [0, 1, 3]</text>
+</g>
+<!-- 3&#45;&gt;5 -->
+<g id="edge5" class="edge">
+<title>3&#45;&gt;5</title>
+<path fill="none" stroke="black" d="M189.13,-188.99C189.3,-180.86 189.48,-171.96 189.66,-163.38" />
+<polygon fill="black" stroke="black" points="193.16,-163.21 189.86,-153.14 186.16,-163.07 193.16,-163.21" />
+</g>
+<!-- 6 -->
+<g id="node7" class="node">
+<title>6</title>
+<path fill="#8139e5" stroke="black" d="M106.5,-53C106.5,-53 20.5,-53 20.5,-53 14.5,-53 8.5,-47 8.5,-41 8.5,-41 8.5,-12 8.5,-12 8.5,-6 14.5,0 20.5,0 20.5,0 106.5,0 106.5,0 112.5,0 118.5,-6 118.5,-12 118.5,-12 118.5,-41 118.5,-41 118.5,-47 112.5,-53 106.5,-53" />
+<text text-anchor="start" x="23.5" y="-37.8" font-family="Helvetica,sans-Serif" font-size="14.00">entropy = 0.0</text>
+<text text-anchor="start" x="26" y="-22.8" font-family="Helvetica,sans-Serif" font-size="14.00">samples = 3</text>
+<text text-anchor="start" x="16.5" y="-7.8" font-family="Helvetica,sans-Serif" font-size="14.00">value = [0, 0, 3]</text>
+</g>
+<!-- 5&#45;&gt;6 -->
+<g id="edge6" class="edge">
+<title>5&#45;&gt;6</title>
+<path fill="none" stroke="black" d="M147.86,-88.94C134.73,-79.38 120.27,-68.85 107.09,-59.25" />
+<polygon fill="black" stroke="black" points="108.78,-56.15 98.64,-53.09 104.66,-61.81 108.78,-56.15" />
+</g>
+<!-- 7 -->
+<g id="node8" class="node">
+<title>7</title>
+<path fill="#39e581" stroke="black" d="M234.5,-53C234.5,-53 148.5,-53 148.5,-53 142.5,-53 136.5,-47 136.5,-41 136.5,-41 136.5,-12 136.5,-12 136.5,-6 142.5,0 148.5,0 148.5,0 234.5,0 234.5,0 240.5,0 246.5,-6 246.5,-12 246.5,-12 246.5,-41 246.5,-41 246.5,-47 240.5,-53 234.5,-53" />
+<text text-anchor="start" x="151.5" y="-37.8" font-family="Helvetica,sans-Serif" font-size="14.00">entropy = 0.0</text>
+<text text-anchor="start" x="154" y="-22.8" font-family="Helvetica,sans-Serif" font-size="14.00">samples = 1</text>
+<text text-anchor="start" x="144.5" y="-7.8" font-family="Helvetica,sans-Serif" font-size="14.00">value = [0, 1, 0]</text>
+</g>
+<!-- 5&#45;&gt;7 -->
+<g id="edge7" class="edge">
+<title>5&#45;&gt;7</title>
+<path fill="none" stroke="black" d="M190.84,-88.94C190.93,-80.66 191.02,-71.64 191.11,-63.13" />
+<polygon fill="black" stroke="black" points="194.61,-63.13 191.22,-53.09 187.62,-63.05 194.61,-63.13" />
+</g>
+<!-- 9 -->
+<g id="node10" class="node">
+<title>9</title>
+<path fill="#ab7bee" stroke="black" d="M366,-153C366,-153 279,-153 279,-153 273,-153 267,-147 267,-141 267,-141 267,-101 267,-101 267,-95 273,-89 279,-89 279,-89 366,-89 366,-89 372,-89 378,-95 378,-101 378,-101 378,-141 378,-141 378,-147 372,-153 366,-153" />
+<text text-anchor="start" x="297" y="-138.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text>
+<text text-anchor="start" x="307" y="-138.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">0</text>
+<text text-anchor="start" x="314" y="-138.8" font-family="Helvetica,sans-Serif" font-size="14.00"> ≤ 6.5</text>
+<text text-anchor="start" x="275" y="-124.8" font-family="Helvetica,sans-Serif" font-size="14.00">entropy = 0.811</text>
+<text text-anchor="start" x="285" y="-110.8" font-family="Helvetica,sans-Serif" font-size="14.00">samples = 4</text>
+<text text-anchor="start" x="275.5" y="-96.8" font-family="Helvetica,sans-Serif" font-size="14.00">value = [0, 1, 3]</text>
+</g>
+<!-- 8&#45;&gt;9 -->
+<g id="edge9" class="edge">
+<title>8&#45;&gt;9</title>
+<path fill="none" stroke="black" d="M323.18,-188.99C323.1,-180.86 323.01,-171.96 322.92,-163.38" />
+<polygon fill="black" stroke="black" points="326.42,-163.11 322.82,-153.14 319.42,-163.18 326.42,-163.11" />
+</g>
+<!-- 12 -->
+<g id="node13" class="node">
+<title>12</title>
+<path fill="#8139e5" stroke="black" d="M501,-147.5C501,-147.5 408,-147.5 408,-147.5 402,-147.5 396,-141.5 396,-135.5 396,-135.5 396,-106.5 396,-106.5 396,-100.5 402,-94.5 408,-94.5 408,-94.5 501,-94.5 501,-94.5 507,-94.5 513,-100.5 513,-106.5 513,-106.5 513,-135.5 513,-135.5 513,-141.5 507,-147.5 501,-147.5" />
+<text text-anchor="start" x="414.5" y="-132.3" font-family="Helvetica,sans-Serif" font-size="14.00">entropy = 0.0</text>
+<text text-anchor="start" x="413.5" y="-117.3" font-family="Helvetica,sans-Serif" font-size="14.00">samples = 35</text>
+<text text-anchor="start" x="404" y="-102.3" font-family="Helvetica,sans-Serif" font-size="14.00">value = [0, 0, 35]</text>
+</g>
+<!-- 8&#45;&gt;12 -->
+<g id="edge12" class="edge">
+<title>8&#45;&gt;12</title>
+<path fill="none" stroke="black" d="M364.95,-188.99C380,-177.73 397.02,-165 412.15,-153.68" />
+<polygon fill="black" stroke="black" points="414.43,-156.35 420.34,-147.56 410.23,-150.74 414.43,-156.35" />
+</g>
+<!-- 10 -->
+<g id="node11" class="node">
+<title>10</title>
+<path fill="#8139e5" stroke="black" d="M364.5,-53C364.5,-53 278.5,-53 278.5,-53 272.5,-53 266.5,-47 266.5,-41 266.5,-41 266.5,-12 266.5,-12 266.5,-6 272.5,0 278.5,0 278.5,0 364.5,0 364.5,0 370.5,0 376.5,-6 376.5,-12 376.5,-12 376.5,-41 376.5,-41 376.5,-47 370.5,-53 364.5,-53" />
+<text text-anchor="start" x="281.5" y="-37.8" font-family="Helvetica,sans-Serif" font-size="14.00">entropy = 0.0</text>
+<text text-anchor="start" x="284" y="-22.8" font-family="Helvetica,sans-Serif" font-size="14.00">samples = 3</text>
+<text text-anchor="start" x="274.5" y="-7.8" font-family="Helvetica,sans-Serif" font-size="14.00">value = [0, 0, 3]</text>
+</g>
+<!-- 9&#45;&gt;10 -->
+<g id="edge10" class="edge">
+<title>9&#45;&gt;10</title>
+<path fill="none" stroke="black" d="M322.16,-88.94C322.07,-80.66 321.98,-71.64 321.89,-63.13" />
+<polygon fill="black" stroke="black" points="325.38,-63.05 321.78,-53.09 318.39,-63.13 325.38,-63.05" />
+</g>
+<!-- 11 -->
+<g id="node12" class="node">
+<title>11</title>
+<path fill="#39e581" stroke="black" d="M492.5,-53C492.5,-53 406.5,-53 406.5,-53 400.5,-53 394.5,-47 394.5,-41 394.5,-41 394.5,-12 394.5,-12 394.5,-6 400.5,0 406.5,0 406.5,0 492.5,0 492.5,0 498.5,0 504.5,-6 504.5,-12 504.5,-12 504.5,-41 504.5,-41 504.5,-47 498.5,-53 492.5,-53" />
+<text text-anchor="start" x="409.5" y="-37.8" font-family="Helvetica,sans-Serif" font-size="14.00">entropy = 0.0</text>
+<text text-anchor="start" x="412" y="-22.8" font-family="Helvetica,sans-Serif" font-size="14.00">samples = 1</text>
+<text text-anchor="start" x="402.5" y="-7.8" font-family="Helvetica,sans-Serif" font-size="14.00">value = [0, 1, 0]</text>
+</g>
+<!-- 9&#45;&gt;11 -->
+<g id="edge11" class="edge">
+<title>9&#45;&gt;11</title>
+<path fill="none" stroke="black" d="M365.14,-88.94C378.27,-79.38 392.73,-68.85 405.91,-59.25" />
+<polygon fill="black" stroke="black" points="408.34,-61.81 414.36,-53.09 404.22,-56.15 408.34,-61.81" />
+</g>
+</g>
+</svg>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here's the training score which indeed shows the tree is perfect at classfying the flowers on the training set. This tends to result in overfitting to the training set.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">clf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>1.0</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This is an easy dataset to classify, so the overfitting is not evident here.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">clf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0.9736842105263158</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There are 7 leaves in our tree. Note that the leaves do not have to be depicted at the bottom of the tree in the diagram. A leaf is just a node without any children and could be represented near the top of the tree.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">clf</span><span class="o">.</span><span class="n">get_n_leaves</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>7</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Inference">Inference<a class="anchor-link" href="#Inference"> </a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now that we have trained our model, we can perform inference.</p>
+<p>When inference on new samples is performed, the sample simply is examined with the "rules" created by the feature splits. Starting from the topmost node (the root node) in our example above, if feature three has a value of less than or equal 0.8, go to the left child node; otherwise go to the right. This process continues all the way down until the sample is put into a leaf.</p>
+<p>The predicted class is the class in the leaf with the highest probability of that class for that leaf. In other words, simply break down the training samples by class within that leaf and choose the class with the most number of train samples. The probability of choosing that class is simply the number of training samples in that leaf belonging to that class divided by the total number of training samples in that leaf.</p>
+<p>Since all of our leafs are pure, the classifier will always give 100% for its predictions. We'll rexamine this when we have impure leafs below.</p>
+<p>Here are the features for the first test sample.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X_test</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([5.8, 2.8, 5.1, 2.4])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The path for this sample follows down the right side of the tree. Note that features are zero-indexed.</p>
+<p>Root node: Is 2.4 &lt;= 0.8? No, so go right.</p>
+<p>Is 5.1 &lt;= 4.95? No, so go right.</p>
+<p>Is 5.1 &lt;= 5.05? No, so go right.</p>
+<p>That brings it to the leaf on the right with 35 samples, where the 3rd class (index 2) is predicted:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">([</span><span class="n">X_test</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([2])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Again, the probability is 100% since there are no training samples in that leaf from the other two classes. In the plot the node is colored dark purple. For this tree purple represents the 3rd class and the darker the shade the more probable it is.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">clf</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">([</span><span class="n">X_test</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[0., 0., 1.]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Pruning">Pruning<a class="anchor-link" href="#Pruning"> </a></h2><p>One way to prevent overfitting is the pre-prune the tree by specifying the maximum depth and/or maximum number of leaves. Here we set the maximum depth to 3.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">clf</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="s2">&quot;entropy&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">clf</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_svg output_subarea output_execute_result">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+&lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
+<!-- Generated by graphviz version 2.44.0 (0)
+ -->
+<!-- Title: Tree Pages: 1 -->
+<svg width="521pt" height="361pt" viewBox="0.00 0.00 521.00 361.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 357)">
+<title>Tree</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-357 517,-357 517,4 -4,4" />
+<!-- 0 -->
+<g id="node1" class="node">
+<title>0</title>
+<path fill="#f8f4fe" stroke="black" d="M240.5,-353C240.5,-353 132.5,-353 132.5,-353 126.5,-353 120.5,-347 120.5,-341 120.5,-341 120.5,-301 120.5,-301 120.5,-295 126.5,-289 132.5,-289 132.5,-289 240.5,-289 240.5,-289 246.5,-289 252.5,-295 252.5,-301 252.5,-301 252.5,-341 252.5,-341 252.5,-347 246.5,-353 240.5,-353" />
+<text text-anchor="start" x="161" y="-338.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text>
+<text text-anchor="start" x="171" y="-338.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">3</text>
+<text text-anchor="start" x="178" y="-338.8" font-family="Helvetica,sans-Serif" font-size="14.00"> ≤ 0.8</text>
+<text text-anchor="start" x="139" y="-324.8" font-family="Helvetica,sans-Serif" font-size="14.00">entropy = 1.581</text>
+<text text-anchor="start" x="141.5" y="-310.8" font-family="Helvetica,sans-Serif" font-size="14.00">samples = 112</text>
+<text text-anchor="start" x="128.5" y="-296.8" font-family="Helvetica,sans-Serif" font-size="14.00">value = [37, 34, 41]</text>
+</g>
+<!-- 1 -->
+<g id="node2" class="node">
+<title>1</title>
+<path fill="#e58139" stroke="black" d="M164,-247.5C164,-247.5 71,-247.5 71,-247.5 65,-247.5 59,-241.5 59,-235.5 59,-235.5 59,-206.5 59,-206.5 59,-200.5 65,-194.5 71,-194.5 71,-194.5 164,-194.5 164,-194.5 170,-194.5 176,-200.5 176,-206.5 176,-206.5 176,-235.5 176,-235.5 176,-241.5 170,-247.5 164,-247.5" />
+<text text-anchor="start" x="77.5" y="-232.3" font-family="Helvetica,sans-Serif" font-size="14.00">entropy = 0.0</text>
+<text text-anchor="start" x="76.5" y="-217.3" font-family="Helvetica,sans-Serif" font-size="14.00">samples = 37</text>
+<text text-anchor="start" x="67" y="-202.3" font-family="Helvetica,sans-Serif" font-size="14.00">value = [37, 0, 0]</text>
+</g>
+<!-- 0&#45;&gt;1 -->
+<g id="edge1" class="edge">
+<title>0&#45;&gt;1</title>
+<path fill="none" stroke="black" d="M164.67,-288.99C157.25,-278.46 148.93,-266.64 141.37,-255.9" />
+<polygon fill="black" stroke="black" points="144.11,-253.72 135.49,-247.56 138.39,-257.75 144.11,-253.72" />
+<text text-anchor="middle" x="131.22" y="-268.49" font-family="Helvetica,sans-Serif" font-size="14.00">True</text>
+</g>
+<!-- 2 -->
+<g id="node3" class="node">
+<title>2</title>
+<path fill="#e9ddfb" stroke="black" d="M307,-253C307,-253 206,-253 206,-253 200,-253 194,-247 194,-241 194,-241 194,-201 194,-201 194,-195 200,-189 206,-189 206,-189 307,-189 307,-189 313,-189 319,-195 319,-201 319,-201 319,-241 319,-241 319,-247 313,-253 307,-253" />
+<text text-anchor="start" x="227" y="-238.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text>
+<text text-anchor="start" x="237" y="-238.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">2</text>
+<text text-anchor="start" x="244" y="-238.8" font-family="Helvetica,sans-Serif" font-size="14.00"> ≤ 4.95</text>
+<text text-anchor="start" x="209" y="-224.8" font-family="Helvetica,sans-Serif" font-size="14.00">entropy = 0.994</text>
+<text text-anchor="start" x="215.5" y="-210.8" font-family="Helvetica,sans-Serif" font-size="14.00">samples = 75</text>
+<text text-anchor="start" x="202" y="-196.8" font-family="Helvetica,sans-Serif" font-size="14.00">value = [0, 34, 41]</text>
+</g>
+<!-- 0&#45;&gt;2 -->
+<g id="edge2" class="edge">
+<title>0&#45;&gt;2</title>
+<path fill="none" stroke="black" d="M208.65,-288.99C214.9,-280.23 221.8,-270.58 228.35,-261.4" />
+<polygon fill="black" stroke="black" points="231.29,-263.31 234.26,-253.14 225.59,-259.25 231.29,-263.31" />
+<text text-anchor="middle" x="238.37" y="-274.1" font-family="Helvetica,sans-Serif" font-size="14.00">False</text>
+</g>
+<!-- 3 -->
+<g id="node4" class="node">
+<title>3</title>
+<path fill="#4be78c" stroke="black" d="M235,-153C235,-153 142,-153 142,-153 136,-153 130,-147 130,-141 130,-141 130,-101 130,-101 130,-95 136,-89 142,-89 142,-89 235,-89 235,-89 241,-89 247,-95 247,-101 247,-101 247,-141 247,-141 247,-147 241,-153 235,-153" />
+<text text-anchor="start" x="159" y="-138.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text>
+<text text-anchor="start" x="169" y="-138.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">3</text>
+<text text-anchor="start" x="176" y="-138.8" font-family="Helvetica,sans-Serif" font-size="14.00"> ≤ 1.65</text>
+<text text-anchor="start" x="141" y="-124.8" font-family="Helvetica,sans-Serif" font-size="14.00">entropy = 0.414</text>
+<text text-anchor="start" x="147.5" y="-110.8" font-family="Helvetica,sans-Serif" font-size="14.00">samples = 36</text>
+<text text-anchor="start" x="138" y="-96.8" font-family="Helvetica,sans-Serif" font-size="14.00">value = [0, 33, 3]</text>
+</g>
+<!-- 2&#45;&gt;3 -->
+<g id="edge3" class="edge">
+<title>2&#45;&gt;3</title>
+<path fill="none" stroke="black" d="M234.98,-188.99C228.91,-180.23 222.21,-170.58 215.84,-161.4" />
+<polygon fill="black" stroke="black" points="218.69,-159.36 210.11,-153.14 212.93,-163.35 218.69,-159.36" />
+</g>
+<!-- 6 -->
+<g id="node7" class="node">
+<title>6</title>
+<path fill="#843ee6" stroke="black" d="M370,-153C370,-153 277,-153 277,-153 271,-153 265,-147 265,-141 265,-141 265,-101 265,-101 265,-95 271,-89 277,-89 277,-89 370,-89 370,-89 376,-89 382,-95 382,-101 382,-101 382,-141 382,-141 382,-147 376,-153 370,-153" />
+<text text-anchor="start" x="294" y="-138.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text>
+<text text-anchor="start" x="304" y="-138.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">2</text>
+<text text-anchor="start" x="311" y="-138.8" font-family="Helvetica,sans-Serif" font-size="14.00"> ≤ 5.05</text>
+<text text-anchor="start" x="276" y="-124.8" font-family="Helvetica,sans-Serif" font-size="14.00">entropy = 0.172</text>
+<text text-anchor="start" x="282.5" y="-110.8" font-family="Helvetica,sans-Serif" font-size="14.00">samples = 39</text>
+<text text-anchor="start" x="273" y="-96.8" font-family="Helvetica,sans-Serif" font-size="14.00">value = [0, 1, 38]</text>
+</g>
+<!-- 2&#45;&gt;6 -->
+<g id="edge6" class="edge">
+<title>2&#45;&gt;6</title>
+<path fill="none" stroke="black" d="M277.7,-188.99C283.69,-180.23 290.28,-170.58 296.56,-161.4" />
+<polygon fill="black" stroke="black" points="299.45,-163.37 302.21,-153.14 293.68,-159.42 299.45,-163.37" />
+</g>
+<!-- 4 -->
+<g id="node5" class="node">
+<title>4</title>
+<path fill="#39e581" stroke="black" d="M105,-53C105,-53 12,-53 12,-53 6,-53 0,-47 0,-41 0,-41 0,-12 0,-12 0,-6 6,0 12,0 12,0 105,0 105,0 111,0 117,-6 117,-12 117,-12 117,-41 117,-41 117,-47 111,-53 105,-53" />
+<text text-anchor="start" x="18.5" y="-37.8" font-family="Helvetica,sans-Serif" font-size="14.00">entropy = 0.0</text>
+<text text-anchor="start" x="17.5" y="-22.8" font-family="Helvetica,sans-Serif" font-size="14.00">samples = 32</text>
+<text text-anchor="start" x="8" y="-7.8" font-family="Helvetica,sans-Serif" font-size="14.00">value = [0, 32, 0]</text>
+</g>
+<!-- 3&#45;&gt;4 -->
+<g id="edge4" class="edge">
+<title>3&#45;&gt;4</title>
+<path fill="none" stroke="black" d="M144.85,-88.94C131.29,-79.29 116.33,-68.65 102.73,-58.97" />
+<polygon fill="black" stroke="black" points="104.64,-56.04 94.47,-53.09 100.58,-61.74 104.64,-56.04" />
+</g>
+<!-- 5 -->
+<g id="node6" class="node">
+<title>5</title>
+<path fill="#ab7bee" stroke="black" d="M234,-53C234,-53 147,-53 147,-53 141,-53 135,-47 135,-41 135,-41 135,-12 135,-12 135,-6 141,0 147,0 147,0 234,0 234,0 240,0 246,-6 246,-12 246,-12 246,-41 246,-41 246,-47 240,-53 234,-53" />
+<text text-anchor="start" x="143" y="-37.8" font-family="Helvetica,sans-Serif" font-size="14.00">entropy = 0.811</text>
+<text text-anchor="start" x="153" y="-22.8" font-family="Helvetica,sans-Serif" font-size="14.00">samples = 4</text>
+<text text-anchor="start" x="143.5" y="-7.8" font-family="Helvetica,sans-Serif" font-size="14.00">value = [0, 1, 3]</text>
+</g>
+<!-- 3&#45;&gt;5 -->
+<g id="edge5" class="edge">
+<title>3&#45;&gt;5</title>
+<path fill="none" stroke="black" d="M189.17,-88.94C189.35,-80.66 189.55,-71.64 189.73,-63.13" />
+<polygon fill="black" stroke="black" points="193.23,-63.16 189.95,-53.09 186.23,-63.01 193.23,-63.16" />
+</g>
+<!-- 7 -->
+<g id="node8" class="node">
+<title>7</title>
+<path fill="#ab7bee" stroke="black" d="M366,-53C366,-53 279,-53 279,-53 273,-53 267,-47 267,-41 267,-41 267,-12 267,-12 267,-6 273,0 279,0 279,0 366,0 366,0 372,0 378,-6 378,-12 378,-12 378,-41 378,-41 378,-47 372,-53 366,-53" />
+<text text-anchor="start" x="275" y="-37.8" font-family="Helvetica,sans-Serif" font-size="14.00">entropy = 0.811</text>
+<text text-anchor="start" x="285" y="-22.8" font-family="Helvetica,sans-Serif" font-size="14.00">samples = 4</text>
+<text text-anchor="start" x="275.5" y="-7.8" font-family="Helvetica,sans-Serif" font-size="14.00">value = [0, 1, 3]</text>
+</g>
+<!-- 6&#45;&gt;7 -->
+<g id="edge7" class="edge">
+<title>6&#45;&gt;7</title>
+<path fill="none" stroke="black" d="M323.16,-88.94C323.07,-80.66 322.98,-71.64 322.89,-63.13" />
+<polygon fill="black" stroke="black" points="326.38,-63.05 322.78,-53.09 319.39,-63.13 326.38,-63.05" />
+</g>
+<!-- 8 -->
+<g id="node9" class="node">
+<title>8</title>
+<path fill="#8139e5" stroke="black" d="M501,-53C501,-53 408,-53 408,-53 402,-53 396,-47 396,-41 396,-41 396,-12 396,-12 396,-6 402,0 408,0 408,0 501,0 501,0 507,0 513,-6 513,-12 513,-12 513,-41 513,-41 513,-47 507,-53 501,-53" />
+<text text-anchor="start" x="414.5" y="-37.8" font-family="Helvetica,sans-Serif" font-size="14.00">entropy = 0.0</text>
+<text text-anchor="start" x="413.5" y="-22.8" font-family="Helvetica,sans-Serif" font-size="14.00">samples = 35</text>
+<text text-anchor="start" x="404" y="-7.8" font-family="Helvetica,sans-Serif" font-size="14.00">value = [0, 0, 35]</text>
+</g>
+<!-- 6&#45;&gt;8 -->
+<g id="edge8" class="edge">
+<title>6&#45;&gt;8</title>
+<path fill="none" stroke="black" d="M367.49,-88.94C381.15,-79.29 396.22,-68.65 409.93,-58.97" />
+<polygon fill="black" stroke="black" points="412.11,-61.72 418.26,-53.09 408.07,-56 412.11,-61.72" />
+</g>
+</g>
+</svg>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">clf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0.9821428571428571</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">clf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0.9736842105263158</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here is a sample where we are only 75% sure that it is class 2, since only 3 of the 4 samples in its leaf are class 2.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">([</span><span class="n">X_test</span><span class="p">[</span><span class="mi">20</span><span class="p">]])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([2])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">clf</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">([</span><span class="n">X_test</span><span class="p">[</span><span class="mi">20</span><span class="p">]])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[0.  , 0.25, 0.75]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="How-a-classification-tree-determines-where-to-split">How a classification tree determines where to split<a class="anchor-link" href="#How-a-classification-tree-determines-where-to-split"> </a></h2><p>Let's talk a little bit more about how trees use entropy (or alternatively Gini) to determine splits.</p>
+<p>Information gain is calculated by cycling through all possible splits in the training set. Practically this is the process:</p>
+<ol>
+<li>Select the first feature.</li>
+<li>Pick the halfway point between the first sample and the second sample.</li>
+<li>Calculate the entropy of the two child nodes if a split is made at that point.</li>
+<li>Repeat steps 2 and 3 for all midpoints for this feature.</li>
+<li>Go back to step 1 and repeat for all features.</li>
+</ol>
+<p>At the end, pick the feature and split that has the lowest sum entropy for the two child nodes.</p>
+<p>Again, information gain is the difference in entropy of the parent node and the summation of entropies of the two child nodes. Since the entropy of the parent node is the same for each potential split that we try, we only need to calculate the entropies of the child nodes for a split and find the split that minimizes that since that will maximize the information gained.</p>
+<p>Here's a tree with a max depth of 1 using entropy to split:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">clf</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="s2">&quot;entropy&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">clf</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_svg output_subarea output_execute_result">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+&lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
+<!-- Generated by graphviz version 2.44.0 (0)
+ -->
+<!-- Title: Tree Pages: 1 -->
+<svg width="268pt" height="161pt" viewBox="0.00 0.00 268.00 161.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 157)">
+<title>Tree</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-157 264,-157 264,4 -4,4" />
+<!-- 0 -->
+<g id="node1" class="node">
+<title>0</title>
+<path fill="#f8f4fe" stroke="black" d="M181.5,-153C181.5,-153 73.5,-153 73.5,-153 67.5,-153 61.5,-147 61.5,-141 61.5,-141 61.5,-101 61.5,-101 61.5,-95 67.5,-89 73.5,-89 73.5,-89 181.5,-89 181.5,-89 187.5,-89 193.5,-95 193.5,-101 193.5,-101 193.5,-141 193.5,-141 193.5,-147 187.5,-153 181.5,-153" />
+<text text-anchor="start" x="98" y="-138.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text>
+<text text-anchor="start" x="108" y="-138.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">2</text>
+<text text-anchor="start" x="115" y="-138.8" font-family="Helvetica,sans-Serif" font-size="14.00"> ≤ 2.35</text>
+<text text-anchor="start" x="80" y="-124.8" font-family="Helvetica,sans-Serif" font-size="14.00">entropy = 1.581</text>
+<text text-anchor="start" x="82.5" y="-110.8" font-family="Helvetica,sans-Serif" font-size="14.00">samples = 112</text>
+<text text-anchor="start" x="69.5" y="-96.8" font-family="Helvetica,sans-Serif" font-size="14.00">value = [37, 34, 41]</text>
+</g>
+<!-- 1 -->
+<g id="node2" class="node">
+<title>1</title>
+<path fill="#e58139" stroke="black" d="M105,-53C105,-53 12,-53 12,-53 6,-53 0,-47 0,-41 0,-41 0,-12 0,-12 0,-6 6,0 12,0 12,0 105,0 105,0 111,0 117,-6 117,-12 117,-12 117,-41 117,-41 117,-47 111,-53 105,-53" />
+<text text-anchor="start" x="18.5" y="-37.8" font-family="Helvetica,sans-Serif" font-size="14.00">entropy = 0.0</text>
+<text text-anchor="start" x="17.5" y="-22.8" font-family="Helvetica,sans-Serif" font-size="14.00">samples = 37</text>
+<text text-anchor="start" x="8" y="-7.8" font-family="Helvetica,sans-Serif" font-size="14.00">value = [37, 0, 0]</text>
+</g>
+<!-- 0&#45;&gt;1 -->
+<g id="edge1" class="edge">
+<title>0&#45;&gt;1</title>
+<path fill="none" stroke="black" d="M104.33,-88.94C97.68,-80.02 90.39,-70.25 83.62,-61.18" />
+<polygon fill="black" stroke="black" points="86.37,-59.01 77.59,-53.09 80.76,-63.2 86.37,-59.01" />
+<text text-anchor="middle" x="73.99" y="-74.13" font-family="Helvetica,sans-Serif" font-size="14.00">True</text>
+</g>
+<!-- 2 -->
+<g id="node3" class="node">
+<title>2</title>
+<path fill="#e9ddfb" stroke="black" d="M248,-53C248,-53 147,-53 147,-53 141,-53 135,-47 135,-41 135,-41 135,-12 135,-12 135,-6 141,0 147,0 147,0 248,0 248,0 254,0 260,-6 260,-12 260,-12 260,-41 260,-41 260,-47 254,-53 248,-53" />
+<text text-anchor="start" x="150" y="-37.8" font-family="Helvetica,sans-Serif" font-size="14.00">entropy = 0.994</text>
+<text text-anchor="start" x="156.5" y="-22.8" font-family="Helvetica,sans-Serif" font-size="14.00">samples = 75</text>
+<text text-anchor="start" x="143" y="-7.8" font-family="Helvetica,sans-Serif" font-size="14.00">value = [0, 34, 41]</text>
+</g>
+<!-- 0&#45;&gt;2 -->
+<g id="edge2" class="edge">
+<title>0&#45;&gt;2</title>
+<path fill="none" stroke="black" d="M151,-88.94C157.75,-80.02 165.15,-70.25 172.01,-61.18" />
+<polygon fill="black" stroke="black" points="174.89,-63.18 178.13,-53.09 169.31,-58.95 174.89,-63.18" />
+<text text-anchor="middle" x="181.56" y="-74.15" font-family="Helvetica,sans-Serif" font-size="14.00">False</text>
+</g>
+</g>
+</svg>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's implement our entropy calculation. This takes a list of targets and calculates the entropy for that node.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="k">def</span> <span class="nf">entropy</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">total</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    
+    <span class="n">s</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">x</span><span class="o">/</span><span class="n">total</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="n">p</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        
+    <span class="k">return</span> <span class="o">-</span><span class="n">s</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here's our original list of targets:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">y_train</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([1, 1, 2, 0, 2, 0, 0, 1, 2, 2, 2, 2, 1, 2, 1, 1, 2, 2, 2, 2, 1, 2,
+       1, 0, 2, 1, 1, 1, 1, 2, 0, 0, 2, 1, 0, 0, 1, 0, 2, 1, 0, 1, 2, 1,
+       0, 2, 2, 2, 2, 0, 0, 2, 2, 0, 2, 0, 2, 2, 0, 0, 2, 0, 0, 0, 1, 2,
+       2, 0, 0, 0, 1, 1, 0, 0, 1, 0, 2, 1, 2, 1, 0, 2, 0, 2, 0, 0, 2, 0,
+       2, 1, 1, 1, 2, 2, 1, 1, 0, 1, 2, 2, 0, 1, 1, 1, 1, 0, 0, 0, 2, 1,
+       2, 0])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here's the associated entropy which matches above. This is the entropy of the root node.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">entropy</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>1.5807197138422104</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now let's get the entropes of the child nodes for the split that was found. In this case it was feature 3 with the split at 0.8.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">feat</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">x</span> <span class="o">=</span> <span class="mf">0.8</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here are the samples that went into the left node. As you can see all of them are of class <code>0</code>. There is no entropy associated with this node - the node is pure.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">left</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[</span><span class="n">X_train</span><span class="p">[:,</span><span class="n">feat</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">x</span><span class="p">]</span>
+<span class="n">left</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">entropy</span><span class="p">(</span><span class="n">left</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>-0.0</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here are the samples that went into the right node:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">right</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[</span><span class="n">X_train</span><span class="p">[:,</span><span class="n">feat</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">x</span><span class="p">]</span>
+<span class="n">right</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([1, 1, 2, 2, 1, 2, 2, 2, 2, 1, 2, 1, 1, 2, 2, 2, 2, 1, 2, 1, 2, 1,
+       1, 1, 1, 2, 2, 1, 1, 2, 1, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       1, 2, 2, 1, 1, 1, 2, 1, 2, 1, 2, 2, 2, 2, 1, 1, 1, 2, 2, 1, 1, 1,
+       2, 2, 1, 1, 1, 1, 2, 1, 2])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">entropy</span><span class="p">(</span><span class="n">right</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0.993707106604508</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now we need the cycle through each feature, and then cycle through each possible split.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="k">def</span> <span class="nf">calc_entropies</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    
+    <span class="n">n</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">min_ents</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    <span class="n">min_splits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    
+        <span class="c1"># Use set to remove dups; sort it to get halfway points</span>
+        <span class="n">points</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="n">feat</span><span class="p">])))</span>
+        
+        <span class="n">splits</span> <span class="o">=</span> <span class="p">[(</span><span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">/</span><span class="mf">2.</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">))]</span>
+        <span class="n">entropies</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">splits</span><span class="p">:</span>
+        
+            <span class="n">l</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[</span><span class="n">X_train</span><span class="p">[:,</span><span class="n">feat</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">x</span><span class="p">]</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[</span><span class="n">X_train</span><span class="p">[:,</span><span class="n">feat</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">x</span><span class="p">]</span>
+        
+            <span class="n">e</span> <span class="o">=</span> <span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">entropy</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="o">+</span> <span class="n">r</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">entropy</span><span class="p">(</span><span class="n">r</span><span class="p">))</span> <span class="o">/</span> <span class="n">n</span>
+            <span class="n">entropies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+        <span class="n">feat_min_ent</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">entropies</span><span class="p">)</span>
+        <span class="n">min_ents</span><span class="p">[</span><span class="n">feat</span><span class="p">]</span> <span class="o">=</span> <span class="n">entropies</span><span class="p">[</span><span class="n">feat_min_ent</span><span class="p">]</span>
+        <span class="n">min_splits</span><span class="p">[</span><span class="n">feat</span><span class="p">]</span> <span class="o">=</span> <span class="n">splits</span><span class="p">[</span><span class="n">feat_min_ent</span><span class="p">]</span>
+        
+    <span class="n">min_feat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">min_ents</span><span class="p">)</span>
+            
+    <span class="k">return</span> <span class="n">min_feat</span><span class="p">,</span> <span class="n">min_splits</span><span class="p">[</span><span class="n">min_feat</span><span class="p">],</span> <span class="n">min_ents</span><span class="p">[</span><span class="n">min_feat</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">calc_entropies</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(2, 2.35, 0.6654288660298044)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note that in this example splitting feature 3 at 0.8 gives the same entropy as the above split. <code>np.argmin</code> returns the argument of the first minimum in the case of a tie.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Regression">Regression<a class="anchor-link" href="#Regression"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I'll cover decision tree regression in another post soon.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><a class="u-url" href="/2020/05/14/decision-trees.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Blog of Wes Barnett</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/wesbarnett" title="wesbarnett"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/WesBarnettPhD" title="WesBarnettPhD"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
