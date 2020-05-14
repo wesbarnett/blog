@@ -1,1 +1,1 @@
-Sitemap: https://wesbarnett.github.io/blog/sitemap.xml
+Sitemap: https://barnett.science/sitemap.xml
