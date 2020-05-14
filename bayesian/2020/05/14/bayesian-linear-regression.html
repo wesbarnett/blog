@@ -111,7 +111,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      10 min read
+      11 min read
     
 </span></p>
 
@@ -391,6 +391,51 @@ window.onload = wrap_img;
 </div>
 </div>
 </div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>data {
+    int&lt;lower=0&gt; N;
+    int&lt;lower=0&gt; K;
+    matrix[N, K] x;
+    vector[N] y;
+    int&lt;lower=0&gt; N_new;
+    matrix[N_new, K] x_new;
+}
+parameters {
+    vector[K] beta;
+    real&lt;lower=0&gt; sigma;
+}
+model {
+    y ~ normal(x*beta, sigma);
+}
+generated quantities {
+    vector[N] y_train_pred;
+    vector[N_new] y_new;
+    for (n in 1:N) {
+        y_train_pred[n] = normal_rng(x[n]*beta, sigma);
+    }
+    for (n in 1:N_new) {
+        y_new[n] = normal_rng(x_new[n]*beta, sigma);
+    }
+}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -1674,6 +1719,43 @@ INFO:cmdstanpy:finish chain 4
 </div>
 </div>
 </div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>data {
+    int&lt;lower=0&gt; N;
+    int&lt;lower=0&gt; K;
+    matrix[N, K] x;
+    vector[K] beta;
+    real&lt;lower=0&gt; sigma;
+}
+parameters {
+}
+model {
+}
+generated quantities {
+    vector[N] y;
+    for (n in 1:N) {
+        y[n] = normal_rng(x[n]*beta, sigma);
+    }
+}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
