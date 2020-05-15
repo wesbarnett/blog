@@ -33,6 +33,17 @@
         
     
   
+    
+        ,"post3": {
+            "title": "Speed comparisons with Python, Numba, Fortran",
+            "content": "The classic Monte Carlo &quot;Hello World&quot; is to calculate $ pi$ by generating random numbers and accepting or rejecting them. The algorithm below is taken from one of my graduate textbooks on molecular simulations - I apologize that I can&#39;t remember where, and that book is long gone. Essentially one is throwing darts into the unit square and then measuring if it is within the quarter of the unit circle. $ pi$ equals the number of darts in the circle divided by all of the attempts. Since it is a quarter of the unit circle, we multiple by 4. . I thought it would be fun to try to use some of the available tooling to get a speed performance in Python as well as using some Fortan inline since Fortran was the major language I used in graduate school. Note that fortranmagic is located in the fortran-magic package. . %load_ext fortranmagic import numpy as np from numba import jit, njit, prange . n = 10000000 . Plain Python and Numpy . def calc_pi_p(n): accept = 0.0 for i in range(n): r = np.random.random(2) if (np.dot(r,r) &lt;= 1.0): accept += 1.0 return 4.0 * accept / float(n) . %%time calc_pi_p(n) . CPU times: user 47.9 s, sys: 25.6 ms, total: 47.9 s Wall time: 48.1 s . 3.141434 . Numba . @jit def calc_pi_numba(n): accept = 0.0 for i in range(n): r = np.random.random(2) if (np.dot(r,r) &lt;= 1.0): accept += 1.0 return 4.0 * accept / float(n) . %%time calc_pi_numba(n) . CPU times: user 2.29 s, sys: 13.2 ms, total: 2.31 s Wall time: 2.31 s . 3.1418784 . Numba in parallel . @njit(parallel=True) def calc_pi_numba_parallel(n): accept = 0.0 for i in prange(n): r = np.random.random(2) if (np.dot(r,r) &lt;= 1.0): accept += 1.0 return 4.0 * accept / float(n) . %%time calc_pi_numba_parallel(n) . CPU times: user 1.24 s, sys: 9.69 ms, total: 1.25 s Wall time: 1.09 s . 3.1403444 . Fortran . %%fortran function calc_pi_f(n) result(pi) implicit none integer(8) :: accept real(8) :: r(2), pi integer(8), intent(in) :: n integer(8) :: i accept = 0 do i = 1, n call random_number(r) if (dot_product(r,r) &lt;= 1.0) then accept = accept + 1 end if end do pi = 4.0d0 * dble(accept)/dble(n) end function calc_pi_f . %%time calc_pi_f(n) . CPU times: user 406 ms, sys: 0 ns, total: 406 ms Wall time: 405 ms . 3.1423488 . Looks like Fortran is the winner in this case. We didn&#39;t even parallelize the operation, but Numba does give a signifcant speedup compared to plain Python/Numpy. There might be a way to vectorize some of the operations in Numpy though to perform better, but I failed to find out how to do that in this case. .",
+            "url": "https://barnett.science/performance/2018/08/27/fortran-speed.html",
+            "relUrl": "/performance/2018/08/27/fortran-speed.html",
+            "date": " • Aug 27, 2018"
+        }
+        
+    
+  
 
   
   
