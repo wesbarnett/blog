@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-15T07:45:20-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>Wes Barnett's Blog</subtitle><entry><title type="html">Building a deep learning box</title><link href="https://barnett.science/deeplearning/2020/02/02/deep-learning-box.html" rel="alternate" type="text/html" title="Building a deep learning box" /><published>2020-02-02T00:00:00-06:00</published><updated>2020-02-02T00:00:00-06:00</updated><id>https://barnett.science/deeplearning/2020/02/02/deep-learning-box</id><content type="html" xml:base="https://barnett.science/deeplearning/2020/02/02/deep-learning-box.html">&lt;p&gt;During the process of going through the fast.ai course, I decided to build my own deep
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-15T08:28:54-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>Wes Barnett's Blog</subtitle><entry><title type="html">Building a deep learning box</title><link href="https://barnett.science/deeplearning/2020/02/02/deep-learning-box.html" rel="alternate" type="text/html" title="Building a deep learning box" /><published>2020-02-02T00:00:00-06:00</published><updated>2020-02-02T00:00:00-06:00</updated><id>https://barnett.science/deeplearning/2020/02/02/deep-learning-box</id><content type="html" xml:base="https://barnett.science/deeplearning/2020/02/02/deep-learning-box.html">&lt;p&gt;During the process of going through the fast.ai course, I decided to build my own deep
 learning box. This post is summary of my experience, but it won’t tell you every detail
 needed to build your own. There are quite a few guides out there.&lt;/p&gt;
 
@@ -2245,7 +2245,7 @@ INFO:cmdstanpy:finish chain 1
 
 &lt;div class=&quot;cell border-box-sizing text_cell rendered&quot;&gt;&lt;div class=&quot;inner_cell&quot;&gt;
 &lt;div class=&quot;text_cell_render border-box-sizing rendered_html&quot;&gt;
-&lt;p&gt;In this notebook I walk through how a classification decision tree is fit, how inference is performed, how to reduce overfitting, how splits are determined.&lt;/p&gt;
+&lt;p&gt;In this notebook I walk through how a classification decision tree is fit, how inference is performed, how to reduce overfitting, how splits are determined. This is based on a notebook I created while I was fellow at Insight Data Science when studying for interviews.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -2336,7 +2336,7 @@ INFO:cmdstanpy:finish chain 1
 &lt;p&gt;$I_{G}(p) = \sum_{i=1}^{J}p_{i}(1-p_{i})$&lt;/p&gt;
 &lt;p&gt;Here $p_{i}$ is the probability of an item with label $i$ being chosen and $1 - p_{i}$ is the probability of a mistake in categorizing that item. $J$ is the number of classes. Gini reaches zero when all cases in the node fall into a single target category.&lt;/p&gt;
 &lt;p&gt;Alternatively, one can use information gain to decide where to split, where information gain is defined as the difference in entropy of the parent and the weighted sum of the entropies of the children. Entropy is defined as:&lt;/p&gt;
-&lt;p&gt;$H_(p) = -\sum_{i=1}^{J}p_{i}\log_{2}(p_{i})$&lt;/p&gt;
+&lt;p&gt;$H(p) = -\sum_{i=1}^{J}p_{i}\log_{2}(p_{i})$&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -2400,9 +2400,9 @@ INFO:cmdstanpy:finish chain 1
 &lt;g id=&quot;node1&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;0&lt;/title&gt;
 &lt;path fill=&quot;#f8f4fe&quot; stroke=&quot;black&quot; d=&quot;M240.5,-453C240.5,-453 132.5,-453 132.5,-453 126.5,-453 120.5,-447 120.5,-441 120.5,-441 120.5,-401 120.5,-401 120.5,-395 126.5,-389 132.5,-389 132.5,-389 240.5,-389 240.5,-389 246.5,-389 252.5,-395 252.5,-401 252.5,-401 252.5,-441 252.5,-441 252.5,-447 246.5,-453 240.5,-453&quot; /&gt;
-&lt;text text-anchor=&quot;start&quot; x=&quot;161&quot; y=&quot;-438.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;14.00&quot;&gt;X&lt;/text&gt;
-&lt;text text-anchor=&quot;start&quot; x=&quot;171&quot; y=&quot;-438.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; baseline-shift=&quot;sub&quot; font-size=&quot;14.00&quot;&gt;3&lt;/text&gt;
-&lt;text text-anchor=&quot;start&quot; x=&quot;178&quot; y=&quot;-438.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;14.00&quot;&gt; ≤ 0.8&lt;/text&gt;
+&lt;text text-anchor=&quot;start&quot; x=&quot;157&quot; y=&quot;-438.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;14.00&quot;&gt;X&lt;/text&gt;
+&lt;text text-anchor=&quot;start&quot; x=&quot;167&quot; y=&quot;-438.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; baseline-shift=&quot;sub&quot; font-size=&quot;14.00&quot;&gt;2&lt;/text&gt;
+&lt;text text-anchor=&quot;start&quot; x=&quot;174&quot; y=&quot;-438.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;14.00&quot;&gt; ≤ 2.35&lt;/text&gt;
 &lt;text text-anchor=&quot;start&quot; x=&quot;139&quot; y=&quot;-424.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;14.00&quot;&gt;entropy = 1.581&lt;/text&gt;
 &lt;text text-anchor=&quot;start&quot; x=&quot;141.5&quot; y=&quot;-410.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;14.00&quot;&gt;samples = 112&lt;/text&gt;
 &lt;text text-anchor=&quot;start&quot; x=&quot;128.5&quot; y=&quot;-396.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;14.00&quot;&gt;value = [37, 34, 41]&lt;/text&gt;
@@ -2462,8 +2462,8 @@ INFO:cmdstanpy:finish chain 1
 &lt;title&gt;8&lt;/title&gt;
 &lt;path fill=&quot;#843ee6&quot; stroke=&quot;black&quot; d=&quot;M370,-253C370,-253 277,-253 277,-253 271,-253 265,-247 265,-241 265,-241 265,-201 265,-201 265,-195 271,-189 277,-189 277,-189 370,-189 370,-189 376,-189 382,-195 382,-201 382,-201 382,-241 382,-241 382,-247 376,-253 370,-253&quot; /&gt;
 &lt;text text-anchor=&quot;start&quot; x=&quot;294&quot; y=&quot;-238.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;14.00&quot;&gt;X&lt;/text&gt;
-&lt;text text-anchor=&quot;start&quot; x=&quot;304&quot; y=&quot;-238.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; baseline-shift=&quot;sub&quot; font-size=&quot;14.00&quot;&gt;2&lt;/text&gt;
-&lt;text text-anchor=&quot;start&quot; x=&quot;311&quot; y=&quot;-238.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;14.00&quot;&gt; ≤ 5.05&lt;/text&gt;
+&lt;text text-anchor=&quot;start&quot; x=&quot;304&quot; y=&quot;-238.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; baseline-shift=&quot;sub&quot; font-size=&quot;14.00&quot;&gt;3&lt;/text&gt;
+&lt;text text-anchor=&quot;start&quot; x=&quot;311&quot; y=&quot;-238.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;14.00&quot;&gt; ≤ 1.75&lt;/text&gt;
 &lt;text text-anchor=&quot;start&quot; x=&quot;276&quot; y=&quot;-224.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;14.00&quot;&gt;entropy = 0.172&lt;/text&gt;
 &lt;text text-anchor=&quot;start&quot; x=&quot;282.5&quot; y=&quot;-210.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;14.00&quot;&gt;samples = 39&lt;/text&gt;
 &lt;text text-anchor=&quot;start&quot; x=&quot;273&quot; y=&quot;-196.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;14.00&quot;&gt;value = [0, 1, 38]&lt;/text&gt;
@@ -2537,9 +2537,9 @@ INFO:cmdstanpy:finish chain 1
 &lt;g id=&quot;node10&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;9&lt;/title&gt;
 &lt;path fill=&quot;#ab7bee&quot; stroke=&quot;black&quot; d=&quot;M366,-153C366,-153 279,-153 279,-153 273,-153 267,-147 267,-141 267,-141 267,-101 267,-101 267,-95 273,-89 279,-89 279,-89 366,-89 366,-89 372,-89 378,-95 378,-101 378,-101 378,-141 378,-141 378,-147 372,-153 366,-153&quot; /&gt;
-&lt;text text-anchor=&quot;start&quot; x=&quot;297&quot; y=&quot;-138.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;14.00&quot;&gt;X&lt;/text&gt;
-&lt;text text-anchor=&quot;start&quot; x=&quot;307&quot; y=&quot;-138.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; baseline-shift=&quot;sub&quot; font-size=&quot;14.00&quot;&gt;0&lt;/text&gt;
-&lt;text text-anchor=&quot;start&quot; x=&quot;314&quot; y=&quot;-138.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;14.00&quot;&gt; ≤ 6.5&lt;/text&gt;
+&lt;text text-anchor=&quot;start&quot; x=&quot;293&quot; y=&quot;-138.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;14.00&quot;&gt;X&lt;/text&gt;
+&lt;text text-anchor=&quot;start&quot; x=&quot;303&quot; y=&quot;-138.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; baseline-shift=&quot;sub&quot; font-size=&quot;14.00&quot;&gt;3&lt;/text&gt;
+&lt;text text-anchor=&quot;start&quot; x=&quot;310&quot; y=&quot;-138.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;14.00&quot;&gt; ≤ 1.65&lt;/text&gt;
 &lt;text text-anchor=&quot;start&quot; x=&quot;275&quot; y=&quot;-124.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;14.00&quot;&gt;entropy = 0.811&lt;/text&gt;
 &lt;text text-anchor=&quot;start&quot; x=&quot;285&quot; y=&quot;-110.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;14.00&quot;&gt;samples = 4&lt;/text&gt;
 &lt;text text-anchor=&quot;start&quot; x=&quot;275.5&quot; y=&quot;-96.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;14.00&quot;&gt;value = [0, 1, 3]&lt;/text&gt;
@@ -3212,8 +3212,10 @@ INFO:cmdstanpy:finish chain 1
 &lt;li&gt;Repeat steps 2 and 3 for all midpoints for this feature.&lt;/li&gt;
 &lt;li&gt;Go back to step 1 and repeat for all features.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;At the end, pick the feature and split that has the lowest sum entropy for the two child nodes.&lt;/p&gt;
-&lt;p&gt;Again, information gain is the difference in entropy of the parent node and the summation of entropies of the two child nodes. Since the entropy of the parent node is the same for each potential split that we try, we only need to calculate the entropies of the child nodes for a split and find the split that minimizes that since that will maximize the information gained.&lt;/p&gt;
+&lt;p&gt;At the end, pick the feature and split that has the lowest weighted summation of the entropies for the two child nodes.&lt;/p&gt;
+&lt;p&gt;Again, information gain is the difference in entropy of the parent node and the weighted summation of entropies of the two child nodes. Since the entropy of the parent node is the same for each potential split that we try, we only need to calculate the entropies of the child nodes for a split and find the split that minimizes their weighted sum since that will maximize the information gained.&lt;/p&gt;
+&lt;p&gt;Here's the formula for information gain (IG), where $H_{parent}$ is the entropy of the parent node, $N_{left}$ is the number of samples in the left child, $H_{left}$ is the entropy of the left child, $N_{right}$ is the number of samples in the right child, $H_{right}$ is the entropy of the right child:&lt;/p&gt;
+&lt;p&gt;$IG = H_{parent} - (N_{left} H_{left} + N_{right} H_{right})$&lt;/p&gt;
 &lt;p&gt;Here's a tree with a max depth of 1 using entropy to split:&lt;/p&gt;
 
 &lt;/div&gt;
@@ -3323,7 +3325,9 @@ INFO:cmdstanpy:finish chain 1
 
 &lt;div class=&quot;cell border-box-sizing text_cell rendered&quot;&gt;&lt;div class=&quot;inner_cell&quot;&gt;
 &lt;div class=&quot;text_cell_render border-box-sizing rendered_html&quot;&gt;
-&lt;p&gt;Let's implement our entropy calculation. This takes a list of targets and calculates the entropy for that node.&lt;/p&gt;
+&lt;p&gt;Let's implement our entropy calculation. As a reminder, the formula is:&lt;/p&gt;
+&lt;p&gt;$H(p) = -\sum_{i=1}^{J}p_{i}\log_{2}(p_{i})$&lt;/p&gt;
+&lt;p&gt;This takes a list of targets and calculates the entropy for that node.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -3361,7 +3365,231 @@ INFO:cmdstanpy:finish chain 1
 
 &lt;div class=&quot;cell border-box-sizing text_cell rendered&quot;&gt;&lt;div class=&quot;inner_cell&quot;&gt;
 &lt;div class=&quot;text_cell_render border-box-sizing rendered_html&quot;&gt;
-&lt;p&gt;Here's our original list of targets:&lt;/p&gt;
+&lt;h3 id=&quot;Plotting-entropy-in-the-binary-class-case&quot;&gt;Plotting entropy in the binary class case&lt;a class=&quot;anchor-link&quot; href=&quot;#Plotting-entropy-in-the-binary-class-case&quot;&gt; &lt;/a&gt;&lt;/h3&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;cell border-box-sizing text_cell rendered&quot;&gt;&lt;div class=&quot;inner_cell&quot;&gt;
+&lt;div class=&quot;text_cell_render border-box-sizing rendered_html&quot;&gt;
+&lt;p&gt;Let's take a quick look at an example where we have two classes, 0 and 1, in 100 samples (so 50 of each class) to get an idea of what entropy is describing. If we perfectly split our data into 0's in the left bucket, and 1's into the right bucket, we have 0 entropy. Whatever (hypothetical) decision rule that caused that split has split our data perfectly.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+    
+    
+&lt;div class=&quot;cell border-box-sizing code_cell rendered&quot;&gt;
+&lt;div class=&quot;input&quot;&gt;
+
+&lt;div class=&quot;inner_cell&quot;&gt;
+    &lt;div class=&quot;input_area&quot;&gt;
+&lt;div class=&quot; highlight hl-ipython3&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;right&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zeros&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ones&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+    
+
+&lt;div class=&quot;cell border-box-sizing text_cell rendered&quot;&gt;&lt;div class=&quot;inner_cell&quot;&gt;
+&lt;div class=&quot;text_cell_render border-box-sizing rendered_html&quot;&gt;
+&lt;p&gt;Because each node is pure, the entropy is 0 for each node:&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+    
+    
+&lt;div class=&quot;cell border-box-sizing code_cell rendered&quot;&gt;
+&lt;div class=&quot;input&quot;&gt;
+
+&lt;div class=&quot;inner_cell&quot;&gt;
+    &lt;div class=&quot;input_area&quot;&gt;
+&lt;div class=&quot; highlight hl-ipython3&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;entropy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;entropy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;output_wrapper&quot;&gt;
+&lt;div class=&quot;output&quot;&gt;
+
+&lt;div class=&quot;output_area&quot;&gt;
+
+
+
+&lt;div class=&quot;output_text output_subarea output_execute_result&quot;&gt;
+&lt;pre&gt;(-0.0, -0.0)&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+    
+
+    
+    
+&lt;div class=&quot;cell border-box-sizing code_cell rendered&quot;&gt;
+&lt;div class=&quot;input&quot;&gt;
+
+&lt;div class=&quot;inner_cell&quot;&gt;
+    &lt;div class=&quot;input_area&quot;&gt;
+&lt;div class=&quot; highlight hl-ipython3&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+    
+
+&lt;div class=&quot;cell border-box-sizing text_cell rendered&quot;&gt;&lt;div class=&quot;inner_cell&quot;&gt;
+&lt;div class=&quot;text_cell_render border-box-sizing rendered_html&quot;&gt;
+&lt;p&gt;Now let's change 1 sample - moving one of the 0's from the left node to the right, and one of the 1's from the right node to the left. Here are the entropies of those child nodes. In both cases, the entropy goes up by the same amount.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+    
+    
+&lt;div class=&quot;cell border-box-sizing code_cell rendered&quot;&gt;
+&lt;div class=&quot;input&quot;&gt;
+
+&lt;div class=&quot;inner_cell&quot;&gt;
+    &lt;div class=&quot;input_area&quot;&gt;
+&lt;div class=&quot; highlight hl-ipython3&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;entropy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;entropy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;output_wrapper&quot;&gt;
+&lt;div class=&quot;output&quot;&gt;
+
+&lt;div class=&quot;output_area&quot;&gt;
+
+
+
+&lt;div class=&quot;output_text output_subarea output_execute_result&quot;&gt;
+&lt;pre&gt;(0.14144054254182067, 0.14144054254182067)&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+    
+
+&lt;div class=&quot;cell border-box-sizing text_cell rendered&quot;&gt;&lt;div class=&quot;inner_cell&quot;&gt;
+&lt;div class=&quot;text_cell_render border-box-sizing rendered_html&quot;&gt;
+&lt;p&gt;Let's make this discussion even simpler by looking at just a single node containing 100 samples of either 0's or 1's. Let's start with a pure node of containing just 0's and incrementally change those 0's to 1's and find out what happens with the entropy:&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+    
+    
+&lt;div class=&quot;cell border-box-sizing code_cell rendered&quot;&gt;
+&lt;div class=&quot;input&quot;&gt;
+
+&lt;div class=&quot;inner_cell&quot;&gt;
+    &lt;div class=&quot;input_area&quot;&gt;
+&lt;div class=&quot; highlight hl-ipython3&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zeros&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+    
+
+    
+    
+&lt;div class=&quot;cell border-box-sizing code_cell rendered&quot;&gt;
+&lt;div class=&quot;input&quot;&gt;
+
+&lt;div class=&quot;inner_cell&quot;&gt;
+    &lt;div class=&quot;input_area&quot;&gt;
+&lt;div class=&quot; highlight hl-ipython3&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;99&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;100.&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;entropy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+    
+
+&lt;div class=&quot;cell border-box-sizing text_cell rendered&quot;&gt;&lt;div class=&quot;inner_cell&quot;&gt;
+&lt;div class=&quot;text_cell_render border-box-sizing rendered_html&quot;&gt;
+&lt;p&gt;Here's the plot of the entropy of that node as a function of the fraction of positive class samples (1's) in that node. Initially when the fraction is zero (the node is all 0's), the node is pure, so the entropy is 0. As we begin to change 0's for 1's the entropy increases and eventually reaches 1 when the fraction is 0.5 (equal amount of 1's and 0's). From there, the entropy decreases as the fraction of the positive class continues to increase and eventually reaches zero again when the node is all 1's and is thu pure.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+    
+    
+&lt;div class=&quot;cell border-box-sizing code_cell rendered&quot;&gt;
+&lt;div class=&quot;input&quot;&gt;
+
+&lt;div class=&quot;inner_cell&quot;&gt;
+    &lt;div class=&quot;input_area&quot;&gt;
+&lt;div class=&quot; highlight hl-ipython3&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ylabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Entropy&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xlabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Fraction positive class&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;output_wrapper&quot;&gt;
+&lt;div class=&quot;output&quot;&gt;
+
+&lt;div class=&quot;output_area&quot;&gt;
+
+
+
+&lt;div class=&quot;output_png output_subarea &quot;&gt;
+&lt;img src=&quot;data:image/png;base64,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
+&quot; /&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+    
+
+&lt;div class=&quot;cell border-box-sizing text_cell rendered&quot;&gt;&lt;div class=&quot;inner_cell&quot;&gt;
+&lt;div class=&quot;text_cell_render border-box-sizing rendered_html&quot;&gt;
+&lt;p&gt;Remember, splits are determined by information gain, that is, the difference in entropy of the parent and the weighted summation of the entropies of the children. If you have a child node with an entropy of 1.0 that means that node contributes nothing to understanding of how to split the data into the two classes. If you have a child node with an entropy of 0.0 you have been able to perfectly segment out those samples. But again, we want the weighted combination of the entropies of the children to be low. You might have a situation where one is very low and one is very high, but it's better to split elsewhere to make the weighted sum lower.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;cell border-box-sizing text_cell rendered&quot;&gt;&lt;div class=&quot;inner_cell&quot;&gt;
+&lt;div class=&quot;text_cell_render border-box-sizing rendered_html&quot;&gt;
+&lt;h3 id=&quot;Finding-the-best-split-through-iteration&quot;&gt;Finding the best split through iteration&lt;a class=&quot;anchor-link&quot; href=&quot;#Finding-the-best-split-through-iteration&quot;&gt; &lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Here's our original list of targets from the Iris example:&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
