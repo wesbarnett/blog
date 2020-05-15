@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-14T21:20:36-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>Wes Barnett's Blog</subtitle><entry><title type="html">Building a deep learning box</title><link href="https://barnett.science/deeplearning/2020/02/02/deep-learning-box.html" rel="alternate" type="text/html" title="Building a deep learning box" /><published>2020-02-02T00:00:00-06:00</published><updated>2020-02-02T00:00:00-06:00</updated><id>https://barnett.science/deeplearning/2020/02/02/deep-learning-box</id><content type="html" xml:base="https://barnett.science/deeplearning/2020/02/02/deep-learning-box.html">&lt;p&gt;During the process of going through the fast.ai course, I decided to build my own deep
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-15T07:45:20-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>Wes Barnett's Blog</subtitle><entry><title type="html">Building a deep learning box</title><link href="https://barnett.science/deeplearning/2020/02/02/deep-learning-box.html" rel="alternate" type="text/html" title="Building a deep learning box" /><published>2020-02-02T00:00:00-06:00</published><updated>2020-02-02T00:00:00-06:00</updated><id>https://barnett.science/deeplearning/2020/02/02/deep-learning-box</id><content type="html" xml:base="https://barnett.science/deeplearning/2020/02/02/deep-learning-box.html">&lt;p&gt;During the process of going through the fast.ai course, I decided to build my own deep
 learning box. This post is summary of my experience, but it won’t tell you every detail
 needed to build your own. There are quite a few guides out there.&lt;/p&gt;
 
@@ -2243,6 +2243,13 @@ INFO:cmdstanpy:finish chain 1
 &lt;/div&gt;
     
 
+&lt;div class=&quot;cell border-box-sizing text_cell rendered&quot;&gt;&lt;div class=&quot;inner_cell&quot;&gt;
+&lt;div class=&quot;text_cell_render border-box-sizing rendered_html&quot;&gt;
+&lt;p&gt;In this notebook I walk through how a classification decision tree is fit, how inference is performed, how to reduce overfitting, how splits are determined.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
     
     
 &lt;div class=&quot;cell border-box-sizing code_cell rendered&quot;&gt;
@@ -2297,12 +2304,6 @@ INFO:cmdstanpy:finish chain 1
 
 &lt;div class=&quot;cell border-box-sizing text_cell rendered&quot;&gt;&lt;div class=&quot;inner_cell&quot;&gt;
 &lt;div class=&quot;text_cell_render border-box-sizing rendered_html&quot;&gt;
-&lt;h2 id=&quot;Classification&quot;&gt;Classification&lt;a class=&quot;anchor-link&quot; href=&quot;#Classification&quot;&gt; &lt;/a&gt;&lt;/h2&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;cell border-box-sizing text_cell rendered&quot;&gt;&lt;div class=&quot;inner_cell&quot;&gt;
-&lt;div class=&quot;text_cell_render border-box-sizing rendered_html&quot;&gt;
 &lt;p&gt;We'll use the Iris dataset as a quick way to discuss classification trees. To learn more about this dataset use &lt;code&gt;help(load_iris)&lt;/code&gt;.&lt;/p&gt;
 
 &lt;/div&gt;
@@ -2330,7 +2331,7 @@ INFO:cmdstanpy:finish chain 1
 
 &lt;div class=&quot;cell border-box-sizing text_cell rendered&quot;&gt;&lt;div class=&quot;inner_cell&quot;&gt;
 &lt;div class=&quot;text_cell_render border-box-sizing rendered_html&quot;&gt;
-&lt;h3 id=&quot;Fitting&quot;&gt;Fitting&lt;a class=&quot;anchor-link&quot; href=&quot;#Fitting&quot;&gt; &lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Decision trees search over all possible ways to split up features and find the split that is most informative about the target variable. The parent node splits into two child nodes based on this split. From there the children also split in the same manner until all leaves are pure, unless another stopping condition is specified. A leaf is a node that has no children. A pure leaf is a leaf with only one class of items in it.&lt;/p&gt;
+&lt;h2 id=&quot;Fitting&quot;&gt;Fitting&lt;a class=&quot;anchor-link&quot; href=&quot;#Fitting&quot;&gt; &lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Decision trees search over all possible ways to split up features and find the split that is most informative about the target variable. The parent node splits into two child nodes based on this split. From there the children also split in the same manner until all leaves are pure, unless another stopping condition is specified. A leaf is a node that has no children. A pure leaf is a leaf with only one class of items in it.&lt;/p&gt;
 &lt;p&gt;Classifications trees split using the GINI impurity which is defined as:&lt;/p&gt;
 &lt;p&gt;$I_{G}(p) = \sum_{i=1}^{J}p_{i}(1-p_{i})$&lt;/p&gt;
 &lt;p&gt;Here $p_{i}$ is the probability of an item with label $i$ being chosen and $1 - p_{i}$ is the probability of a mistake in categorizing that item. $J$ is the number of classes. Gini reaches zero when all cases in the node fall into a single target category.&lt;/p&gt;
@@ -2726,13 +2727,7 @@ INFO:cmdstanpy:finish chain 1
 
 &lt;div class=&quot;cell border-box-sizing text_cell rendered&quot;&gt;&lt;div class=&quot;inner_cell&quot;&gt;
 &lt;div class=&quot;text_cell_render border-box-sizing rendered_html&quot;&gt;
-&lt;h3 id=&quot;Inference&quot;&gt;Inference&lt;a class=&quot;anchor-link&quot; href=&quot;#Inference&quot;&gt; &lt;/a&gt;&lt;/h3&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;cell border-box-sizing text_cell rendered&quot;&gt;&lt;div class=&quot;inner_cell&quot;&gt;
-&lt;div class=&quot;text_cell_render border-box-sizing rendered_html&quot;&gt;
-&lt;p&gt;Now that we have trained our model, we can perform inference.&lt;/p&gt;
+&lt;h2 id=&quot;Inference&quot;&gt;Inference&lt;a class=&quot;anchor-link&quot; href=&quot;#Inference&quot;&gt; &lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Now that we have trained our model, we can perform inference.&lt;/p&gt;
 &lt;p&gt;When inference on new samples is performed, the sample simply is examined with the &quot;rules&quot; created by the feature splits. Starting from the topmost node (the root node) in our example above, if feature three has a value of less than or equal 0.8, go to the left child node; otherwise go to the right. This process continues all the way down until the sample is put into a leaf.&lt;/p&gt;
 &lt;p&gt;The predicted class is the class in the leaf with the highest probability of that class for that leaf. In other words, simply break down the training samples by class within that leaf and choose the class with the most number of train samples. The probability of choosing that class is simply the number of training samples in that leaf belonging to that class divided by the total number of training samples in that leaf.&lt;/p&gt;
 &lt;p&gt;Since all of our leafs are pure, the classifier will always give 100% for its predictions. We'll rexamine this when we have impure leafs below.&lt;/p&gt;
@@ -3201,6 +3196,13 @@ INFO:cmdstanpy:finish chain 1
 
 &lt;div class=&quot;cell border-box-sizing text_cell rendered&quot;&gt;&lt;div class=&quot;inner_cell&quot;&gt;
 &lt;div class=&quot;text_cell_render border-box-sizing rendered_html&quot;&gt;
+&lt;p&gt;A popular and effective way to reduce overfitting is to create a &quot;forest&quot; of weak decision trees and use them together (for example, random forests). This is beyond the scope of this notebook.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;cell border-box-sizing text_cell rendered&quot;&gt;&lt;div class=&quot;inner_cell&quot;&gt;
+&lt;div class=&quot;text_cell_render border-box-sizing rendered_html&quot;&gt;
 &lt;h2 id=&quot;Information-gain-&amp;amp;-splits&quot;&gt;Information gain &amp;amp; splits&lt;a class=&quot;anchor-link&quot; href=&quot;#Information-gain-&amp;amp;-splits&quot;&gt; &lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Let's talk a little bit more about how trees use entropy (or alternatively Gini) to determine splits.&lt;/p&gt;
 &lt;p&gt;Information gain is calculated by cycling through all possible splits in the training set. Practically this is the process:&lt;/p&gt;
 &lt;ol&gt;
@@ -3444,7 +3446,7 @@ INFO:cmdstanpy:finish chain 1
 
 &lt;div class=&quot;cell border-box-sizing text_cell rendered&quot;&gt;&lt;div class=&quot;inner_cell&quot;&gt;
 &lt;div class=&quot;text_cell_render border-box-sizing rendered_html&quot;&gt;
-&lt;p&gt;Now let's get the entropes of the child nodes for the split that was found. In this case it was feature 3 with the split at 0.8.&lt;/p&gt;
+&lt;p&gt;Now let's get the entropies of the child nodes for the split that was found. In this case it was feature 3 with the split at 0.8.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
