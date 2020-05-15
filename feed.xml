@@ -1,5 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-14T20:13:57-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>Wes Barnett's Blog</subtitle><entry><title type="html">Building a deep learning box</title><link href="https://barnett.science/deeplearning/2020/02/02/deep-learning-box.html" rel="alternate" type="text/html" title="Building a deep learning box" /><published>2020-02-02T00:00:00-06:00</published><updated>2020-02-02T00:00:00-06:00</updated><id>https://barnett.science/deeplearning/2020/02/02/deep-learning-box</id><content type="html" xml:base="https://barnett.science/deeplearning/2020/02/02/deep-learning-box.html">&lt;p&gt;During the process of going through the fast.ai course, I decided to build my own deep
-learning box. A couple of decades ago as a teenager I remember my brother ordering parts
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-14T21:01:23-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>Wes Barnett's Blog</subtitle><entry><title type="html">Building a deep learning box</title><link href="https://barnett.science/deeplearning/2020/02/02/deep-learning-box.html" rel="alternate" type="text/html" title="Building a deep learning box" /><published>2020-02-02T00:00:00-06:00</published><updated>2020-02-02T00:00:00-06:00</updated><id>https://barnett.science/deeplearning/2020/02/02/deep-learning-box</id><content type="html" xml:base="https://barnett.science/deeplearning/2020/02/02/deep-learning-box.html">&lt;p&gt;During the process of going through the fast.ai course, I decided to build my own deep
+learning box. This post is summary of my experience, but it won’t tell you every detail
+needed to build your own. There are quite a few guides out there.&lt;/p&gt;
+
+&lt;p&gt;A couple of decades ago as a teenager I remember my brother ordering parts
 and putting together the family’s PC. Of course at the time it was used mainly for
 playing Alpha Centauri, downloading from Napster, and racking up the long distance phone
 bill not knowing area codes did not mean local calling. I also got exposed to HTML and
@@ -16,7 +19,48 @@ considered acceptable, but I was on a budget.&lt;/p&gt;
 
 &lt;p&gt;Here are most of the parts in their boxes before assembling.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/deep-learning-box/parts.png&quot; alt=&quot;&quot; title=&quot;Parts&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">During the process of going through the fast.ai course, I decided to build my own deep learning box. A couple of decades ago as a teenager I remember my brother ordering parts and putting together the family’s PC. Of course at the time it was used mainly for playing Alpha Centauri, downloading from Napster, and racking up the long distance phone bill not knowing area codes did not mean local calling. I also got exposed to HTML and Javascript at the time so that was my first real introduction to any kind of coding (Javascript has changed just a little since then).</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://barnett.science/images/deep-learning-box.png" /><media:content medium="image" url="https://barnett.science/images/deep-learning-box.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Bayesian Linear Regression with CmdStanPy</title><link href="https://barnett.science/bayesian/2020/01/27/baysian-linear-regression.html" rel="alternate" type="text/html" title="Bayesian Linear Regression with CmdStanPy" /><published>2020-01-27T00:00:00-06:00</published><updated>2020-01-27T00:00:00-06:00</updated><id>https://barnett.science/bayesian/2020/01/27/baysian-linear-regression</id><content type="html" xml:base="https://barnett.science/bayesian/2020/01/27/baysian-linear-regression.html">&lt;!--
+&lt;p&gt;&lt;img src=&quot;/images/deep-learning-box/parts.jpg&quot; alt=&quot;&quot; title=&quot;The parts!&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The process was pretty straightforward. Motherboard went in first, then the processor,
+and so on. I did have an issue where the backplate came off when I unscrewed the mounting screws for
+the processor fan. I struggled to put the fan on due that until I realized it had
+fallen behind the case. I wish I had mounted the fan the other way since there is a
+plastic part that now covers one of the RAM ports.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/deep-learning-box/fan-installed.jpg&quot; alt=&quot;&quot; title=&quot;Motherboard,
+processor, and fan installed. Should have turned the fan around.&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Most of the cords can only plug into one spot and everything on the motherboard and
+power supply are labeled. Just paint by numbers for the most part. I did make the
+mistake of not plugging the GPU into the power but got a nice message when I tried to
+boot up.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/deep-learning-box/gpu-power.jpg&quot; alt=&quot;&quot; title=&quot;Nice message telling me
+of my mistake.&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/deep-learning-box/completed.jpg&quot; alt=&quot;&quot; title=&quot;All the parts assembled.&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After I was able to boot I installed &lt;a href=&quot;https://www.archlinux.org&quot;&gt;Arch Linux&lt;/a&gt; on it.
+I have been involved with the Arch community for quite some time in editing the Wiki and
+have installed it numerous times, so I was comfortable doing so (Here’s &lt;a href=&quot;https://wiki.archlinux.org/index.php/User:Rdeckard/Installation_guide&quot;&gt;my own
+installation guide; use with
+caution&lt;/a&gt;.
+Additionally all the super computer clusters I used in graduate school were Linux-based,
+and our lab setup our own cluster. One downside about using Arch is that sometimes there
+are libraries that are made for Ubuntu that aren’t as easily compiled for Arch in a
+straightforward manner.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/deep-learning-box/arch-boot.jpg&quot; alt=&quot;&quot; title=&quot;It's working!! Arch
+Linux boot screen.&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After installing Arch I installed JupyterLab and JupyterHub, CUDA, and some of the deep
+learning frameworks and was able to start running pretty quickly.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/deep-learning-box/fastai.PNG&quot; alt=&quot;&quot; title=&quot;Running Jupyter on the
+machine remotely.&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Thus far, it’s been a good experience using the machine for running a couple of Kaggle
+competitions.&lt;/p&gt;</content><author><name></name></author><summary type="html">During the process of going through the fast.ai course, I decided to build my own deep learning box. This post is summary of my experience, but it won’t tell you every detail needed to build your own. There are quite a few guides out there.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://barnett.science/images/deep-learning-box/completed.jpg" /><media:content medium="image" url="https://barnett.science/images/deep-learning-box/completed.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Bayesian Linear Regression with CmdStanPy</title><link href="https://barnett.science/bayesian/2020/01/27/baysian-linear-regression.html" rel="alternate" type="text/html" title="Bayesian Linear Regression with CmdStanPy" /><published>2020-01-27T00:00:00-06:00</published><updated>2020-01-27T00:00:00-06:00</updated><id>https://barnett.science/bayesian/2020/01/27/baysian-linear-regression</id><content type="html" xml:base="https://barnett.science/bayesian/2020/01/27/baysian-linear-regression.html">&lt;!--
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
 #################################################
