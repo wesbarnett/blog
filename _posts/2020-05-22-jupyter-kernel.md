@@ -4,7 +4,7 @@ description: "How to quickly setup a virtual environment for use as a Jupyter ke
 layout: post
 toc: false
 comments: true
-image: images/venv.jpg
+image: images/venv.png
 hide: false
 search_exclude: false
 categories: [deeplearning]
