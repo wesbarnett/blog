@@ -1,4 +1,55 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-16T09:36:03-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>© 2020 Wes Barnett</subtitle><entry><title type="html">Building a deep learning box</title><link href="https://barnett.science/deeplearning/2020/02/02/deep-learning-box.html" rel="alternate" type="text/html" title="Building a deep learning box" /><published>2020-02-02T00:00:00-06:00</published><updated>2020-02-02T00:00:00-06:00</updated><id>https://barnett.science/deeplearning/2020/02/02/deep-learning-box</id><content type="html" xml:base="https://barnett.science/deeplearning/2020/02/02/deep-learning-box.html">&lt;p&gt;During the process of going through the fast.ai course, I decided to build my own deep
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-22T20:05:08-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>© 2020 Wes Barnett</subtitle><entry><title type="html">Create a venv for a Jupyter kernel</title><link href="https://barnett.science/deeplearning/2020/05/22/jupyter-kernel.html" rel="alternate" type="text/html" title="Create a venv for a Jupyter kernel" /><published>2020-05-22T00:00:00-05:00</published><updated>2020-05-22T00:00:00-05:00</updated><id>https://barnett.science/deeplearning/2020/05/22/jupyter-kernel</id><content type="html" xml:base="https://barnett.science/deeplearning/2020/05/22/jupyter-kernel.html">&lt;p&gt;After I setup my deep learning box, I installed JupyterHub following &lt;a href=&quot;https://jupyterhub.readthedocs.io/en/stable/installation-guide-hard.html#part-1-jupyterhub-and-jupyterlab&quot;&gt;these
+instructions&lt;/a&gt;.
+I skipped the conda part myself since I like to run things in Python &lt;code class=&quot;highlighter-rouge&quot;&gt;venv&lt;/code&gt;’s (virtual
+environments).&lt;/p&gt;
+
+&lt;p&gt;One aspect that I struggled with in finding in the documentation was how to setup a
+Python &lt;code class=&quot;highlighter-rouge&quot;&gt;venv&lt;/code&gt; to be used for a Jupyter kernel. It was actually much simpler than
+expected.&lt;/p&gt;
+
+&lt;p&gt;First, create a &lt;code class=&quot;highlighter-rouge&quot;&gt;venv&lt;/code&gt; that will be used for the kernel:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; venv my-venv
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then activate that virtual environment:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; ./my-venv/bin/activate
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After that install ipykernel:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; pip &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;ipykernel
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Lastly, register that environment as a kernel as described
+&lt;a href=&quot;https://ipython.readthedocs.io/en/stable/install/kernel_install.html#kernels-for-different-environments&quot;&gt;here&lt;/a&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; ipykernel &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--user&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; my-venv &lt;span class=&quot;nt&quot;&gt;--display-name&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Python (my-venv)&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;That’s it! Now when you log into your JupyterHub and start a notebook, you should see it
+as available.&lt;/p&gt;
+
+&lt;h2 id=&quot;installing-packages&quot;&gt;Installing packages&lt;/h2&gt;
+
+&lt;p&gt;Whenenever you want to install new packages to be available in your kernel
+simply install them to your virtual environment. You can ssh into your box, activate
+your venv, and run pip to install them.&lt;/p&gt;
+
+&lt;p&gt;Alternatively, you can use the &lt;code class=&quot;highlighter-rouge&quot;&gt;%pip&lt;/code&gt; magic in Jupyter to run the installation. For
+example, to install pandas:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;%pip &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;pandas
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Note that this will give you different results from running &lt;code class=&quot;highlighter-rouge&quot;&gt;!pip&lt;/code&gt;, which is running it
+as a shell command. That won’t use the pip in the virtual environment being utilized by
+the kernel like &lt;code class=&quot;highlighter-rouge&quot;&gt;%pip&lt;/code&gt; will. Neither will &lt;code class=&quot;highlighter-rouge&quot;&gt;!python -m pip&lt;/code&gt;. You will end up installing
+your packages in the wrong location if you use the shell form.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/venv.png&quot; alt=&quot;&quot; title=&quot;Our virtual environment is now available as a
+kernel.&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">After I setup my deep learning box, I installed JupyterHub following these instructions. I skipped the conda part myself since I like to run things in Python venv’s (virtual environments).</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://barnett.science/images/venv.jpg" /><media:content medium="image" url="https://barnett.science/images/venv.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Building a deep learning box</title><link href="https://barnett.science/deeplearning/2020/02/02/deep-learning-box.html" rel="alternate" type="text/html" title="Building a deep learning box" /><published>2020-02-02T00:00:00-06:00</published><updated>2020-02-02T00:00:00-06:00</updated><id>https://barnett.science/deeplearning/2020/02/02/deep-learning-box</id><content type="html" xml:base="https://barnett.science/deeplearning/2020/02/02/deep-learning-box.html">&lt;p&gt;During the process of going through the fast.ai course, I decided to build my own deep
 learning box. This post is summary of my experience, but it won’t tell you every detail
 needed to build your own. There are quite a few guides out there.&lt;/p&gt;
 
@@ -3992,10 +4043,10 @@ INFO:cmdstanpy:finish chain 1
 
 
 
-&lt;div id=&quot;b61db9f6-c862-4e96-b70c-69cda32b3089&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;028cfcd0-8777-443c-9f0d-462e67a45992&quot;&gt;&lt;/div&gt;
 &lt;div class=&quot;output_subarea output_javascript &quot;&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
-var element = $('#b61db9f6-c862-4e96-b70c-69cda32b3089');
+var element = $('#028cfcd0-8777-443c-9f0d-462e67a45992');
 new Promise(function(resolve, reject) {
 	var script = document.createElement(&quot;script&quot;);
 	script.onload = resolve;
