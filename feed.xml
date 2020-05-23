@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-22T20:07:42-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>© 2020 Wes Barnett</subtitle><entry><title type="html">Create a venv for a Jupyter kernel</title><link href="https://barnett.science/deeplearning/2020/05/22/jupyter-kernel.html" rel="alternate" type="text/html" title="Create a venv for a Jupyter kernel" /><published>2020-05-22T00:00:00-05:00</published><updated>2020-05-22T00:00:00-05:00</updated><id>https://barnett.science/deeplearning/2020/05/22/jupyter-kernel</id><content type="html" xml:base="https://barnett.science/deeplearning/2020/05/22/jupyter-kernel.html">&lt;p&gt;After I setup my deep learning box, I installed JupyterHub following &lt;a href=&quot;https://jupyterhub.readthedocs.io/en/stable/installation-guide-hard.html#part-1-jupyterhub-and-jupyterlab&quot;&gt;these
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-22T20:10:25-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>© 2020 Wes Barnett</subtitle><entry><title type="html">Create a venv for a Jupyter kernel</title><link href="https://barnett.science/deeplearning/2020/05/22/jupyter-kernel.html" rel="alternate" type="text/html" title="Create a venv for a Jupyter kernel" /><published>2020-05-22T00:00:00-05:00</published><updated>2020-05-22T00:00:00-05:00</updated><id>https://barnett.science/deeplearning/2020/05/22/jupyter-kernel</id><content type="html" xml:base="https://barnett.science/deeplearning/2020/05/22/jupyter-kernel.html">&lt;p&gt;After I setup my deep learning box, I installed JupyterHub following &lt;a href=&quot;https://jupyterhub.readthedocs.io/en/stable/installation-guide-hard.html#part-1-jupyterhub-and-jupyterlab&quot;&gt;these
 instructions&lt;/a&gt;.
 I skipped the conda part myself since I like to run things in Python &lt;code class=&quot;highlighter-rouge&quot;&gt;venv&lt;/code&gt;’s (virtual
 environments).&lt;/p&gt;
@@ -4043,10 +4043,10 @@ INFO:cmdstanpy:finish chain 1
 
 
 
-&lt;div id=&quot;f926bcff-1827-40d6-9b78-1cd905a03565&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;f1f4be5c-dfca-4772-bbf6-a8891492b853&quot;&gt;&lt;/div&gt;
 &lt;div class=&quot;output_subarea output_javascript &quot;&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
-var element = $('#f926bcff-1827-40d6-9b78-1cd905a03565');
+var element = $('#f1f4be5c-dfca-4772-bbf6-a8891492b853');
 new Promise(function(resolve, reject) {
 	var script = document.createElement(&quot;script&quot;);
 	script.onload = resolve;
