@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-25T13:09:00-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>© 2020 Wes Barnett</subtitle><entry><title type="html">Arch Linux Installation</title><link href="https://barnett.science/linux/2020/05/24/arch-install.html" rel="alternate" type="text/html" title="Arch Linux Installation" /><published>2020-05-24T00:00:00-05:00</published><updated>2020-05-24T00:00:00-05:00</updated><id>https://barnett.science/linux/2020/05/24/arch-install</id><content type="html" xml:base="https://barnett.science/linux/2020/05/24/arch-install.html">&lt;div class=&quot;flash flash-error&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-25T13:13:56-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>© 2020 Wes Barnett</subtitle><entry><title type="html">Arch Linux Installation</title><link href="https://barnett.science/linux/2020/05/24/arch-install.html" rel="alternate" type="text/html" title="Arch Linux Installation" /><published>2020-05-24T00:00:00-05:00</published><updated>2020-05-24T00:00:00-05:00</updated><id>https://barnett.science/linux/2020/05/24/arch-install</id><content type="html" xml:base="https://barnett.science/linux/2020/05/24/arch-install.html">&lt;div class=&quot;flash flash-error&quot;&gt;
     &lt;svg class=&quot;octicon octicon-alert&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; height=&quot;16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 000 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 00.01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;
     &lt;strong&gt;Warning: &lt;/strong&gt;This is my personal guide for installing an Arch
 Linux system. Use it only as a guide as you follow along with the official
@@ -773,7 +773,7 @@ of my mistake.&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;After I was able to boot I installed &lt;a href=&quot;https://www.archlinux.org&quot;&gt;Arch Linux&lt;/a&gt; on it.
 I have been involved with the Arch community for quite some time in editing the Wiki and
-have installed it numerous times, so I was comfortable doing so (Here’s &lt;a href=&quot;https://wiki.archlinux.org/index.php/User:Rdeckard/Installation_guide&quot;&gt;my own
+have installed it numerous times, so I was comfortable doing so (Here’s &lt;a href=&quot;/linux/2020/05/24/arch-install.html&quot;&gt;my own
 installation guide; use with
 caution&lt;/a&gt;.
 Additionally all the super computer clusters I used in graduate school were Linux-based,
@@ -4723,10 +4723,10 @@ INFO:cmdstanpy:finish chain 1
 
 
 
-&lt;div id=&quot;331432c4-e20a-41ce-b45b-b3a6f1b82c2e&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;a2fe5cff-0d6d-4f40-bb57-b062c82b929b&quot;&gt;&lt;/div&gt;
 &lt;div class=&quot;output_subarea output_javascript &quot;&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
-var element = $('#331432c4-e20a-41ce-b45b-b3a6f1b82c2e');
+var element = $('#a2fe5cff-0d6d-4f40-bb57-b062c82b929b');
 new Promise(function(resolve, reject) {
 	var script = document.createElement(&quot;script&quot;);
 	script.onload = resolve;
