@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Arch Linux Installation | Wes Barnett, PhD</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Arch Linux Installation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A guide for installing a minimal booting system." />
+<meta property="og:description" content="A guide for installing a minimal booting system." />
+<link rel="canonical" href="https://barnett.science/linux/2020/05/24/arch-install.html" />
+<meta property="og:url" content="https://barnett.science/linux/2020/05/24/arch-install.html" />
+<meta property="og:site_name" content="Wes Barnett, PhD" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-05-24T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"A guide for installing a minimal booting system.","mainEntityOfPage":{"@type":"WebPage","@id":"https://barnett.science/linux/2020/05/24/arch-install.html"},"@type":"BlogPosting","url":"https://barnett.science/linux/2020/05/24/arch-install.html","headline":"Arch Linux Installation","dateModified":"2020-05-24T00:00:00-05:00","datePublished":"2020-05-24T00:00:00-05:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://barnett.science/feed.xml" title="Wes Barnett, PhD" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Arch Linux Installation | Wes Barnett, PhD</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Arch Linux Installation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A guide for installing a minimal booting system." />
+<meta property="og:description" content="A guide for installing a minimal booting system." />
+<link rel="canonical" href="https://barnett.science/linux/2020/05/24/arch-install.html" />
+<meta property="og:url" content="https://barnett.science/linux/2020/05/24/arch-install.html" />
+<meta property="og:site_name" content="Wes Barnett, PhD" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-05-24T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"A guide for installing a minimal booting system.","mainEntityOfPage":{"@type":"WebPage","@id":"https://barnett.science/linux/2020/05/24/arch-install.html"},"@type":"BlogPosting","url":"https://barnett.science/linux/2020/05/24/arch-install.html","headline":"Arch Linux Installation","dateModified":"2020-05-24T00:00:00-05:00","datePublished":"2020-05-24T00:00:00-05:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://barnett.science/feed.xml" title="Wes Barnett, PhD" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Wes Barnett, PhD</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Arch Linux Installation</h1><p class="page-description">A guide for installing a minimal booting system.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-05-24T00:00:00-05:00" itemprop="datePublished">
+        May 24, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      11 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#linux">linux</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#pre-installation">Pre-installation</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#verify-signature">Verify signature</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#create-bootable-disk">Create bootable disk</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#boot-the-live-environment">Boot the live environment</a></li>
+<li class="toc-entry toc-h3"><a href="#set-the-keyboard-layout">Set the keyboard layout</a></li>
+<li class="toc-entry toc-h3"><a href="#verify-the-boot-mode">Verify the boot mode</a></li>
+<li class="toc-entry toc-h3"><a href="#connect-to-the-internet">Connect to the internet</a></li>
+<li class="toc-entry toc-h3"><a href="#update-the-system-clock">Update the system clock</a></li>
+<li class="toc-entry toc-h3"><a href="#partition-the-disk">Partition the disk</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#create-luks-container">Create LUKS container</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#format-the-partitions">Format the partitions</a></li>
+<li class="toc-entry toc-h3"><a href="#mount-the-file-systems">Mount the file systems</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#installation">Installation</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#select-the-mirrors">Select the mirrors</a></li>
+<li class="toc-entry toc-h3"><a href="#install-packages">Install packages</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#configure-the-system">Configure the system</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#fstab">Fstab</a></li>
+<li class="toc-entry toc-h3"><a href="#chroot">Chroot</a></li>
+<li class="toc-entry toc-h3"><a href="#time-zone">Time zone</a></li>
+<li class="toc-entry toc-h3"><a href="#localization">Localization</a></li>
+<li class="toc-entry toc-h3"><a href="#network-configuration">Network configuration</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#hostname">Hostname</a></li>
+<li class="toc-entry toc-h4"><a href="#configuration">Configuration</a></li>
+<li class="toc-entry toc-h4"><a href="#dns-resolution">DNS resolution</a></li>
+<li class="toc-entry toc-h4"><a href="#wireless">Wireless</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#initramfs">Initramfs</a></li>
+<li class="toc-entry toc-h3"><a href="#root-password">Root password</a></li>
+<li class="toc-entry toc-h3"><a href="#add-normal-user">Add normal user</a></li>
+<li class="toc-entry toc-h3"><a href="#swap-file">Swap file</a></li>
+<li class="toc-entry toc-h3"><a href="#boot-loader">Boot loader</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#efistub">EFISTUB</a></li>
+<li class="toc-entry toc-h4"><a href="#syslinux">syslinux</a></li>
+<li class="toc-entry toc-h4"><a href="#kernel-parameters">Kernel parameters</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#reboot">Reboot</a></li>
+</ul><div class="flash flash-error">
+    <svg class="octicon octicon-alert" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 000 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 00.01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg>
+    <strong>Warning: </strong>This is my personal guide for installing an Arch
+Linux system. Use it only as a guide as you follow along with the official
+<a href="https://wiki.archlinux.org/index.php/Installation_Guide">Installation Guide</a>.
+</div>
+
+<p>This guide gives several options along the way, depending on your system.</p>
+
+<ul>
+  <li>For UEFI, EFISTUB is used to boot the kernel directly.</li>
+  <li>For systems needing BIOS, syslinux is used.</li>
+  <li>Gives options for encrypting the system if desired.</li>
+  <li>Gives notes on using btrfs subvolumes if desired.</li>
+</ul>
+
+<p>You may need additional packages for video drivers, etc.</p>
+
+<h2 id="pre-installation">
+<a class="anchor" href="#pre-installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pre-installation</h2>
+
+<p><a href="https://www.archlinux.org/download/">Download</a> the Arch ISO and GnuPG signature.</p>
+
+<h3 id="verify-signature">
+<a class="anchor" href="#verify-signature" aria-hidden="true"><span class="octicon octicon-link"></span></a>Verify signature</h3>
+
+<p>If you have GnuPG installed on your current system, verify the download:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ gpg --keyserver-options auto-key-retrieve --verify archlinux-&lt;version&gt;-dual.iso.sig
+</code></pre></div></div>
+
+<h4 id="create-bootable-disk">
+<a class="anchor" href="#create-bootable-disk" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create bootable disk</h4>
+
+<p>Create a bootable USB drive by doing the following on an existing Linux installation:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># dd bs=4M if=/path/to/archlinux-&lt;version&gt;-x86_64.iso of=/dev/sdx status=progress &amp;&amp; sync
+</code></pre></div></div>
+
+<p>where <code class="highlighter-rouge">/dev/sdx</code> is the USB drive.</p>
+
+<h3 id="boot-the-live-environment">
+<a class="anchor" href="#boot-the-live-environment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Boot the live environment</h3>
+
+<p>Now boot from the USB drive.</p>
+
+<h3 id="set-the-keyboard-layout">
+<a class="anchor" href="#set-the-keyboard-layout" aria-hidden="true"><span class="octicon octicon-link"></span></a>Set the keyboard layout</h3>
+
+<p>If using a keymap other than US, temporarily set the keyboard layout by doing:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># loadkeys de-latin1
+</code></pre></div></div>
+
+<p>Change <code class="highlighter-rouge">de-latin1</code> to a layout found in <code class="highlighter-rouge">/usr/share/kbd/keymaps/**/*.map.gz</code>.</p>
+
+<h3 id="verify-the-boot-mode">
+<a class="anchor" href="#verify-the-boot-mode" aria-hidden="true"><span class="octicon octicon-link"></span></a>Verify the boot mode</h3>
+
+<p>Verify that you have booted with UEFI mode by checking that
+<code class="highlighter-rouge">/sys/firmware/efi/efivars</code> exists. If you’re not booted in the UEFI, you
+should setup your motherboard to do so to follow this installation guide. If
+you are not able to use UEFI, this guide has an option to boot from BIOS using
+syslinux.</p>
+
+<h3 id="connect-to-the-internet">
+<a class="anchor" href="#connect-to-the-internet" aria-hidden="true"><span class="octicon octicon-link"></span></a>Connect to the internet</h3>
+
+<p>If you have a <strong>wired</strong> connection, it should connect automatically.</p>
+
+<p>If you have a <strong><em>wireless</em></strong> connection, first stop the wired connection to prevent conflicts:</p>
+
+<pre>
+# systemctl stop dhcpcd@<i>interface</i>.service
+</pre>
+
+<p>A list of interfaces can be found with:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ip link
+</code></pre></div></div>
+
+<p>Then connect to a wifi network with <code class="highlighter-rouge">wpa_supplicant</code>:</p>
+
+<pre>
+# wpa_supplicant -B -i <i>interface</i> -C/run/wpa_supplicant
+# wpa_cli -i <i>interface</i>
+&gt; scan
+&gt; scan_results
+&gt; add_network
+&gt; set_network 0 ssid "<i>SSID</i>"
+&gt; set_network 0 psk "<i>passphrase</i>"
+&gt; enable_network 0
+&gt; quit
+</pre>
+
+<p>Get an ip address with dhcpcd:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># dhcpcd
+</code></pre></div></div>
+
+<p>For both <strong>wired</strong> and <strong>wireless</strong> connections, check your connection with:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ping archlinux.org
+</code></pre></div></div>
+
+<h3 id="update-the-system-clock">
+<a class="anchor" href="#update-the-system-clock" aria-hidden="true"><span class="octicon octicon-link"></span></a>Update the system clock</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># timedatectl set-ntp true
+</code></pre></div></div>
+
+<h3 id="partition-the-disk">
+<a class="anchor" href="#partition-the-disk" aria-hidden="true"><span class="octicon octicon-link"></span></a>Partition the disk</h3>
+
+<div class="flash flash-error">
+    <svg class="octicon octicon-alert octicon octicon-alert" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 000 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 00.01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg>
+    <strong>Warning: </strong>All data on your disk will be erased. Backup any data you wish to keep.
+</div>
+
+<div class="flash">
+    <svg class="octicon octicon-info" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg>
+    <strong>Note: </strong>This guide assumes your disk is at <code>/dev/sda</code>. Change if needed.
+</div>
+
+<p>Use <code class="highlighter-rouge">lsblk</code> to identify existing file systems.</p>
+
+<p>Here are the possible layouts this guide uses. Modify to your needs.</p>
+
+<p><strong>UEFI, not encrypted</strong></p>
+
+<table>
+<tr>
+  <th>Mount point</th>
+  <th>Partition</th>
+  <th>Partition type</th>
+  <th>Suggested size</th>
+</tr>
+<tr>
+  <td><code>/mnt/boot</code></td>
+  <td><code>/dev/sda1</code></td>
+  <td>
+    EFI system partition
+    &lt;/ul&gt;
+  </td>
+  <td>550 MiB</td>
+</tr>
+
+<tr>
+<td><code>/mnt</code></td>
+<td><code>/dev/sda2</code></td>
+<td>Linux x86-64 root (/)</td>
+<td>Remainder of the device</td>
+</tr>
+</table>
+
+<p><strong>BIOS, not encrypted</strong></p>
+
+<table>
+<tr>
+  <th>Mount point</th>
+  <th>Partition</th>
+  <th>Partition type</th>
+  <th>Suggested size</th>
+</tr>
+<tr>
+  <td><code>/mnt/boot</code></td>
+  <td><code>/dev/sda1</code></td>
+  <td>
+    boot partition
+  </td>
+  <td>550 MiB</td>
+</tr>
+
+<tr>
+<td><code>/mnt</code></td>
+<td>
+<code>/dev/sda2</code>
+</td>
+<td>Linux x86-64 root (/)</td>
+<td>Remainder of the device</td>
+</tr>
+</table>
+
+<p><strong>UEFI, encrypted</strong></p>
+<table>
+<tr>
+  <th>Mount point</th>
+  <th>Partition</th>
+  <th>Partition type</th>
+  <th>Suggested size</th>
+</tr>
+<tr>
+  <td><code>/mnt/boot</code></td>
+  <td><code>/dev/sda1</code></td>
+  <td>
+    EFI system partition
+  </td>
+  <td>550 MiB</td>
+</tr>
+
+<tr>
+<td><code>/mnt</code></td>
+<td>
+<code>/dev/mapper/cryptroot</code>
+</td>
+<td>Linux x86-64 root (/)</td>
+<td>Remainder of the device</td>
+</tr>
+</table>
+
+<p><strong>BIOS, encrypted</strong></p>
+<table>
+<tr>
+  <th>Mount point</th>
+  <th>Partition</th>
+  <th>Partition type</th>
+  <th>Suggested size</th>
+</tr>
+<tr>
+  <td><code>/mnt/boot</code></td>
+  <td><code>/dev/sda1</code></td>
+  <td>
+    boot partition
+  </td>
+  <td>550 MiB</td>
+</tr>
+
+<tr>
+<td><code>/mnt</code></td>
+<td><code>/dev/mapper/cryptroot</code></td>
+<td>Linux x86-64 root (/)</td>
+<td>Remainder of the device</td>
+</tr>
+</table>
+
+<p>Use GPT fdisk to format the disk:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># gdisk /dev/sda
+</code></pre></div></div>
+
+<ol>
+  <li>Create a new empty GUID partition table by typing <code class="highlighter-rouge">o</code> at the prompt.</li>
+  <li>Create a new partition by typing <code class="highlighter-rouge">n</code> at the prompt. Hit <code class="highlighter-rouge">Enter</code> when
+prompted for the partition number, keeping the default of <code class="highlighter-rouge">1</code>. Hit
+<code class="highlighter-rouge">Enter</code> again for the first section, keeping the default. For the last
+sector, type in <code class="highlighter-rouge">+550M</code> and hit <code class="highlighter-rouge">Enter</code>.</li>
+  <li>For an <strong>EFI</strong> system, type in <code class="highlighter-rouge">EF00</code> to indicate it is an EFI system
+partition for
+the partition type. Otherwise, use the default.</li>
+  <li>Now create at least one more partition for the installation. To create just
+one more partition to fill the rest of the disk, type <code class="highlighter-rouge">n</code> at the prompt
+and use the defaults for the partition number, first sector, last sector, and
+hex code.</li>
+  <li>If setting up a <strong>BIOS</strong> system with syslinux, enter
+expert mode by entering <code class="highlighter-rouge">x</code>. Then enter <code class="highlighter-rouge">a</code> and then <code class="highlighter-rouge">1</code> to set
+an attribute for partition 1. Then enter <code class="highlighter-rouge">2</code> to set it as a legacy BIOS
+partition and then <code class="highlighter-rouge">Enter</code> to exit the set attribute menu.  6.  Finally,
+write the table to the disk and exit by entering <code class="highlighter-rouge">w</code> at the prompt.</li>
+</ol>
+
+<div class="flash flash-success">
+    <svg class="octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M16 8.5l-6 6-3-3L8.5 10l1.5 1.5L14.5 7 16 8.5zM5.7 12.2l.8.8H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h7c.55 0 1 .45 1 1v6.5l-.8-.8c-.39-.39-1.03-.39-1.42 0L5.7 10.8a.996.996 0 000 1.41v-.01zM4 4h5V3H4v1zm0 2h5V5H4v1zm0 2h3V7H4v1zM3 9H2v1h1V9zm0-2H2v1h1V7zm0-2H2v1h1V5zm0-2H2v1h1V3z"></path></svg>
+    <strong>Tip: </strong>Here are one-liners for the above layout.<br>
+<br>
+For <b>EFI</b>:
+<pre># sgdisk /dev/sda -o -n 1::+550M -n 2 -t 2:EF00</pre>
+For <b>BIOS</b>:
+<pre># sgdisk /dev/sda -o -n 1::+550M -n 2 -A 1:set:2i</pre>
+
+</div>
+
+<h4 id="create-luks-container">
+<a class="anchor" href="#create-luks-container" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create LUKS container</h4>
+
+<p>If encrypting your system with dm-crypt/LUKS, do:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># cryptsetup lukFormat --type luks2 /dev/sda2
+# cryptsetup open /dev/sda2 cryptroot
+</code></pre></div></div>
+
+<p>Othwerwise, skip this step.</p>
+
+<h3 id="format-the-partitions">
+<a class="anchor" href="#format-the-partitions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Format the partitions</h3>
+
+<p>Format your ESP as FAT32:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># mkfs.fat -F32 /dev/sda1
+</code></pre></div></div>
+
+<p>Replace <code class="highlighter-rouge">ext4</code> with the file system you are using in all of the following.</p>
+
+<p>To format the LUKS container on an <strong>encrypted</strong> system do:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># mkfs.ext4 /dev/mapper/cryptroot
+</code></pre></div></div>
+
+<p>To format a <strong>regular</strong> (not encrypted) system, do:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># mkfs.ext4 /dev/sda2
+</code></pre></div></div>
+
+<h3 id="mount-the-file-systems">
+<a class="anchor" href="#mount-the-file-systems" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mount the file systems</h3>
+
+<p>For the <strong>encrypted</strong> setup mount the LUKS container:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># mount /dev/mapper/cryptroot /mnt
+</code></pre></div></div>
+
+<p>For the <strong>regular</strong> setup mount the root partition:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># mount /dev/sda2 /mnt
+</code></pre></div></div>
+
+<p>In both cases make a mount point for the boot partition and mount it:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># mkdir -p /mnt/boot
+# mount /dev/sda1 /mnt/boot
+</code></pre></div></div>
+
+<div class="flash flash-success">
+    <svg class="octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M16 8.5l-6 6-3-3L8.5 10l1.5 1.5L14.5 7 16 8.5zM5.7 12.2l.8.8H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h7c.55 0 1 .45 1 1v6.5l-.8-.8c-.39-.39-1.03-.39-1.42 0L5.7 10.8a.996.996 0 000 1.41v-.01zM4 4h5V3H4v1zm0 2h5V5H4v1zm0 2h3V7H4v1zM3 9H2v1h1V9zm0-2H2v1h1V7zm0-2H2v1h1V5zm0-2H2v1h1V3z"></path></svg>
+    <strong>Tip: </strong>If using btrfs, create any subvolumes you wish to use as mount points
+now. Then unmount <code>/mnt</code> and remount your subvolumes to the appropriate mount
+points. For example, for the <b>encrypted</b> setup:
+<pre>
+# mount /dev/mapper/cryptroot /mnt
+# btrfs subvolume create /mnt/@
+# btrfs subvolume create /mnt/@home
+# umount /mnt
+# mount -o compress=zstd,subvol=@ /dev/mapper/cryptroot /mnt
+# mkdir -p /mnt/home
+# mount -o compress=zstd,subvol=@home /dev/mapper/cryptroot /mnt/home
+# mkdir -p /mnt/boot
+# mount /dev/sda1 /mnt/boot
+</pre>
+
+</div>
+
+<h2 id="installation">
+<a class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<h3 id="select-the-mirrors">
+<a class="anchor" href="#select-the-mirrors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Select the mirrors</h3>
+
+<p>If you desire, edit <code class="highlighter-rouge">/etc/pacman.d/mirrorlist</code> to select which mirrors have
+priority. Higher in the file means higher priority. This file will be copied to
+the new installation.</p>
+
+<h3 id="install-packages">
+<a class="anchor" href="#install-packages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install packages</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># pacstrap /mnt base btrfs-progs linux man-db man-pages texinfo vim which
+</code></pre></div></div>
+
+<p>Append additional packages you wish to install to the line. You will have the
+opportunity to install more packages in the chroot environment and when you
+boot into the new system.</p>
+
+<p>If you have an AMD or Intel processor, you will want to go ahead and install
+the <code class="highlighter-rouge">amd-ucode</code> or <code class="highlighter-rouge">intel-ucode</code> packages, respectively to enable
+microcode updates later in the guide.</p>
+
+<h2 id="configure-the-system">
+<a class="anchor" href="#configure-the-system" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configure the system</h2>
+
+<h3 id="fstab">
+<a class="anchor" href="#fstab" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fstab</h3>
+
+<p>Generate the fstab for your new installation:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># genfstab -U /mnt &gt; /mnt/etc/fstab
+</code></pre></div></div>
+
+<h3 id="chroot">
+<a class="anchor" href="#chroot" aria-hidden="true"><span class="octicon octicon-link"></span></a>Chroot</h3>
+
+<p>chroot into the new installation:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># arch-chroot /mnt
+</code></pre></div></div>
+
+<h3 id="time-zone">
+<a class="anchor" href="#time-zone" aria-hidden="true"><span class="octicon octicon-link"></span></a>Time zone</h3>
+
+<p>Set the time zone:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ln -sf /usr/share/zoneinfo/&lt;Region&gt;/&lt;City&gt; /etc/localtime
+</code></pre></div></div>
+
+<p>Set the hardware clock from the system clock:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># hwclock --systohc
+</code></pre></div></div>
+
+<h3 id="localization">
+<a class="anchor" href="#localization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Localization</h3>
+
+<p>Uncomment needed locales in <code class="highlighter-rouge">/etc/locale.gen</code> (<em>e.g.</em>, <code class="highlighter-rouge">en_US.UTF-8</code>). Then run:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># locale-gen
+</code></pre></div></div>
+
+<p>Set the <code class="highlighter-rouge">LANG</code> environment variable the locale in the following file.</p>
+
+<pre style="margin-bottom: 0 !important; border-bottom:none;
+           padding-bottom:0.8em;">/etc/locale.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top:
+            0.8em;">LANG=en_US.UTF-8</pre>
+
+<p>If you are not using a US keymap, make the keyboard layout permanent:</p>
+
+<pre style="margin-bottom: 0 !important; border-bottom:none;
+           padding-bottom:0.8em;">/etc/vconsole.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top:
+            0.8em;">KEYMAP=de-latin1</pre>
+
+<h3 id="network-configuration">
+<a class="anchor" href="#network-configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Network configuration</h3>
+
+<h4 id="hostname">
+<a class="anchor" href="#hostname" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hostname</h4>
+
+<p>Set the hostname. Change <i><code class="highlighter-rouge">hostname</code></i> to your preferred hostname in the following:</p>
+
+<pre style="margin-bottom: 0 !important; border-bottom:none;
+           padding-bottom:0.8em;">/etc/hostname</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top:
+            0.8em;"><i>hostname</i></pre>
+
+<pre style="margin-bottom: 0 !important; border-bottom:none;
+           padding-bottom:0.8em;">/etc/hosts</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top:
+            0.8em;">127.0.0.1    localhost
+::1    	     localhost
+127.0.1.1    <i>hostname</i>.localdomain    <i>hostname</i></pre>
+
+<h4 id="configuration">
+<a class="anchor" href="#configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration</h4>
+
+<p>systemd-networkd will be used to connect to the internet after installation is complete.</p>
+
+<p>Create a minimal systemd-networkd configuration file with the following
+contents. Here <i><code class="highlighter-rouge">interface</code></i> is the wireless interface or the wired interface
+if not using wireless.</p>
+
+<pre style="margin-bottom: 0 !important; border-bottom:none;
+           padding-bottom:0.8em;">/etc/systemd/network/config.network</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top:
+            0.8em;">
+[Match]
+Name=<i>interface</i>
+
+[Network]
+DHCP=yes</pre>
+
+<p>Enable the <code class="highlighter-rouge">systemd-networkd.service</code> unit.</p>
+
+<h4 id="dns-resolution">
+<a class="anchor" href="#dns-resolution" aria-hidden="true"><span class="octicon octicon-link"></span></a>DNS resolution</h4>
+
+<p>To use systemd-resolved for DNS resolution, create a symlink as follows:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ln -s /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+</code></pre></div></div>
+
+<p>Enable the <code class="highlighter-rouge">systemd-resolved.service</code> unit.</p>
+
+<h4 id="wireless">
+<a class="anchor" href="#wireless" aria-hidden="true"><span class="octicon octicon-link"></span></a>Wireless</h4>
+
+<p>If using a wireless interface, install the <code class="highlighter-rouge">iwd</code> package now:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># pacman -S iwd
+</code></pre></div></div>
+
+<p>Additionally enable the <code class="highlighter-rouge">iwd.service</code> for wireless on boot.</p>
+
+<div class="flash">
+    <svg class="octicon octicon-info octicon octicon-info" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg>
+    <strong>Note: </strong>To prevent a known race condition that causes wireless device
+renaming problems, create a drop-in file for <code>iwd.service</code> with the following:
+<pre>
+[Unit]
+After=systemd-udevd.service systemd-networkd.service
+</pre>
+</div>
+
+<h3 id="initramfs">
+<a class="anchor" href="#initramfs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Initramfs</h3>
+
+<p>If using an <strong>encrypted</strong> system, add the <code class="highlighter-rouge">encrypt</code> hook to your mkinitcpio
+configuration as shown below. Add the <code class="highlighter-rouge">keymap</code> hook if you are not using the
+default US keymap. If using btrfs, you can remove the <code class="highlighter-rouge">fsck</code> hook.</p>
+
+<pre style="margin-bottom: 0 !important; border-bottom:none;
+           padding-bottom:0.8em;">/etc/mkinitcpio.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top:
+            0.8em;">HOOKS=(base udev autodetect modconf block filesystems keyboard fsck <b>keymap encrypt</b>)</pre>
+
+<div class="flash flash-success">
+    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M16 8.5l-6 6-3-3L8.5 10l1.5 1.5L14.5 7 16 8.5zM5.7 12.2l.8.8H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h7c.55 0 1 .45 1 1v6.5l-.8-.8c-.39-.39-1.03-.39-1.42 0L5.7 10.8a.996.996 0 000 1.41v-.01zM4 4h5V3H4v1zm0 2h5V5H4v1zm0 2h3V7H4v1zM3 9H2v1h1V9zm0-2H2v1h1V7zm0-2H2v1h1V5zm0-2H2v1h1V3z"></path></svg>
+    <strong>Tip: </strong>Move <code>keyboard</code> in front of <code>autodetect</code> if using an external
+USB keyboard that was not connected when the image is created.
+</div>
+
+<p>Regenerate initramfs:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># mkinitcpio -p linux
+</code></pre></div></div>
+
+<h3 id="root-password">
+<a class="anchor" href="#root-password" aria-hidden="true"><span class="octicon octicon-link"></span></a>Root password</h3>
+
+<p>Set the root password:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># passwd
+</code></pre></div></div>
+
+<div class="flash flash-success">
+    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M16 8.5l-6 6-3-3L8.5 10l1.5 1.5L14.5 7 16 8.5zM5.7 12.2l.8.8H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h7c.55 0 1 .45 1 1v6.5l-.8-.8c-.39-.39-1.03-.39-1.42 0L5.7 10.8a.996.996 0 000 1.41v-.01zM4 4h5V3H4v1zm0 2h5V5H4v1zm0 2h3V7H4v1zM3 9H2v1h1V9zm0-2H2v1h1V7zm0-2H2v1h1V5zm0-2H2v1h1V3z"></path></svg>
+    <strong>Tip: </strong>You can skip this step if you are giving your normal user super user privileges via sudo.
+</div>
+
+<h3 id="add-normal-user">
+<a class="anchor" href="#add-normal-user" aria-hidden="true"><span class="octicon octicon-link"></span></a>Add normal user</h3>
+
+<p>Install the <code class="highlighter-rouge">sudo</code> package:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># pacman -S sudo
+</code></pre></div></div>
+
+<p>Add a normal user, add it to the <code class="highlighter-rouge">wheel</code> group, and set the password as
+follows, where <code class="highlighter-rouge">user</code> is the name of your user:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># useradd -m -G wheel user
+# passwd user
+</code></pre></div></div>
+
+<p>Open the sudoers file and uncomment the <code class="highlighter-rouge">wheel</code> group, giving that user access
+to sudo:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EDITOR=vim visudo
+</code></pre></div></div>
+
+<h3 id="swap-file">
+<a class="anchor" href="#swap-file" aria-hidden="true"><span class="octicon octicon-link"></span></a>Swap file</h3>
+
+<p>If using btrfs, first create a subvolume for the swap file to reside on.
+Then, create an empty swap file and set it to not use COW:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># btrfs subvolume create /.swap
+# truncate -s 0 /.swap/swapfile
+# chattr +C /.swap/swapfile
+</code></pre></div></div>
+
+<p>If not using btrfs, simply create a directory:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># mkdir /.swap
+</code></pre></div></div>
+
+<p>In all cases do:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># dd if=/dev/zero of=/.swap/swapfile bs=1M count=2048
+# chmod 600 /.swap/swapfile
+# mkswap /.swap/swapfile
+</code></pre></div></div>
+
+<p>Update fstab with a line for the swap file as follows:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># /etc/fstab
+/.swap/swapfile none swap defaults 0 0
+</code></pre></div></div>
+
+<div class="flash flash-error">
+    <svg class="octicon octicon-alert octicon octicon-alert octicon octicon-alert" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 000 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 00.01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg>
+    <strong>Warning: </strong>If using btrfs instead of ext4, do <b>not</b> use a swap
+file for kernels before v5.0, since it may cause file system corruption. Instead, use a
+swap partition (not covered here).
+</div>
+
+<h3 id="boot-loader">
+<a class="anchor" href="#boot-loader" aria-hidden="true"><span class="octicon octicon-link"></span></a>Boot loader</h3>
+
+<p>Two options are provided here. If you have a UEFI motherboard, use EFISTUB. Otherwise,
+use the BIOS setup with syslinux. In either case, you will need to set your kernel
+parameters.</p>
+
+<h4 id="efistub">
+<a class="anchor" href="#efistub" aria-hidden="true"><span class="octicon octicon-link"></span></a>EFISTUB</h4>
+
+<p>In the UEFI setup we are not using a boot loader. Instead we are booting the
+kernel directly via EFISTUB. Previously you should have created a EFI
+system partition of the size 550MiB and marked it with the partition type
+<code class="highlighter-rouge">EF00</code>.</p>
+
+<p>Exit the chroot and reboot the system. From your Arch Linux live disk, boot
+into the UEFI Shell v2. Then do:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Shell&gt; map
+</code></pre></div></div>
+
+<p>Note the disk number for the hard drive where you are installing Arch Linux.
+This guide assumes it is <code class="highlighter-rouge">1</code>.</p>
+
+<p>Now create two UEFI entries using bcfg.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Shell&gt; bcfg boot add 0 fs1:vmlinuz-linux "Arch Linux"
+Shell&gt; bcfg boot add 1 fs1:vmlinuz-linux "Arch Linux (Fallback)"
+</code></pre></div></div>
+
+<p>Create a file with your kernel parameters as a single line:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Shell&gt; edit fs1:options.txt
+</code></pre></div></div>
+
+<div class="flash">
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg>
+    <strong>Note: </strong>Create at least one additional space before the first character of your
+boot line in your options files. Otherwise, the first character gets squashed
+by a byte order mark and will not be passed to the initramfs, resulting in an
+error when booting. Additionally, your options file should be one line, and one
+line only.
+</div>
+
+<p>Press <code class="highlighter-rouge">F2</code> to save and <code class="highlighter-rouge">F3</code> to quit. Now add that file as the options to your first boot entry:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Shell&gt; bcfg boot -opt 0 fs1:options.txt
+</code></pre></div></div>
+
+<p>Repeat the above process for your second, fallback entry, creating a text file
+named <code class="highlighter-rouge">options-fallback.txt</code> containing a single line with your kernel
+parameters, chaning the intird to the fallback image (<em>i.e.</em>,
+<code class="highlighter-rouge">/initramfs-linux-fallback.img</code>).</p>
+
+<p>Add it to the entry using <code class="highlighter-rouge">bcfg boot -opt 1 fs:1\options-fallback.txt</code>.</p>
+
+<h4 id="syslinux">
+<a class="anchor" href="#syslinux" aria-hidden="true"><span class="octicon octicon-link"></span></a>syslinux</h4>
+
+<p>In the BIOS setup we are using syslinux. Previously you should have created a
+boot partition that was marked with the attribute “legacy BIOS bootable”.</p>
+
+<p>Now, while still in the chroot install <code class="highlighter-rouge">syslinux</code>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># pacman -S syslinux
+</code></pre></div></div>
+
+<p>Create the following configuration file:</p>
+
+<pre style="margin-bottom: 0 !important; border-bottom:none;
+           padding-bottom:0.8em;">/boot/syslinux/syslinux.cfg</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top:
+            0.8em;">
+DEFAULT arch
+LABEL arch
+  MENU LABEL Arch Linux
+  LINUX ../vmlinuz-linux
+  APPEND <i>kernel-parameters</i>
+
+LABEL archfallback
+  MENU LABEL Arch Linux
+  LINUX ../vmlinuz-linux
+  APPEND <i>fallback-kernel-parameters</i></pre>
+
+<p>where <i><code class="highlighter-rouge">kernel-parameters</code></i> is from the kernel parameters you will create in the
+next section.
+<i><code class="highlighter-rouge">fallback-kernel-parameters</code></i> is exactly the same except with <code class="highlighter-rouge">initrd</code>
+pointing to the fallback initramfs (i.e.,
+<code class="highlighter-rouge">/initramfs-linux-fallback.img</code>).</p>
+
+<p>Exit the chroot and unmount all of the partitions:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># umount -R /mnt
+</code></pre></div></div>
+
+<p>Then install the bootloader:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># syslinux --directory syslinux /dev/sda1
+</code></pre></div></div>
+
+<p>And install the MBR:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># dd bs=440 count=1 conv=notrunc if=/usr/lib/syslinux/bios/gptmbr.bin of=/dev/sda
+</code></pre></div></div>
+
+<h4 id="kernel-parameters">
+<a class="anchor" href="#kernel-parameters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Kernel parameters</h4>
+
+<p>No matter what boot loader you use, you need to pass some kernel parameters to
+it as indicated in the above sections.</p>
+
+<p>For an <strong>encrypted</strong> system, the kernel parameters will contain at least:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root=/dev/mapper/cryptroot ro initrd=/initramfs-linux.img init=/usr/lib/systemd/systemd cryptdevice=/dev/sda2:cryptroot
+</code></pre></div></div>
+
+<div class="flash flash-success">
+    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M16 8.5l-6 6-3-3L8.5 10l1.5 1.5L14.5 7 16 8.5zM5.7 12.2l.8.8H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h7c.55 0 1 .45 1 1v6.5l-.8-.8c-.39-.39-1.03-.39-1.42 0L5.7 10.8a.996.996 0 000 1.41v-.01zM4 4h5V3H4v1zm0 2h5V5H4v1zm0 2h3V7H4v1zM3 9H2v1h1V9zm0-2H2v1h1V7zm0-2H2v1h1V5zm0-2H2v1h1V3z"></path></svg>
+    <strong>Tip: </strong>Add <code>:allow-discards</code> after <code>cryptroot</code> to allow trimming if using an
+SSD. Then enable the <code>fstrim.timer</code> to trim the device weekly.
+</div>
+
+<p>For a <strong>regular</strong> system, the kernel parameters will contain at least:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root=/dev/sda2 ro initrd=/initramfs-linux.img init=/usr/lib/systemd/systemd
+</code></pre></div></div>
+
+<div class="flash">
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg>
+    <strong>Note: </strong>In either case, if using btrfs, and you want to boot from a specific
+subvolume, add <code>rootfstype=btrfs rootflags=subvol=/@</code>, where <code>@</code> is the
+subvolume you will mount as <code>/</code>.
+</div>
+
+<div class="flash">
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg>
+    <strong>Note: </strong>If you have an Intel or AMD CPU, enable microcode updates by adding an
+<code>/intel-ucode.img</code> or <code>/amd-ucode.img</code>, respectively to
+<code>initrd=</code> with a comma separating the two images. It ''must'' be the first
+initrd entry on the line. For example:
+<code>initrd=/intel-ucode.img,/initramfs-linux.img</code>.
+</div>
+
+<h2 id="reboot">
+<a class="anchor" href="#reboot" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reboot</h2>
+
+<p>When you reboot you should be prompted for your LUKS password if you decided to encrypt the system.</p>
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="wesbarnett/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/linux/2020/05/24/arch-install.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>© 2020 Wes Barnett</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/wesbarnett" title="wesbarnett"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/wesbarnett" title="wesbarnett"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg></a></li><li><a rel="me" href="https://twitter.com/WesBarnettPhD" title="WesBarnettPhD"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

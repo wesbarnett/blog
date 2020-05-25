@@ -1,4 +1,684 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-22T20:22:57-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>© 2020 Wes Barnett</subtitle><entry><title type="html">Create a venv for a Jupyter kernel</title><link href="https://barnett.science/deeplearning/2020/05/22/jupyter-kernel.html" rel="alternate" type="text/html" title="Create a venv for a Jupyter kernel" /><published>2020-05-22T00:00:00-05:00</published><updated>2020-05-22T00:00:00-05:00</updated><id>https://barnett.science/deeplearning/2020/05/22/jupyter-kernel</id><content type="html" xml:base="https://barnett.science/deeplearning/2020/05/22/jupyter-kernel.html">&lt;p&gt;After I setup my deep learning box, I installed JupyterHub following &lt;a href=&quot;https://jupyterhub.readthedocs.io/en/stable/installation-guide-hard.html#part-1-jupyterhub-and-jupyterlab&quot;&gt;these
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-25T13:09:00-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>© 2020 Wes Barnett</subtitle><entry><title type="html">Arch Linux Installation</title><link href="https://barnett.science/linux/2020/05/24/arch-install.html" rel="alternate" type="text/html" title="Arch Linux Installation" /><published>2020-05-24T00:00:00-05:00</published><updated>2020-05-24T00:00:00-05:00</updated><id>https://barnett.science/linux/2020/05/24/arch-install</id><content type="html" xml:base="https://barnett.science/linux/2020/05/24/arch-install.html">&lt;div class=&quot;flash flash-error&quot;&gt;
+    &lt;svg class=&quot;octicon octicon-alert&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; height=&quot;16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 000 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 00.01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;
+    &lt;strong&gt;Warning: &lt;/strong&gt;This is my personal guide for installing an Arch
+Linux system. Use it only as a guide as you follow along with the official
+&lt;a href=&quot;https://wiki.archlinux.org/index.php/Installation_Guide&quot;&gt;Installation Guide&lt;/a&gt;.
+&lt;/div&gt;
+
+&lt;p&gt;This guide gives several options along the way, depending on your system.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;For UEFI, EFISTUB is used to boot the kernel directly.&lt;/li&gt;
+  &lt;li&gt;For systems needing BIOS, syslinux is used.&lt;/li&gt;
+  &lt;li&gt;Gives options for encrypting the system if desired.&lt;/li&gt;
+  &lt;li&gt;Gives notes on using btrfs subvolumes if desired.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You may need additional packages for video drivers, etc.&lt;/p&gt;
+
+&lt;h2 id=&quot;pre-installation&quot;&gt;Pre-installation&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.archlinux.org/download/&quot;&gt;Download&lt;/a&gt; the Arch ISO and GnuPG signature.&lt;/p&gt;
+
+&lt;h3 id=&quot;verify-signature&quot;&gt;Verify signature&lt;/h3&gt;
+
+&lt;p&gt;If you have GnuPG installed on your current system, verify the download:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ gpg --keyserver-options auto-key-retrieve --verify archlinux-&amp;lt;version&amp;gt;-dual.iso.sig
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;create-bootable-disk&quot;&gt;Create bootable disk&lt;/h4&gt;
+
+&lt;p&gt;Create a bootable USB drive by doing the following on an existing Linux installation:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# dd bs=4M if=/path/to/archlinux-&amp;lt;version&amp;gt;-x86_64.iso of=/dev/sdx status=progress &amp;amp;&amp;amp; sync
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;where &lt;code class=&quot;highlighter-rouge&quot;&gt;/dev/sdx&lt;/code&gt; is the USB drive.&lt;/p&gt;
+
+&lt;h3 id=&quot;boot-the-live-environment&quot;&gt;Boot the live environment&lt;/h3&gt;
+
+&lt;p&gt;Now boot from the USB drive.&lt;/p&gt;
+
+&lt;h3 id=&quot;set-the-keyboard-layout&quot;&gt;Set the keyboard layout&lt;/h3&gt;
+
+&lt;p&gt;If using a keymap other than US, temporarily set the keyboard layout by doing:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# loadkeys de-latin1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Change &lt;code class=&quot;highlighter-rouge&quot;&gt;de-latin1&lt;/code&gt; to a layout found in &lt;code class=&quot;highlighter-rouge&quot;&gt;/usr/share/kbd/keymaps/**/*.map.gz&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;verify-the-boot-mode&quot;&gt;Verify the boot mode&lt;/h3&gt;
+
+&lt;p&gt;Verify that you have booted with UEFI mode by checking that
+&lt;code class=&quot;highlighter-rouge&quot;&gt;/sys/firmware/efi/efivars&lt;/code&gt; exists. If you’re not booted in the UEFI, you
+should setup your motherboard to do so to follow this installation guide. If
+you are not able to use UEFI, this guide has an option to boot from BIOS using
+syslinux.&lt;/p&gt;
+
+&lt;h3 id=&quot;connect-to-the-internet&quot;&gt;Connect to the internet&lt;/h3&gt;
+
+&lt;p&gt;If you have a &lt;strong&gt;wired&lt;/strong&gt; connection, it should connect automatically.&lt;/p&gt;
+
+&lt;p&gt;If you have a &lt;strong&gt;&lt;em&gt;wireless&lt;/em&gt;&lt;/strong&gt; connection, first stop the wired connection to prevent conflicts:&lt;/p&gt;
+
+&lt;pre&gt;
+# systemctl stop dhcpcd@&lt;i&gt;interface&lt;/i&gt;.service
+&lt;/pre&gt;
+
+&lt;p&gt;A list of interfaces can be found with:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ip link
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then connect to a wifi network with &lt;code class=&quot;highlighter-rouge&quot;&gt;wpa_supplicant&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;
+# wpa_supplicant -B -i &lt;i&gt;interface&lt;/i&gt; -C/run/wpa_supplicant
+# wpa_cli -i &lt;i&gt;interface&lt;/i&gt;
+&amp;gt; scan
+&amp;gt; scan_results
+&amp;gt; add_network
+&amp;gt; set_network 0 ssid &quot;&lt;i&gt;SSID&lt;/i&gt;&quot;
+&amp;gt; set_network 0 psk &quot;&lt;i&gt;passphrase&lt;/i&gt;&quot;
+&amp;gt; enable_network 0
+&amp;gt; quit
+&lt;/pre&gt;
+
+&lt;p&gt;Get an ip address with dhcpcd:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# dhcpcd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;For both &lt;strong&gt;wired&lt;/strong&gt; and &lt;strong&gt;wireless&lt;/strong&gt; connections, check your connection with:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ping archlinux.org
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;update-the-system-clock&quot;&gt;Update the system clock&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# timedatectl set-ntp true
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;partition-the-disk&quot;&gt;Partition the disk&lt;/h3&gt;
+
+&lt;div class=&quot;flash flash-error&quot;&gt;
+    &lt;svg class=&quot;octicon octicon-alert octicon octicon-alert&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; height=&quot;16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 000 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 00.01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;
+    &lt;strong&gt;Warning: &lt;/strong&gt;All data on your disk will be erased. Backup any data you wish to keep.
+&lt;/div&gt;
+
+&lt;div class=&quot;flash&quot;&gt;
+    &lt;svg class=&quot;octicon octicon-info&quot; viewBox=&quot;0 0 14 16&quot; version=&quot;1.1&quot; width=&quot;14&quot; height=&quot;16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;
+    &lt;strong&gt;Note: &lt;/strong&gt;This guide assumes your disk is at &lt;code&gt;/dev/sda&lt;/code&gt;. Change if needed.
+&lt;/div&gt;
+
+&lt;p&gt;Use &lt;code class=&quot;highlighter-rouge&quot;&gt;lsblk&lt;/code&gt; to identify existing file systems.&lt;/p&gt;
+
+&lt;p&gt;Here are the possible layouts this guide uses. Modify to your needs.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;UEFI, not encrypted&lt;/strong&gt;&lt;/p&gt;
+
+&lt;table&gt;
+&lt;tr&gt;
+  &lt;th&gt;Mount point&lt;/th&gt;
+  &lt;th&gt;Partition&lt;/th&gt;
+  &lt;th&gt;Partition type&lt;/th&gt;
+  &lt;th&gt;Suggested size&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;&lt;code&gt;/mnt/boot&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;code&gt;/dev/sda1&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;
+    EFI system partition
+    &amp;lt;/ul&amp;gt;
+  &lt;/td&gt;
+  &lt;td&gt;550 MiB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;/mnt&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;/dev/sda2&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Linux x86-64 root (/)&lt;/td&gt;&lt;td&gt;Remainder of the device&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;strong&gt;BIOS, not encrypted&lt;/strong&gt;&lt;/p&gt;
+
+&lt;table&gt;
+&lt;tr&gt;
+  &lt;th&gt;Mount point&lt;/th&gt;
+  &lt;th&gt;Partition&lt;/th&gt;
+  &lt;th&gt;Partition type&lt;/th&gt;
+  &lt;th&gt;Suggested size&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;&lt;code&gt;/mnt/boot&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;code&gt;/dev/sda1&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;
+    boot partition
+  &lt;/td&gt;
+  &lt;td&gt;550 MiB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;/mnt&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;code&gt;/dev/sda2&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Linux x86-64 root (/)&lt;/td&gt;&lt;td&gt;Remainder of the device&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;strong&gt;UEFI, encrypted&lt;/strong&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;tr&gt;
+  &lt;th&gt;Mount point&lt;/th&gt;
+  &lt;th&gt;Partition&lt;/th&gt;
+  &lt;th&gt;Partition type&lt;/th&gt;
+  &lt;th&gt;Suggested size&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;&lt;code&gt;/mnt/boot&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;code&gt;/dev/sda1&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;
+    EFI system partition
+  &lt;/td&gt;
+  &lt;td&gt;550 MiB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;/mnt&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;code&gt;/dev/mapper/cryptroot&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Linux x86-64 root (/)&lt;/td&gt;&lt;td&gt;Remainder of the device&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;strong&gt;BIOS, encrypted&lt;/strong&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;tr&gt;
+  &lt;th&gt;Mount point&lt;/th&gt;
+  &lt;th&gt;Partition&lt;/th&gt;
+  &lt;th&gt;Partition type&lt;/th&gt;
+  &lt;th&gt;Suggested size&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;&lt;code&gt;/mnt/boot&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;code&gt;/dev/sda1&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;
+    boot partition
+  &lt;/td&gt;
+  &lt;td&gt;550 MiB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;/mnt&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;/dev/mapper/cryptroot&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Linux x86-64 root (/)&lt;/td&gt;&lt;td&gt;Remainder of the device&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Use GPT fdisk to format the disk:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# gdisk /dev/sda
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Create a new empty GUID partition table by typing &lt;code class=&quot;highlighter-rouge&quot;&gt;o&lt;/code&gt; at the prompt.&lt;/li&gt;
+  &lt;li&gt;Create a new partition by typing &lt;code class=&quot;highlighter-rouge&quot;&gt;n&lt;/code&gt; at the prompt. Hit &lt;code class=&quot;highlighter-rouge&quot;&gt;Enter&lt;/code&gt; when
+prompted for the partition number, keeping the default of &lt;code class=&quot;highlighter-rouge&quot;&gt;1&lt;/code&gt;. Hit
+&lt;code class=&quot;highlighter-rouge&quot;&gt;Enter&lt;/code&gt; again for the first section, keeping the default. For the last
+sector, type in &lt;code class=&quot;highlighter-rouge&quot;&gt;+550M&lt;/code&gt; and hit &lt;code class=&quot;highlighter-rouge&quot;&gt;Enter&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;For an &lt;strong&gt;EFI&lt;/strong&gt; system, type in &lt;code class=&quot;highlighter-rouge&quot;&gt;EF00&lt;/code&gt; to indicate it is an EFI system
+partition for
+the partition type. Otherwise, use the default.&lt;/li&gt;
+  &lt;li&gt;Now create at least one more partition for the installation. To create just
+one more partition to fill the rest of the disk, type &lt;code class=&quot;highlighter-rouge&quot;&gt;n&lt;/code&gt; at the prompt
+and use the defaults for the partition number, first sector, last sector, and
+hex code.&lt;/li&gt;
+  &lt;li&gt;If setting up a &lt;strong&gt;BIOS&lt;/strong&gt; system with syslinux, enter
+expert mode by entering &lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt;. Then enter &lt;code class=&quot;highlighter-rouge&quot;&gt;a&lt;/code&gt; and then &lt;code class=&quot;highlighter-rouge&quot;&gt;1&lt;/code&gt; to set
+an attribute for partition 1. Then enter &lt;code class=&quot;highlighter-rouge&quot;&gt;2&lt;/code&gt; to set it as a legacy BIOS
+partition and then &lt;code class=&quot;highlighter-rouge&quot;&gt;Enter&lt;/code&gt; to exit the set attribute menu.  6.  Finally,
+write the table to the disk and exit by entering &lt;code class=&quot;highlighter-rouge&quot;&gt;w&lt;/code&gt; at the prompt.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;flash flash-success&quot;&gt;
+    &lt;svg class=&quot;octicon octicon-checklist&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; height=&quot;16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M16 8.5l-6 6-3-3L8.5 10l1.5 1.5L14.5 7 16 8.5zM5.7 12.2l.8.8H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h7c.55 0 1 .45 1 1v6.5l-.8-.8c-.39-.39-1.03-.39-1.42 0L5.7 10.8a.996.996 0 000 1.41v-.01zM4 4h5V3H4v1zm0 2h5V5H4v1zm0 2h3V7H4v1zM3 9H2v1h1V9zm0-2H2v1h1V7zm0-2H2v1h1V5zm0-2H2v1h1V3z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;
+    &lt;strong&gt;Tip: &lt;/strong&gt;Here are one-liners for the above layout.&lt;br /&gt;
+&lt;br /&gt;
+For &lt;b&gt;EFI&lt;/b&gt;:
+&lt;pre&gt;# sgdisk /dev/sda -o -n 1::+550M -n 2 -t 2:EF00&lt;/pre&gt;
+For &lt;b&gt;BIOS&lt;/b&gt;:
+&lt;pre&gt;# sgdisk /dev/sda -o -n 1::+550M -n 2 -A 1:set:2i&lt;/pre&gt;
+
+&lt;/div&gt;
+
+&lt;h4 id=&quot;create-luks-container&quot;&gt;Create LUKS container&lt;/h4&gt;
+
+&lt;p&gt;If encrypting your system with dm-crypt/LUKS, do:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# cryptsetup lukFormat --type luks2 /dev/sda2
+# cryptsetup open /dev/sda2 cryptroot
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Othwerwise, skip this step.&lt;/p&gt;
+
+&lt;h3 id=&quot;format-the-partitions&quot;&gt;Format the partitions&lt;/h3&gt;
+
+&lt;p&gt;Format your ESP as FAT32:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mkfs.fat -F32 /dev/sda1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Replace &lt;code class=&quot;highlighter-rouge&quot;&gt;ext4&lt;/code&gt; with the file system you are using in all of the following.&lt;/p&gt;
+
+&lt;p&gt;To format the LUKS container on an &lt;strong&gt;encrypted&lt;/strong&gt; system do:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mkfs.ext4 /dev/mapper/cryptroot
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To format a &lt;strong&gt;regular&lt;/strong&gt; (not encrypted) system, do:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mkfs.ext4 /dev/sda2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;mount-the-file-systems&quot;&gt;Mount the file systems&lt;/h3&gt;
+
+&lt;p&gt;For the &lt;strong&gt;encrypted&lt;/strong&gt; setup mount the LUKS container:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mount /dev/mapper/cryptroot /mnt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;For the &lt;strong&gt;regular&lt;/strong&gt; setup mount the root partition:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mount /dev/sda2 /mnt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In both cases make a mount point for the boot partition and mount it:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mkdir -p /mnt/boot
+# mount /dev/sda1 /mnt/boot
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;flash flash-success&quot;&gt;
+    &lt;svg class=&quot;octicon octicon-checklist octicon octicon-checklist&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; height=&quot;16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M16 8.5l-6 6-3-3L8.5 10l1.5 1.5L14.5 7 16 8.5zM5.7 12.2l.8.8H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h7c.55 0 1 .45 1 1v6.5l-.8-.8c-.39-.39-1.03-.39-1.42 0L5.7 10.8a.996.996 0 000 1.41v-.01zM4 4h5V3H4v1zm0 2h5V5H4v1zm0 2h3V7H4v1zM3 9H2v1h1V9zm0-2H2v1h1V7zm0-2H2v1h1V5zm0-2H2v1h1V3z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;
+    &lt;strong&gt;Tip: &lt;/strong&gt;If using btrfs, create any subvolumes you wish to use as mount points
+now. Then unmount &lt;code&gt;/mnt&lt;/code&gt; and remount your subvolumes to the appropriate mount
+points. For example, for the &lt;b&gt;encrypted&lt;/b&gt; setup:
+&lt;pre&gt;
+# mount /dev/mapper/cryptroot /mnt
+# btrfs subvolume create /mnt/@
+# btrfs subvolume create /mnt/@home
+# umount /mnt
+# mount -o compress=zstd,subvol=@ /dev/mapper/cryptroot /mnt
+# mkdir -p /mnt/home
+# mount -o compress=zstd,subvol=@home /dev/mapper/cryptroot /mnt/home
+# mkdir -p /mnt/boot
+# mount /dev/sda1 /mnt/boot
+&lt;/pre&gt;
+
+&lt;/div&gt;
+
+&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;/h2&gt;
+
+&lt;h3 id=&quot;select-the-mirrors&quot;&gt;Select the mirrors&lt;/h3&gt;
+
+&lt;p&gt;If you desire, edit &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/pacman.d/mirrorlist&lt;/code&gt; to select which mirrors have
+priority. Higher in the file means higher priority. This file will be copied to
+the new installation.&lt;/p&gt;
+
+&lt;h3 id=&quot;install-packages&quot;&gt;Install packages&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# pacstrap /mnt base btrfs-progs linux man-db man-pages texinfo vim which
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Append additional packages you wish to install to the line. You will have the
+opportunity to install more packages in the chroot environment and when you
+boot into the new system.&lt;/p&gt;
+
+&lt;p&gt;If you have an AMD or Intel processor, you will want to go ahead and install
+the &lt;code class=&quot;highlighter-rouge&quot;&gt;amd-ucode&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;intel-ucode&lt;/code&gt; packages, respectively to enable
+microcode updates later in the guide.&lt;/p&gt;
+
+&lt;h2 id=&quot;configure-the-system&quot;&gt;Configure the system&lt;/h2&gt;
+
+&lt;h3 id=&quot;fstab&quot;&gt;Fstab&lt;/h3&gt;
+
+&lt;p&gt;Generate the fstab for your new installation:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# genfstab -U /mnt &amp;gt; /mnt/etc/fstab
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;chroot&quot;&gt;Chroot&lt;/h3&gt;
+
+&lt;p&gt;chroot into the new installation:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# arch-chroot /mnt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;time-zone&quot;&gt;Time zone&lt;/h3&gt;
+
+&lt;p&gt;Set the time zone:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ln -sf /usr/share/zoneinfo/&amp;lt;Region&amp;gt;/&amp;lt;City&amp;gt; /etc/localtime
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Set the hardware clock from the system clock:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# hwclock --systohc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;localization&quot;&gt;Localization&lt;/h3&gt;
+
+&lt;p&gt;Uncomment needed locales in &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/locale.gen&lt;/code&gt; (&lt;em&gt;e.g.&lt;/em&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;en_US.UTF-8&lt;/code&gt;). Then run:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# locale-gen
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Set the &lt;code class=&quot;highlighter-rouge&quot;&gt;LANG&lt;/code&gt; environment variable the locale in the following file.&lt;/p&gt;
+
+&lt;pre style=&quot;margin-bottom: 0 !important; border-bottom:none;
+           padding-bottom:0.8em;&quot;&gt;/etc/locale.conf&lt;/pre&gt;
+&lt;pre style=&quot;margin-top: 0; border-top-style:dashed; padding-top:
+            0.8em;&quot;&gt;LANG=en_US.UTF-8&lt;/pre&gt;
+
+&lt;p&gt;If you are not using a US keymap, make the keyboard layout permanent:&lt;/p&gt;
+
+&lt;pre style=&quot;margin-bottom: 0 !important; border-bottom:none;
+           padding-bottom:0.8em;&quot;&gt;/etc/vconsole.conf&lt;/pre&gt;
+&lt;pre style=&quot;margin-top: 0; border-top-style:dashed; padding-top:
+            0.8em;&quot;&gt;KEYMAP=de-latin1&lt;/pre&gt;
+
+&lt;h3 id=&quot;network-configuration&quot;&gt;Network configuration&lt;/h3&gt;
+
+&lt;h4 id=&quot;hostname&quot;&gt;Hostname&lt;/h4&gt;
+
+&lt;p&gt;Set the hostname. Change &lt;i&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;hostname&lt;/code&gt;&lt;/i&gt; to your preferred hostname in the following:&lt;/p&gt;
+
+&lt;pre style=&quot;margin-bottom: 0 !important; border-bottom:none;
+           padding-bottom:0.8em;&quot;&gt;/etc/hostname&lt;/pre&gt;
+&lt;pre style=&quot;margin-top: 0; border-top-style:dashed; padding-top:
+            0.8em;&quot;&gt;&lt;i&gt;hostname&lt;/i&gt;&lt;/pre&gt;
+
+&lt;pre style=&quot;margin-bottom: 0 !important; border-bottom:none;
+           padding-bottom:0.8em;&quot;&gt;/etc/hosts&lt;/pre&gt;
+&lt;pre style=&quot;margin-top: 0; border-top-style:dashed; padding-top:
+            0.8em;&quot;&gt;127.0.0.1    localhost
+::1    	     localhost
+127.0.1.1    &lt;i&gt;hostname&lt;/i&gt;.localdomain    &lt;i&gt;hostname&lt;/i&gt;&lt;/pre&gt;
+
+&lt;h4 id=&quot;configuration&quot;&gt;Configuration&lt;/h4&gt;
+
+&lt;p&gt;systemd-networkd will be used to connect to the internet after installation is complete.&lt;/p&gt;
+
+&lt;p&gt;Create a minimal systemd-networkd configuration file with the following
+contents. Here &lt;i&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;interface&lt;/code&gt;&lt;/i&gt; is the wireless interface or the wired interface
+if not using wireless.&lt;/p&gt;
+
+&lt;pre style=&quot;margin-bottom: 0 !important; border-bottom:none;
+           padding-bottom:0.8em;&quot;&gt;/etc/systemd/network/config.network&lt;/pre&gt;
+&lt;pre style=&quot;margin-top: 0; border-top-style:dashed; padding-top:
+            0.8em;&quot;&gt;
+[Match]
+Name=&lt;i&gt;interface&lt;/i&gt;
+
+[Network]
+DHCP=yes&lt;/pre&gt;
+
+&lt;p&gt;Enable the &lt;code class=&quot;highlighter-rouge&quot;&gt;systemd-networkd.service&lt;/code&gt; unit.&lt;/p&gt;
+
+&lt;h4 id=&quot;dns-resolution&quot;&gt;DNS resolution&lt;/h4&gt;
+
+&lt;p&gt;To use systemd-resolved for DNS resolution, create a symlink as follows:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ln -s /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Enable the &lt;code class=&quot;highlighter-rouge&quot;&gt;systemd-resolved.service&lt;/code&gt; unit.&lt;/p&gt;
+
+&lt;h4 id=&quot;wireless&quot;&gt;Wireless&lt;/h4&gt;
+
+&lt;p&gt;If using a wireless interface, install the &lt;code class=&quot;highlighter-rouge&quot;&gt;iwd&lt;/code&gt; package now:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# pacman -S iwd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Additionally enable the &lt;code class=&quot;highlighter-rouge&quot;&gt;iwd.service&lt;/code&gt; for wireless on boot.&lt;/p&gt;
+
+&lt;div class=&quot;flash&quot;&gt;
+    &lt;svg class=&quot;octicon octicon-info octicon octicon-info&quot; viewBox=&quot;0 0 14 16&quot; version=&quot;1.1&quot; width=&quot;14&quot; height=&quot;16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;
+    &lt;strong&gt;Note: &lt;/strong&gt;To prevent a known race condition that causes wireless device
+renaming problems, create a drop-in file for &lt;code&gt;iwd.service&lt;/code&gt; with the following:
+&lt;pre&gt;
+[Unit]
+After=systemd-udevd.service systemd-networkd.service
+&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;initramfs&quot;&gt;Initramfs&lt;/h3&gt;
+
+&lt;p&gt;If using an &lt;strong&gt;encrypted&lt;/strong&gt; system, add the &lt;code class=&quot;highlighter-rouge&quot;&gt;encrypt&lt;/code&gt; hook to your mkinitcpio
+configuration as shown below. Add the &lt;code class=&quot;highlighter-rouge&quot;&gt;keymap&lt;/code&gt; hook if you are not using the
+default US keymap. If using btrfs, you can remove the &lt;code class=&quot;highlighter-rouge&quot;&gt;fsck&lt;/code&gt; hook.&lt;/p&gt;
+
+&lt;pre style=&quot;margin-bottom: 0 !important; border-bottom:none;
+           padding-bottom:0.8em;&quot;&gt;/etc/mkinitcpio.conf&lt;/pre&gt;
+&lt;pre style=&quot;margin-top: 0; border-top-style:dashed; padding-top:
+            0.8em;&quot;&gt;HOOKS=(base udev autodetect modconf block filesystems keyboard fsck &lt;b&gt;keymap encrypt&lt;/b&gt;)&lt;/pre&gt;
+
+&lt;div class=&quot;flash flash-success&quot;&gt;
+    &lt;svg class=&quot;octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; height=&quot;16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M16 8.5l-6 6-3-3L8.5 10l1.5 1.5L14.5 7 16 8.5zM5.7 12.2l.8.8H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h7c.55 0 1 .45 1 1v6.5l-.8-.8c-.39-.39-1.03-.39-1.42 0L5.7 10.8a.996.996 0 000 1.41v-.01zM4 4h5V3H4v1zm0 2h5V5H4v1zm0 2h3V7H4v1zM3 9H2v1h1V9zm0-2H2v1h1V7zm0-2H2v1h1V5zm0-2H2v1h1V3z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;
+    &lt;strong&gt;Tip: &lt;/strong&gt;Move &lt;code&gt;keyboard&lt;/code&gt; in front of &lt;code&gt;autodetect&lt;/code&gt; if using an external
+USB keyboard that was not connected when the image is created.
+&lt;/div&gt;
+
+&lt;p&gt;Regenerate initramfs:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mkinitcpio -p linux
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;root-password&quot;&gt;Root password&lt;/h3&gt;
+
+&lt;p&gt;Set the root password:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# passwd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;flash flash-success&quot;&gt;
+    &lt;svg class=&quot;octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; height=&quot;16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M16 8.5l-6 6-3-3L8.5 10l1.5 1.5L14.5 7 16 8.5zM5.7 12.2l.8.8H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h7c.55 0 1 .45 1 1v6.5l-.8-.8c-.39-.39-1.03-.39-1.42 0L5.7 10.8a.996.996 0 000 1.41v-.01zM4 4h5V3H4v1zm0 2h5V5H4v1zm0 2h3V7H4v1zM3 9H2v1h1V9zm0-2H2v1h1V7zm0-2H2v1h1V5zm0-2H2v1h1V3z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;
+    &lt;strong&gt;Tip: &lt;/strong&gt;You can skip this step if you are giving your normal user super user privileges via sudo.
+&lt;/div&gt;
+
+&lt;h3 id=&quot;add-normal-user&quot;&gt;Add normal user&lt;/h3&gt;
+
+&lt;p&gt;Install the &lt;code class=&quot;highlighter-rouge&quot;&gt;sudo&lt;/code&gt; package:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# pacman -S sudo
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Add a normal user, add it to the &lt;code class=&quot;highlighter-rouge&quot;&gt;wheel&lt;/code&gt; group, and set the password as
+follows, where &lt;code class=&quot;highlighter-rouge&quot;&gt;user&lt;/code&gt; is the name of your user:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# useradd -m -G wheel user
+# passwd user
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Open the sudoers file and uncomment the &lt;code class=&quot;highlighter-rouge&quot;&gt;wheel&lt;/code&gt; group, giving that user access
+to sudo:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EDITOR=vim visudo
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;swap-file&quot;&gt;Swap file&lt;/h3&gt;
+
+&lt;p&gt;If using btrfs, first create a subvolume for the swap file to reside on.
+Then, create an empty swap file and set it to not use COW:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# btrfs subvolume create /.swap
+# truncate -s 0 /.swap/swapfile
+# chattr +C /.swap/swapfile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If not using btrfs, simply create a directory:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# mkdir /.swap
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In all cases do:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# dd if=/dev/zero of=/.swap/swapfile bs=1M count=2048
+# chmod 600 /.swap/swapfile
+# mkswap /.swap/swapfile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Update fstab with a line for the swap file as follows:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# /etc/fstab
+/.swap/swapfile none swap defaults 0 0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;flash flash-error&quot;&gt;
+    &lt;svg class=&quot;octicon octicon-alert octicon octicon-alert octicon octicon-alert&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; height=&quot;16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 000 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 00.01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;
+    &lt;strong&gt;Warning: &lt;/strong&gt;If using btrfs instead of ext4, do &lt;b&gt;not&lt;/b&gt; use a swap
+file for kernels before v5.0, since it may cause file system corruption. Instead, use a
+swap partition (not covered here).
+&lt;/div&gt;
+
+&lt;h3 id=&quot;boot-loader&quot;&gt;Boot loader&lt;/h3&gt;
+
+&lt;p&gt;Two options are provided here. If you have a UEFI motherboard, use EFISTUB. Otherwise,
+use the BIOS setup with syslinux. In either case, you will need to set your kernel
+parameters.&lt;/p&gt;
+
+&lt;h4 id=&quot;efistub&quot;&gt;EFISTUB&lt;/h4&gt;
+
+&lt;p&gt;In the UEFI setup we are not using a boot loader. Instead we are booting the
+kernel directly via EFISTUB. Previously you should have created a EFI
+system partition of the size 550MiB and marked it with the partition type
+&lt;code class=&quot;highlighter-rouge&quot;&gt;EF00&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Exit the chroot and reboot the system. From your Arch Linux live disk, boot
+into the UEFI Shell v2. Then do:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Shell&amp;gt; map
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Note the disk number for the hard drive where you are installing Arch Linux.
+This guide assumes it is &lt;code class=&quot;highlighter-rouge&quot;&gt;1&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Now create two UEFI entries using bcfg.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Shell&amp;gt; bcfg boot add 0 fs1:vmlinuz-linux &quot;Arch Linux&quot;
+Shell&amp;gt; bcfg boot add 1 fs1:vmlinuz-linux &quot;Arch Linux (Fallback)&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Create a file with your kernel parameters as a single line:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Shell&amp;gt; edit fs1:options.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;flash&quot;&gt;
+    &lt;svg class=&quot;octicon octicon-info octicon octicon-info octicon octicon-info&quot; viewBox=&quot;0 0 14 16&quot; version=&quot;1.1&quot; width=&quot;14&quot; height=&quot;16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;
+    &lt;strong&gt;Note: &lt;/strong&gt;Create at least one additional space before the first character of your
+boot line in your options files. Otherwise, the first character gets squashed
+by a byte order mark and will not be passed to the initramfs, resulting in an
+error when booting. Additionally, your options file should be one line, and one
+line only.
+&lt;/div&gt;
+
+&lt;p&gt;Press &lt;code class=&quot;highlighter-rouge&quot;&gt;F2&lt;/code&gt; to save and &lt;code class=&quot;highlighter-rouge&quot;&gt;F3&lt;/code&gt; to quit. Now add that file as the options to your first boot entry:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Shell&amp;gt; bcfg boot -opt 0 fs1:options.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Repeat the above process for your second, fallback entry, creating a text file
+named &lt;code class=&quot;highlighter-rouge&quot;&gt;options-fallback.txt&lt;/code&gt; containing a single line with your kernel
+parameters, chaning the intird to the fallback image (&lt;em&gt;i.e.&lt;/em&gt;,
+&lt;code class=&quot;highlighter-rouge&quot;&gt;/initramfs-linux-fallback.img&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;Add it to the entry using &lt;code class=&quot;highlighter-rouge&quot;&gt;bcfg boot -opt 1 fs:1\options-fallback.txt&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;syslinux&quot;&gt;syslinux&lt;/h4&gt;
+
+&lt;p&gt;In the BIOS setup we are using syslinux. Previously you should have created a
+boot partition that was marked with the attribute “legacy BIOS bootable”.&lt;/p&gt;
+
+&lt;p&gt;Now, while still in the chroot install &lt;code class=&quot;highlighter-rouge&quot;&gt;syslinux&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# pacman -S syslinux
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Create the following configuration file:&lt;/p&gt;
+
+&lt;pre style=&quot;margin-bottom: 0 !important; border-bottom:none;
+           padding-bottom:0.8em;&quot;&gt;/boot/syslinux/syslinux.cfg&lt;/pre&gt;
+&lt;pre style=&quot;margin-top: 0; border-top-style:dashed; padding-top:
+            0.8em;&quot;&gt;
+DEFAULT arch
+LABEL arch
+  MENU LABEL Arch Linux
+  LINUX ../vmlinuz-linux
+  APPEND &lt;i&gt;kernel-parameters&lt;/i&gt;
+
+LABEL archfallback
+  MENU LABEL Arch Linux
+  LINUX ../vmlinuz-linux
+  APPEND &lt;i&gt;fallback-kernel-parameters&lt;/i&gt;&lt;/pre&gt;
+
+&lt;p&gt;where &lt;i&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;kernel-parameters&lt;/code&gt;&lt;/i&gt; is from the kernel parameters you will create in the
+next section.
+&lt;i&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;fallback-kernel-parameters&lt;/code&gt;&lt;/i&gt; is exactly the same except with &lt;code class=&quot;highlighter-rouge&quot;&gt;initrd&lt;/code&gt;
+pointing to the fallback initramfs (i.e.,
+&lt;code class=&quot;highlighter-rouge&quot;&gt;/initramfs-linux-fallback.img&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;Exit the chroot and unmount all of the partitions:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# umount -R /mnt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then install the bootloader:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# syslinux --directory syslinux /dev/sda1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And install the MBR:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# dd bs=440 count=1 conv=notrunc if=/usr/lib/syslinux/bios/gptmbr.bin of=/dev/sda
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;kernel-parameters&quot;&gt;Kernel parameters&lt;/h4&gt;
+
+&lt;p&gt;No matter what boot loader you use, you need to pass some kernel parameters to
+it as indicated in the above sections.&lt;/p&gt;
+
+&lt;p&gt;For an &lt;strong&gt;encrypted&lt;/strong&gt; system, the kernel parameters will contain at least:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;root=/dev/mapper/cryptroot ro initrd=/initramfs-linux.img init=/usr/lib/systemd/systemd cryptdevice=/dev/sda2:cryptroot
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;flash flash-success&quot;&gt;
+    &lt;svg class=&quot;octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; height=&quot;16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M16 8.5l-6 6-3-3L8.5 10l1.5 1.5L14.5 7 16 8.5zM5.7 12.2l.8.8H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h7c.55 0 1 .45 1 1v6.5l-.8-.8c-.39-.39-1.03-.39-1.42 0L5.7 10.8a.996.996 0 000 1.41v-.01zM4 4h5V3H4v1zm0 2h5V5H4v1zm0 2h3V7H4v1zM3 9H2v1h1V9zm0-2H2v1h1V7zm0-2H2v1h1V5zm0-2H2v1h1V3z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;
+    &lt;strong&gt;Tip: &lt;/strong&gt;Add &lt;code&gt;:allow-discards&lt;/code&gt; after &lt;code&gt;cryptroot&lt;/code&gt; to allow trimming if using an
+SSD. Then enable the &lt;code&gt;fstrim.timer&lt;/code&gt; to trim the device weekly.
+&lt;/div&gt;
+
+&lt;p&gt;For a &lt;strong&gt;regular&lt;/strong&gt; system, the kernel parameters will contain at least:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;root=/dev/sda2 ro initrd=/initramfs-linux.img init=/usr/lib/systemd/systemd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;flash&quot;&gt;
+    &lt;svg class=&quot;octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info&quot; viewBox=&quot;0 0 14 16&quot; version=&quot;1.1&quot; width=&quot;14&quot; height=&quot;16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;
+    &lt;strong&gt;Note: &lt;/strong&gt;In either case, if using btrfs, and you want to boot from a specific
+subvolume, add &lt;code&gt;rootfstype=btrfs rootflags=subvol=/@&lt;/code&gt;, where &lt;code&gt;@&lt;/code&gt; is the
+subvolume you will mount as &lt;code&gt;/&lt;/code&gt;.
+&lt;/div&gt;
+
+&lt;div class=&quot;flash&quot;&gt;
+    &lt;svg class=&quot;octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info&quot; viewBox=&quot;0 0 14 16&quot; version=&quot;1.1&quot; width=&quot;14&quot; height=&quot;16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;
+    &lt;strong&gt;Note: &lt;/strong&gt;If you have an Intel or AMD CPU, enable microcode updates by adding an
+&lt;code&gt;/intel-ucode.img&lt;/code&gt; or &lt;code&gt;/amd-ucode.img&lt;/code&gt;, respectively to
+&lt;code&gt;initrd=&lt;/code&gt; with a comma separating the two images. It ''must'' be the first
+initrd entry on the line. For example:
+&lt;code&gt;initrd=/intel-ucode.img,/initramfs-linux.img&lt;/code&gt;.
+&lt;/div&gt;
+
+&lt;h2 id=&quot;reboot&quot;&gt;Reboot&lt;/h2&gt;
+
+&lt;p&gt;When you reboot you should be prompted for your LUKS password if you decided to encrypt the system.&lt;/p&gt;</content><author><name></name></author><summary type="html">Warning: This is my personal guide for installing an Arch Linux system. Use it only as a guide as you follow along with the official Installation Guide.</summary></entry><entry><title type="html">Create a venv for a Jupyter kernel</title><link href="https://barnett.science/deeplearning/2020/05/22/jupyter-kernel.html" rel="alternate" type="text/html" title="Create a venv for a Jupyter kernel" /><published>2020-05-22T00:00:00-05:00</published><updated>2020-05-22T00:00:00-05:00</updated><id>https://barnett.science/deeplearning/2020/05/22/jupyter-kernel</id><content type="html" xml:base="https://barnett.science/deeplearning/2020/05/22/jupyter-kernel.html">&lt;p&gt;After I setup my deep learning box, I installed JupyterHub following &lt;a href=&quot;https://jupyterhub.readthedocs.io/en/stable/installation-guide-hard.html#part-1-jupyterhub-and-jupyterlab&quot;&gt;these
 instructions&lt;/a&gt;.
 I skipped the conda part myself since I like to run things in Python &lt;code class=&quot;highlighter-rouge&quot;&gt;venv&lt;/code&gt;’s (virtual
 environments).&lt;/p&gt;
@@ -4043,10 +4723,10 @@ INFO:cmdstanpy:finish chain 1
 
 
 
-&lt;div id=&quot;b200b088-b59f-458b-8c7d-b0315cd343d2&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;331432c4-e20a-41ce-b45b-b3a6f1b82c2e&quot;&gt;&lt;/div&gt;
 &lt;div class=&quot;output_subarea output_javascript &quot;&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
-var element = $('#b200b088-b59f-458b-8c7d-b0315cd343d2');
+var element = $('#331432c4-e20a-41ce-b45b-b3a6f1b82c2e');
 new Promise(function(resolve, reject) {
 	var script = document.createElement(&quot;script&quot;);
 	script.onload = resolve;
