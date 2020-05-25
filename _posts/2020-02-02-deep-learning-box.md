@@ -57,7 +57,7 @@ After I was able to boot I installed [Arch Linux](https://www.archlinux.org) on 
 I have been involved with the Arch community for quite some time in editing the Wiki and
 have installed it numerous times, so I was comfortable doing so (Here's [my own
 installation guide; use with
-caution](https://wiki.archlinux.org/index.php/User:Rdeckard/Installation_guide).
+caution]({{ site.baseurl }}/linux/2020/05/24/arch-install.html).
 Additionally all the super computer clusters I used in graduate school were Linux-based,
 and our lab setup our own cluster. One downside about using Arch is that sometimes there
 are libraries that are made for Ubuntu that aren't as easily compiled for Arch in a
