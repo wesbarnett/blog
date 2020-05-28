@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-28T15:49:14-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>© 2020 Wes Barnett</subtitle><entry><title type="html">Run a Flask app on AWS EC2</title><link href="https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html" rel="alternate" type="text/html" title="Run a Flask app on AWS EC2" /><published>2020-05-28T00:00:00-05:00</published><updated>2020-05-28T00:00:00-05:00</updated><id>https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask</id><content type="html" xml:base="https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html">&lt;p&gt;Let’s say you’ve created a &lt;a href=&quot;https://flask.palletsprojects.com/en/1.1.x/&quot;&gt;Flask&lt;/a&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-28T16:27:25-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>© 2020 Wes Barnett</subtitle><entry><title type="html">Run a Flask app on AWS EC2</title><link href="https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html" rel="alternate" type="text/html" title="Run a Flask app on AWS EC2" /><published>2020-05-28T00:00:00-05:00</published><updated>2020-05-28T00:00:00-05:00</updated><id>https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask</id><content type="html" xml:base="https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html">&lt;p&gt;Let’s say you’ve created a &lt;a href=&quot;https://flask.palletsprojects.com/en/1.1.x/&quot;&gt;Flask&lt;/a&gt;
 application and you’re ready to launch it to AWS. At this point you may not care about
 scaling yet, and you just want to get it in production so you can demo it to prospective
 clients or employers. How do you get that up and running quickly?&lt;/p&gt;
@@ -5167,10 +5167,10 @@ INFO:cmdstanpy:finish chain 1
 
 
 
-&lt;div id=&quot;3534287d-44f8-467f-8dee-19377adf9717&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;b7eb24e5-a678-41da-885e-0723bd54dd12&quot;&gt;&lt;/div&gt;
 &lt;div class=&quot;output_subarea output_javascript &quot;&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
-var element = $('#3534287d-44f8-467f-8dee-19377adf9717');
+var element = $('#b7eb24e5-a678-41da-885e-0723bd54dd12');
 new Promise(function(resolve, reject) {
 	var script = document.createElement(&quot;script&quot;);
 	script.onload = resolve;
