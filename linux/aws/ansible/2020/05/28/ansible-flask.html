@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Run a Flask app on AWS EC2 | Wes Barnett, PhD</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Run a Flask app on AWS EC2" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A guide for running a simple flask app on AWS EC2 along with a simple Ansible playbook." />
+<meta property="og:description" content="A guide for running a simple flask app on AWS EC2 along with a simple Ansible playbook." />
+<link rel="canonical" href="https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html" />
+<meta property="og:url" content="https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html" />
+<meta property="og:site_name" content="Wes Barnett, PhD" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-05-28T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"A guide for running a simple flask app on AWS EC2 along with a simple Ansible playbook.","mainEntityOfPage":{"@type":"WebPage","@id":"https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html"},"@type":"BlogPosting","url":"https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html","headline":"Run a Flask app on AWS EC2","dateModified":"2020-05-28T00:00:00-05:00","datePublished":"2020-05-28T00:00:00-05:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://barnett.science/feed.xml" title="Wes Barnett, PhD" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Run a Flask app on AWS EC2 | Wes Barnett, PhD</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Run a Flask app on AWS EC2" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A guide for running a simple flask app on AWS EC2 along with a simple Ansible playbook." />
+<meta property="og:description" content="A guide for running a simple flask app on AWS EC2 along with a simple Ansible playbook." />
+<link rel="canonical" href="https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html" />
+<meta property="og:url" content="https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html" />
+<meta property="og:site_name" content="Wes Barnett, PhD" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-05-28T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"A guide for running a simple flask app on AWS EC2 along with a simple Ansible playbook.","mainEntityOfPage":{"@type":"WebPage","@id":"https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html"},"@type":"BlogPosting","url":"https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html","headline":"Run a Flask app on AWS EC2","dateModified":"2020-05-28T00:00:00-05:00","datePublished":"2020-05-28T00:00:00-05:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://barnett.science/feed.xml" title="Wes Barnett, PhD" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Wes Barnett, PhD</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Run a Flask app on AWS EC2</h1><p class="page-description">A guide for running a simple flask app on AWS EC2 along with a simple Ansible playbook.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-05-28T00:00:00-05:00" itemprop="datePublished">
+        May 28, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      9 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#linux">linux</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#aws">aws</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#ansible">ansible</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#flask-project-setup">Flask project setup</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#running-locally">Running locally</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#aws-setup">AWS Setup</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#create-and-launch-ec2-instance">Create and launch EC2 instance</a></li>
+<li class="toc-entry toc-h3"><a href="#allocate-elastic-ip-address">Allocate elastic IP address</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#domain-name">Domain name</a></li>
+<li class="toc-entry toc-h2"><a href="#setup-instance">Setup instance</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#install-packages">Install packages</a></li>
+<li class="toc-entry toc-h3"><a href="#test-gunicorn">Test gunicorn</a></li>
+<li class="toc-entry toc-h3"><a href="#gunicorn-systemd-unit">gunicorn systemd unit</a></li>
+<li class="toc-entry toc-h3"><a href="#nginx-configuration">nginx configuration</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#automate-setup-with-ansible">Automate setup with Ansible</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#create-playbook">Create playbook</a></li>
+<li class="toc-entry toc-h3"><a href="#run-playbook">Run playbook</a></li>
+</ul>
+</li>
+</ul><p>Let’s say you’ve created a <a href="https://flask.palletsprojects.com/en/1.1.x/">Flask</a>
+application and you’re ready to launch it to AWS. At this point you may not care about
+scaling yet, and you just want to get it in production so you can demo it to prospective
+clients or employers. How do you get that up and running quickly?</p>
+
+<p>In this blog post we’ll set up a simple Flask project to be run on an AWS EC2 instance
+using <a href="https://gunicorn.org/">gunicorn</a> and <a href="https://nginx.org/">nginx</a>.</p>
+
+<p>After walking through this manually, we’ll automate the setup using
+<a href="https://www.ansible.com/">Ansible</a></p>
+
+<h2 id="flask-project-setup">
+<a class="anchor" href="#flask-project-setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Flask project setup</h2>
+
+<p>I’m assuming you have already created your Flask application and know a little bit about
+how to run it locally. I have a barebones Flask project located
+<a href="https://github.com/wesbarnett/flask-project">here</a> that I am using as a model for this
+blog post. All of the routes/views are located in <code class="highlighter-rouge">application/app/routes.py</code> in the
+project.</p>
+
+<p>If you end up using your own Flask project, be sure that the directory structure is the
+same in order to follow this post. Specifically, <code class="highlighter-rouge">__init__.py</code> should be in <code class="highlighter-rouge">application/app</code> and
+should have contents that indicate where the Flask routes are stored. For example, in
+the skeleton used above they are in <code class="highlighter-rouge">routes.py</code>, so the contents of <code class="highlighter-rouge">__init__.py</code> is:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">app</span> <span class="kn">import</span> <span class="n">routes</span>
+</code></pre></div></div>
+
+<p>Here’s the directory structure:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>application/
+    app/
+        __init__.py
+        routes.py
+requirements.txt
+</code></pre></div></div>
+
+<h3 id="running-locally">
+<a class="anchor" href="#running-locally" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running locally</h3>
+
+<p>To run the repository locally, clone it to your machine:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/wesbarnett/flask-project
+</code></pre></div></div>
+
+<p>Then install the requirements. In this example I’m creating a virtual environment:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>flask-project
+python3 <span class="nt">-m</span> venv venv
+<span class="nb">source</span> ./venv/bin/activate
+python <span class="nt">-m</span> pip <span class="nb">install </span>flask gunicorn
+</code></pre></div></div>
+
+<p>Then to run locally do:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gunicorn <span class="nt">--chdir</span> application <span class="nt">-b</span> :8080 app:app
+</code></pre></div></div>
+
+<p>Then visit <a href="http://localhost:8080">http://localhost:8080</a> and you should see a line that
+says “It works!”.</p>
+
+<h2 id="aws-setup">
+<a class="anchor" href="#aws-setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>AWS Setup</h2>
+
+<h3 id="create-and-launch-ec2-instance">
+<a class="anchor" href="#create-and-launch-ec2-instance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create and launch EC2 instance</h3>
+
+<p>So now you have your Flask project and you’re ready to move it to an AWS EC2 instance.
+It’s time to login to your <a href="https://console.aws.amazon.com/ec2">AWS console’s EC2
+dashboard</a>. From there click the big orange “Launch
+Instance” button.</p>
+
+<p><img src="/images/aws/aws_ec2_dash.png" alt="" title="AWS EC2 Dashboard"></p>
+
+<p>Let’s use an Ubuntu Server 18.04 LTS image, so select that on the
+next page. From there you can choose what instance type you want. If you are able,
+choose the free tier eligible one if just testing this out.</p>
+
+<p><img src="/images/aws/aws_ubuntu.png" alt="" title="AWS EC2 image selection"></p>
+
+<p>After selecting what instance type go ahead and skip ahead to step 6 where you can
+configure your security group. Add a rule for port 80 and possibly 443 if you’re going
+to use HTTPS later, or choose a security group that already has those ports open. Simply
+choose “HTTP” under type and it will automatically ensure port 80 is open for all
+traffic.  Otherwise, you won’t be able to access your application in a web browser.</p>
+
+<p><img src="/images/aws/aws_security.png" alt="" title="AWS EC2 security group"></p>
+
+<p>When you click “Review and launch” you will get a warning that you are allowing traffic
+from anywhere. Then click “Launch”. At this point you’ll be asked to choose or create a
+keypair that you will use when you ssh into your instance.</p>
+
+<div class="flash flash-error">
+    <svg class="octicon octicon-alert octicon octicon-alert octicon octicon-alert octicon octicon-alert" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 000 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 00.01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg>
+    <strong>Warning: </strong>Ensure you stop the instance when you are done!
+</div>
+
+<h3 id="allocate-elastic-ip-address">
+<a class="anchor" href="#allocate-elastic-ip-address" aria-hidden="true"><span class="octicon octicon-link"></span></a>Allocate elastic IP address</h3>
+
+<p>Next we want an elastic IP address. The advantage of this is that if we bring an
+instance down and bring another one up, we can just move the IP address to be associated
+with that new instance. Additionally if you stop an instance and restart it, without an
+elastic IP address, you will have to find the new IP address of your instance.</p>
+
+<p><img src="/images/aws/aws_elastic_ip.png" alt="" title="AWS Elastic IP allocation"></p>
+
+<p>Under “Network &amp; Security” on the left hand menu click “Elastic IPs”. Then click
+the orange “Allocate Elastic IP Address” button on the top right. Leave the settings
+alone and click the orange “Allocate” button.</p>
+
+<p>At the top you’ll see a green bar with a button that says “Associate this Elastic IP
+Address”. Click that. Now choose your running instance and associate the IP address with
+that instance.</p>
+
+<h2 id="domain-name">
+<a class="anchor" href="#domain-name" aria-hidden="true"><span class="octicon octicon-link"></span></a>Domain name</h2>
+
+<p>If you are going to use a domain or subdomain, go ahead create an A record for your domain using
+your elastic IP address. Personally I have been using
+<a href="https://namecheap.com">namecheap.com</a> as my registrar. <a href="https://www.namecheap.com/support/knowledgebase/article.aspx/319/2237/how-can-i-set-up-an-a-address-record-for-my-domain">Here is an
+article</a>
+on how to add an A address record for namecheap.</p>
+
+<h2 id="setup-instance">
+<a class="anchor" href="#setup-instance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup instance</h2>
+
+<p>Once your instance is running you’ll need to ssh into the instance. From a Linux machine
+this looks like this:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh <span class="nt">-i</span> ~/.ssh/aws.pem ubuntu@&lt;ip-address&gt;
+</code></pre></div></div>
+
+<p>Here <code class="highlighter-rouge">~/.ssh/aws.pem</code> is my key that I associated with this instance. The IP address is
+the Elastic IP you allocated and associated above.</p>
+
+<p>Now you’ll want to clone your Flask project to the instance. For my barebones project it
+would be:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/wesbarnett/flask-project
+</code></pre></div></div>
+
+<h3 id="install-packages">
+<a class="anchor" href="#install-packages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install packages</h3>
+
+<p>We won’t be using a virtual environment on this instance. You’ll need to install a few
+Ubuntu packages next:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get update
+<span class="nb">sudo </span>apt-get <span class="nb">install </span>nginx gunicorn3 python3-pip python3-flask
+</code></pre></div></div>
+
+<p>For the barebones project this is all we need.</p>
+
+<h3 id="test-gunicorn">
+<a class="anchor" href="#test-gunicorn" aria-hidden="true"><span class="octicon octicon-link"></span></a>Test gunicorn</h3>
+
+<p>Now you should be able to test <code class="highlighter-rouge">gunicorn</code>. Note that the executable here is named
+<code class="highlighter-rouge">gunicorn3</code>. This runs the server in the background, makes a GET request to test it, and
+then puts the server back into foreground. You should see “It works!” when you run curl:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gunicorn3 <span class="nt">--chdir</span> application <span class="nt">-b</span> :8080 app:app &amp;
+curl http://localhost:8080
+<span class="nb">fg</span>
+</code></pre></div></div>
+
+<h3 id="gunicorn-systemd-unit">
+<a class="anchor" href="#gunicorn-systemd-unit" aria-hidden="true"><span class="octicon octicon-link"></span></a>gunicorn systemd unit</h3>
+
+<p>We don’t want to have to type in <code class="highlighter-rouge">gunicorn3</code> manually to run our Flask server. Let’s
+have this occur automatically at boot by creating and enabling a systemd unit. Create a
+file with the following contents at the indicated location:</p>
+
+<pre style="margin-bottom: 0 !important; border-bottom:none;
+           padding-bottom:0.8em;">/etc/systemd/system/gunicorn.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top:
+            0.8em;">
+[Unit]
+Description=gunicorn to serve flask-project
+After=network.target
+
+[Service]
+WorkingDirectory=/home/ubuntu/flask-project
+ExecStart=/usr/bin/gunicorn3 -b 0.0.0.0:8080 --chdir application app:app
+
+[Install]
+WantedBy=multi-user.target</pre>
+
+<p>Change <code class="highlighter-rouge">flask-project</code> to the name of your project in the <code class="highlighter-rouge">WorkingDirectory</code> above.</p>
+
+<p>Now to run your gunicorn service do:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl start gunicorn
+</code></pre></div></div>
+
+<p>You should now be able to do <code class="highlighter-rouge">curl http://localhost:8080</code> and get a message that says
+“It works!”.</p>
+
+<p>To enable this to run on boot, do:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl enable gunicorn
+</code></pre></div></div>
+
+<p>If you ever want to restart the server, do:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl restart gunicorn
+</code></pre></div></div>
+
+<h3 id="nginx-configuration">
+<a class="anchor" href="#nginx-configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>nginx configuration</h3>
+
+<p>We don’t want to expose gunicorn to the web directly. It’s not designed for taking
+direct traffic and <a href="https://docs.gunicorn.org/en/stable/deploy.html">susceptible to denial-of service attacks if you do
+that</a>. Instead we’ll use
+<a href="https://nginx.org/">nginx</a> to take the traffic and setup a reverse proxy to gunicorn.</p>
+
+<p>First remove the default configuration from being enabled:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo rm /etc/nginx/sites-enabled/default
+</code></pre></div></div>
+
+<p>Then create a new configuration file:</p>
+
+<pre style="margin-bottom: 0 !important; border-bottom:none;
+           padding-bottom:0.8em;">/etc/nginx/sites-available/flask-project.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top:
+            0.8em;">
+server {
+    listen 80;
+    listen [::]:80;
+
+    location / {
+        proxy_set_header Host              $host;
+        proxy_set_header X-Real-IP         $remote_addr;
+        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Host              $http_host;
+        proxy_pass http://localhost:8080;
+    }
+}</pre>
+
+<p>Now enable it by creating a symlink:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo ln -s /etc/nginx/sites-available/flask-project.conf /etc/nginx/sites-enabled/
+</code></pre></div></div>
+
+<p>Finally, start nginx:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl start nginx
+</code></pre></div></div>
+
+<p>You should now be able to enter your Elastic IP address and domain name into a web
+browser and see your website!</p>
+
+<p>To enable nginx on boot do:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl enable nginx
+</code></pre></div></div>
+
+<p>Whenever you make a change to your code, you’ll need to pull it in with git and restart
+the gunicorn service.</p>
+
+<h2 id="automate-setup-with-ansible">
+<a class="anchor" href="#automate-setup-with-ansible" aria-hidden="true"><span class="octicon octicon-link"></span></a>Automate setup with Ansible</h2>
+
+<p>Let’s make setting up our server a even easier using Ansible. For this section I
+recommend creating a new, clean instance. If you’re not using the previous instance from
+above simply terminate it and release it’s elastic IP address. You can then associate
+the Elastic IP address with this new instance if you want or create a new one. Simply go
+back and follow the AWS setup steps again.</p>
+
+<p>Install <a href="https://www.ansible.com/">Ansible</a> to your local machine. Ansible is a remote
+configuration and provisioning tool. For Linux distributions simply use your package
+manager. For MacOS you can use Homebrew. I’m not
+sure what options are available for Windows. You don’t need to install anything on your
+AWS instance, not even Ansible!</p>
+
+<h3 id="create-playbook">
+<a class="anchor" href="#create-playbook" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create playbook</h3>
+
+<p>Ansible consists of playbooks that you use to tell it what to do. These playbooks then
+refer to configuration file templates. On your local machine create a new directory to
+contain your playbook and templates:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir aws-flask-playbook
+cd aws-flask-playbook
+</code></pre></div></div>
+
+<p>In this directory create an Ansible configuration file:</p>
+
+<pre style="margin-bottom: 0 !important; border-bottom:none;
+           padding-bottom:0.8em;">ansible.cfg</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top:
+            0.8em;">
+[defaults]
+host_key_checking = False
+inventory         = ./deploy/hosts</pre>
+
+<p>Now create a directory named <code class="highlighter-rouge">deploy</code> and in it a file named <code class="highlighter-rouge">hosts</code>. Add your Elastic
+IP address under <code class="highlighter-rouge">[webservers]</code>. You also need to change the location of your private
+key file. <code class="highlighter-rouge">github_user</code> and <code class="highlighter-rouge">app_name</code> are used in the Github url as well as naming some
+of the files later.</p>
+
+<pre style="margin-bottom: 0 !important; border-bottom:none;
+           padding-bottom:0.8em;">deploy/hosts</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top:
+            0.8em;">
+[webservers]
+<i>your-elastic-ip</i>
+
+[webservers:vars]
+ansible_ssh_user=ubuntu
+ansible_ssh_private_key_file=/home/wes/.ssh/aws.pem
+github_user=wesbarnett
+app_name=flask-project
+domain_name=test.barnett.science
+</pre>
+
+<p>Then create a playbook:</p>
+
+<pre style="margin-bottom: 0 !important; border-bottom:none;
+           padding-bottom:0.8em;">deploy.yaml</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top:
+            0.8em;"># Ansible playbook for deploying a Flask app
+
+---
+- hosts: webservers
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: install packages
+    apt: 
+      name: "{{ packages }}"
+      update_cache: yes
+    vars:
+      packages:
+        - nginx
+        - gunicorn3
+        - python3-pip
+
+- hosts: webservers
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: clone repo
+    git:
+      repo: 'https://github.com/{{ github_user }}/{{ app_name }}.git'
+      dest: /srv/www/{{ app_name }}
+      update: yes
+
+- hosts: webservers
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: Install needed python packages
+    pip:
+      requirements: requirements.txt
+      chdir: /srv/www/{{ app_name }}
+
+- hosts: webservers
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: template systemd service config
+    template:
+      src: deploy/gunicorn.service
+      dest: /etc/systemd/system/{{ app_name }}.service
+  - name: start systemd app service
+    systemd: name={{ app_name }}.service state=restarted enabled=yes
+  - name: template nginx site config
+    template:
+      src: deploy/nginx.conf
+      dest: /etc/nginx/sites-available/{{ app_name }}.conf
+  - name: remove default nginx site config
+    file: path=/etc/nginx/sites-enabled/default state=absent
+  - name: enable nginx site
+    file:
+      src: /etc/nginx/sites-available/{{ app_name }}.conf
+      dest: /etc/nginx/sites-enabled/{{ app_name }}.conf
+      state: link
+      force: yes
+  - name: restart nginx
+    systemd: name=nginx state=restarted enabled=yes
+</pre>
+
+<p>The playbook does the following:</p>
+
+<ol>
+  <li>Installs <code class="highlighter-rouge">nginx</code>, <code class="highlighter-rouge">gunicorn3</code>, and <code class="highlighter-rouge">python-pip</code>.</li>
+  <li>Clones the git repository <code class="highlighter-rouge">https://github.com/&lt;github_user&gt;/&lt;app_name&gt;</code> to <code class="highlighter-rouge">/srv/www/</code>.</li>
+  <li>Installs the python packages listed in <code class="highlighter-rouge">requirements.txt</code> of the repo to be cloned.
+<code class="highlighter-rouge">flask</code> should be listed if you are running a flask server.</li>
+  <li>Installs and starts a systemd service to run gunicorn.</li>
+  <li>Installs and enables an <code class="highlighter-rouge">nginx</code> configuration that forwards the gunicorn web service
+to port 80.</li>
+</ol>
+
+<p>After creating create the two configuration file templates that the playbook uses in the
+<code class="highlighter-rouge">deploy</code> directory. These are template files - you do not and should not change anything
+in them, since Ansible will automatically fill in the variables from <code class="highlighter-rouge">deploy/hosts</code>.</p>
+
+<pre style="margin-bottom: 0 !important; border-bottom:none;
+           padding-bottom:0.8em;">deploy/nginx.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top:
+            0.8em;">
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name {{ domain_name }};
+    location / {
+        proxy_set_header Host              $host;
+        proxy_set_header X-Real-IP         $remote_addr;
+        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Host              $http_host;
+        proxy_pass http://localhost:8080;
+    }
+}</pre>
+
+<pre style="margin-bottom: 0 !important; border-bottom:none;
+           padding-bottom:0.8em;">deploy/gunicorn.service</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top:
+            0.8em;">
+
+[Unit]
+Description=gunicorn to serve {{ app_name }}
+After=network.target
+
+[Service]
+WorkingDirectory=/srv/www/{{ app_name }}
+ExecStart=/usr/bin/gunicorn3 -b 0.0.0.0:8080 --chdir application app:app
+
+[Install]
+WantedBy=multi-user.target
+</pre>
+
+<h3 id="run-playbook">
+<a class="anchor" href="#run-playbook" aria-hidden="true"><span class="octicon octicon-link"></span></a>Run playbook</h3>
+
+<p>After setting everything up above, you can now run the playbook.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ansible-playbook deploy.yaml
+</code></pre></div></div>
+
+<p><img src="/images/aws/aws_ansible_output.png" alt="" title="Output after running the
+playbook"></p>
+
+<p>After running the playbook you should be able to visit your Elastic IP address in a web
+browser and see “It works!” for the barebones Flask project.</p>
+
+<p>Now as you make changes, simply push to Github as usual. When you’re ready to update
+your server, just re-run the playbook.</p>
+
+<div class="flash flash-error">
+    <svg class="octicon octicon-alert octicon octicon-alert octicon octicon-alert octicon octicon-alert octicon octicon-alert" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 000 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 00.01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg>
+    <strong>Warning: </strong>If you're just testing this out and not wanting to run
+your Flask site yet, be sure to stop or terminate your EC2 instance.
+</div>
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="wesbarnett/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/linux/aws/ansible/2020/05/28/ansible-flask.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>© 2020 Wes Barnett</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/wesbarnett" title="wesbarnett"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/wesbarnett" title="wesbarnett"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg></a></li><li><a rel="me" href="https://twitter.com/WesBarnettPhD" title="WesBarnettPhD"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
