@@ -59,7 +59,7 @@ just be `SSH` in your implementation):
 -----BEGIN OPENSSH PRIVATE KEY-----
 ```
 
-{% include note.html content="Your private key is encrypted before it reached Github and
+{% include note.html content="Your private key is encrypted before it reaches Github and
 not decrypted until it is used in a workflow <a
 href='https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets'>according
 to Github</a>. Still, understand the security implications of sharing your private key
