@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-28T21:05:23-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>© 2020 Wes Barnett</subtitle><entry><title type="html">Continious deployment to EC2 with Github Actions</title><link href="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html" rel="alternate" type="text/html" title="Continious deployment to EC2 with Github Actions" /><published>2020-05-28T00:00:00-05:00</published><updated>2020-05-28T00:00:00-05:00</updated><id>https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions</id><content type="html" xml:base="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html">&lt;p&gt;In my &lt;a href=&quot;https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html&quot;&gt;previous
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-28T21:09:00-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>© 2020 Wes Barnett</subtitle><entry><title type="html">Continious deployment to EC2 with Github Actions</title><link href="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html" rel="alternate" type="text/html" title="Continious deployment to EC2 with Github Actions" /><published>2020-05-28T00:00:00-05:00</published><updated>2020-05-28T00:00:00-05:00</updated><id>https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions</id><content type="html" xml:base="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html">&lt;p&gt;In my &lt;a href=&quot;https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html&quot;&gt;previous
 post&lt;/a&gt; I covered
 how to setup an AWS EC2 instance with a barebones Flask project. At the end of the post
 we automated this by using Ansible. In this post, we take it one step further and let
@@ -146,6 +146,15 @@ section&lt;/a&gt;.&lt;/p&gt;
 &lt;h2 id=&quot;ssl&quot;&gt;SSL&lt;/h2&gt;
 
 &lt;p&gt;This step is optional for those who want to serve using HTTPS.&lt;/p&gt;
+
+&lt;div class=&quot;flash&quot;&gt;
+    &lt;svg class=&quot;octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info&quot; viewBox=&quot;0 0 14 16&quot; version=&quot;1.1&quot; width=&quot;14&quot; height=&quot;16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;
+    &lt;strong&gt;Note: &lt;/strong&gt;Although it is very simple to enable HTTPS, you can run
+into problems if trying to switch back to HTTP-only later. Specifically, web browsers
+that had been accessing the site via HTTPS will possibly now see the site as insecure
+and may not be able to access content. In other words, if choosing to serve over HTTPS,
+stick with it.
+&lt;/div&gt;
 
 &lt;p&gt;To enable SSL for your site, ensure that port 443 is open in your EC2 security group for
 inbound connections. Then SSH into your EC2 instance and follow the instructions to use
@@ -5323,10 +5332,10 @@ INFO:cmdstanpy:finish chain 1
 
 
 
-&lt;div id=&quot;5f72332e-6f0a-4b85-926a-feeef5207d3b&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;621d679d-d921-4a20-807c-1fa1d0c6b554&quot;&gt;&lt;/div&gt;
 &lt;div class=&quot;output_subarea output_javascript &quot;&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
-var element = $('#5f72332e-6f0a-4b85-926a-feeef5207d3b');
+var element = $('#621d679d-d921-4a20-807c-1fa1d0c6b554');
 new Promise(function(resolve, reject) {
 	var script = document.createElement(&quot;script&quot;);
 	script.onload = resolve;
