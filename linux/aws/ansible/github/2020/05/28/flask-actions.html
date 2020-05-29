@@ -109,7 +109,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      6 min read
+      7 min read
     
 </span></p>
 
@@ -339,13 +339,22 @@ changes, merge with master and push.</p>
 location, you may break the Github action from working. It expects
 <code class="highlighter-rouge">__init__.py</code> to be under <code class="highlighter-rouge">application/app</code>. If you want it elsewhere, you’ll need to
 modify the ansible templates yourself. Other than that, there shouldn’t be any
-restrictions on what you can change.</p>
+restrictions on what you can change or add to your flask server (templates, static
+files, etc.).</p>
 
 <p>You can add additional Python packages to the top-level <code class="highlighter-rouge">requirements.txt</code> and they will
 be installed automatically as part of the ansible provisioning.</p>
 
 <p>To learn more about how this repository is setup, see <a href="https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html#flask-project-setup">this
 section</a>.</p>
+
+<p>Lastly, you can always check how the Github action performed by going to the “Actions”
+tab in your new repository. Additionally you can still ssh into your EC2 instance and
+check the status of both the gunicorn service (<code class="highlighter-rouge">flask-project.service</code> by default) and
+nginx service (<code class="highlighter-rouge">nginx.service</code>) using systemd. Note that if you make any changes to
+<code class="highlighter-rouge">flask-project.service</code> or the nginx configuration you should do that in the ansible
+template in your repository, not in your instance directly; otherwise, any changes you
+make to those files will be overwritten by your ansible playbook when you push later.</p>
 
   </div><!-- from https://github.com/utterance/utterances -->
 <script src="https://utteranc.es/client.js"
