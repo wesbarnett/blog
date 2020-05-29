@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-28T17:12:01-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>© 2020 Wes Barnett</subtitle><entry><title type="html">Continious deployment to EC2 with Github Actions</title><link href="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html" rel="alternate" type="text/html" title="Continious deployment to EC2 with Github Actions" /><published>2020-05-28T00:00:00-05:00</published><updated>2020-05-28T00:00:00-05:00</updated><id>https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions</id><content type="html" xml:base="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html">&lt;p&gt;In my &lt;a href=&quot;https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html&quot;&gt;previous
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-28T19:20:26-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>© 2020 Wes Barnett</subtitle><entry><title type="html">Continious deployment to EC2 with Github Actions</title><link href="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html" rel="alternate" type="text/html" title="Continious deployment to EC2 with Github Actions" /><published>2020-05-28T00:00:00-05:00</published><updated>2020-05-28T00:00:00-05:00</updated><id>https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions</id><content type="html" xml:base="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html">&lt;p&gt;In my &lt;a href=&quot;https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html&quot;&gt;previous
 post&lt;/a&gt; I covered
 how to setup an AWS EC2 instance with a barebones Flask project. At the end of the post
 we automated this by using Ansible. In this post, we take it one step further and let
@@ -25,8 +25,10 @@ continously deploying.&lt;/p&gt;
 repository are discuess in the previous post
 &lt;a href=&quot;https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html#flask-project-setup&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Go ahead an clone your repository to your local machine so you can make changes to the
+&lt;p&gt;Go ahead and clone your repository to your local machine so you can make changes to the
 Flask server.&lt;/p&gt;
+
+&lt;p&gt;The Flask application only has one route at &lt;code class=&quot;highlighter-rouge&quot;&gt;/&lt;/code&gt; that simply prints “It works!”.&lt;/p&gt;
 
 &lt;h3 id=&quot;generate-ssh-keypair&quot;&gt;Generate SSH keypair&lt;/h3&gt;
 
@@ -114,10 +116,10 @@ your domain and see the text “It works!”.&lt;/p&gt;
 
 &lt;h2 id=&quot;usage&quot;&gt;Usage&lt;/h2&gt;
 
-&lt;p&gt;Now that you have it working, simply make updates to your code locally. It’s recommended
-you create another branch to work on development and only merge into master when it is
-ready for production. Anything pushed to the master branch will be automatically
-deployed to your EC2 instance, so be sure to test locally! To do that, you can install
+&lt;p&gt;Now that you have it working, simply make updates to your code and push. It’s
+recommended you create another branch to work on development and only merge into master
+when it is ready for production. Anything pushed to the master branch will be
+automatically deployed to your EC2 instance, so be sure to test locally! To do that, you can install
 gunicorn and flask, as well as other necessary packages and run the following at the top
 level of your local copy of the repository:&lt;/p&gt;
 
@@ -5297,10 +5299,10 @@ INFO:cmdstanpy:finish chain 1
 
 
 
-&lt;div id=&quot;db94b032-ccea-4ae5-b8f7-62213ec9158c&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;96b8a426-2558-4ad3-91ff-e63d4582ac8e&quot;&gt;&lt;/div&gt;
 &lt;div class=&quot;output_subarea output_javascript &quot;&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
-var element = $('#db94b032-ccea-4ae5-b8f7-62213ec9158c');
+var element = $('#96b8a426-2558-4ad3-91ff-e63d4582ac8e');
 new Promise(function(resolve, reject) {
 	var script = document.createElement(&quot;script&quot;);
 	script.onload = resolve;
