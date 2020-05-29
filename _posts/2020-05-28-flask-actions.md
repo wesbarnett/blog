@@ -125,6 +125,7 @@ test.barnett.science
 domain_name=test.barnett.science
 app_name=flask-project
 ansible_ssh_user=ubuntu
+SSL=False
 " %}
 
 Commit the change and push to your Github repository. You should now be able to visit
@@ -149,3 +150,16 @@ be installed automatically as part of the ansible provisioning.
 
 To learn more about how this repository is setup, see [this
 section](https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html#flask-project-setup).
+
+## SSL
+
+This step is optional for those who want to serve using HTTPS.
+
+To enable SSL for your site, ensure that port 443 is open in your EC2 security group for
+inbound connections. Then SSH into your EC2 instance and follow the instructions to use
+Let's Encrypt's certbot [found
+here](https://certbot.eff.org/lets-encrypt/ubuntubionic-nginx).
+
+After this is complete, simply change `SSL=True` in `ansible/deploy/hosts` and push.
+This sets a boolean variable such that the nginx configuration for your domain is
+changed to serve using HTTPS. Additionally all HTTP traffic will be redirected to HTTPS.
