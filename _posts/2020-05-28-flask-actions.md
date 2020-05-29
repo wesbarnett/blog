@@ -38,9 +38,18 @@ repository are discuess in the previous post
 [here](https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html#flask-project-setup).
 
 Go ahead and clone your repository to your local machine so you can make changes to the
-Flask server.
+Flask server later.
 
-The Flask application only has one route at `/` that simply prints "It works!".
+To run the gunicorn server locally for testing, in it's current state you need at least
+the `gunicorn` and `flask` packages. At the top level of the respository run:
+
+```bash
+gunicorn --chdir application -b :8080 app:app
+```
+
+The Flask application only has one route at `/` that simply prints "It works!". If
+running locally you can go to <a href="http://localhost:8080">localhost:8080</a> to see
+the default route.
 
 ### Generate SSH keypair
 
@@ -93,7 +102,7 @@ Return here after you have created an instance and associated an Elastic IP with
 your Flask site yet, be sure to stop your EC2 instance when you are finished testing."
 %}
 
-### Create A record for domain
+### Create an A record for domain
 
 Create an A record for your domain or subdomain for the IP address. I personally use
 [namecheap.com](https://namecheap.com). To add an A record for your domain or subdomain,
@@ -126,16 +135,17 @@ your domain and see the text "It works!".
 Now that you have it working, simply make updates to your code and push. It's
 recommended you create another branch to work on development and only merge into master
 when it is ready for production. Anything pushed to the master branch will be
-automatically deployed to your EC2 instance, so be sure to test locally! To do that, you can install
-gunicorn and flask, as well as other necessary packages and run the following at the top
-level of your local copy of the repository:
-
-```bash
-gunicorn --chdir application -b :8080 app:app
-```
-
-You can then visit `http://localhost:8080` to see how it works locally. When confident
+automatically deployed to your EC2 instance, so be sure to test locally! When confident
 with the changes, merge with master and push.
+
+If you make updates to the directory structure, like moving `__init__.py` to another
+location, you may break the Github action from working. It expects
+`__init__.py` to be under `application/app`. If you want it elsewhere, you'll need to
+modify the ansible templates yourself. Other than that, there shouldn't be any
+restrictions on what you can change.
+
+You can add additional Python packages to the top-level `requirements.txt` and they will
+be installed automatically as part of the ansible provisioning.
 
 To learn more about how this repository is setup, see [this
 section](https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html#flask-project-setup).
