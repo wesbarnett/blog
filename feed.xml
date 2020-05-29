@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-29T09:38:40-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>© 2020 Wes Barnett</subtitle><entry><title type="html">Continious deployment to EC2 with Github Actions</title><link href="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html" rel="alternate" type="text/html" title="Continious deployment to EC2 with Github Actions" /><published>2020-05-28T00:00:00-05:00</published><updated>2020-05-28T00:00:00-05:00</updated><id>https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions</id><content type="html" xml:base="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html">&lt;p&gt;In my &lt;a href=&quot;https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html&quot;&gt;previous
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-29T09:56:05-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>© 2020 Wes Barnett</subtitle><entry><title type="html">Continuous deployment of Flask server with Github Actions</title><link href="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html" rel="alternate" type="text/html" title="Continuous deployment of Flask server with Github Actions" /><published>2020-05-28T00:00:00-05:00</published><updated>2020-05-28T00:00:00-05:00</updated><id>https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions</id><content type="html" xml:base="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html">&lt;p&gt;In my &lt;a href=&quot;https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html&quot;&gt;previous
 post&lt;/a&gt; I covered
-how to setup an AWS EC2 instance with a barebones Flask project. At the end of the post
+how to setup an AWS EC2 instance with a bare bones Flask project. At the end of the post
 we automated this by using Ansible. In this post, we take it one step further and let
 Github use Ansible to provision and configure our EC2 instance. If you haven’t read the
 last post, I recommend at least skimming through it to get an idea of what we’re setting
@@ -13,8 +13,7 @@ any cloud provider or your own personal Linux server. You just need to ensure po
 and 443 are open and copy the public key to the remote server.
 &lt;/div&gt;
 
-&lt;p&gt;We want to use an &lt;a href=&quot;https://docs.ansible.com/ansible/latest/user_guide/playbooks.html&quot;&gt;Ansible
-playbook&lt;/a&gt; via Github
+&lt;p&gt;We want to use an &lt;a href=&quot;https://docs.ansible.com/ansible/latest/user_guide/playbooks.html&quot;&gt;Ansible playbook&lt;/a&gt; via Github
 Actions to provision and configure everything in our EC2 instance automatically so that
 whenever we push the master branch to Github it updates our deployment. The Ansible
 playbook, &lt;a href=&quot;https://github.com/wesbarnett/flask-project/blob/master/ansible/deploy.yaml&quot;&gt;found
@@ -31,7 +30,7 @@ our Flask server.&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;This is not intended as a large-scale solution, but if you’re running a small website or
 REST API that you would like to demo to people, this streamlines some of the process of
-continously deploying.&lt;/p&gt;
+continuously deploying.&lt;/p&gt;
 
 &lt;h2 id=&quot;setup&quot;&gt;Setup&lt;/h2&gt;
 
@@ -46,7 +45,7 @@ repository are discussed in the previous post
 Flask server later.&lt;/p&gt;
 
 &lt;p&gt;To run the gunicorn server locally for testing, in it’s current state you need at least
-the &lt;code class=&quot;highlighter-rouge&quot;&gt;gunicorn&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;flask&lt;/code&gt; packages. At the top level of the respository run:&lt;/p&gt;
+the &lt;code class=&quot;highlighter-rouge&quot;&gt;gunicorn&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;flask&lt;/code&gt; packages. At the top level of the repository run:&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gunicorn &lt;span class=&quot;nt&quot;&gt;--chdir&lt;/span&gt; application &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; :8080 app:app
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -55,13 +54,13 @@ the &lt;code class=&quot;highlighter-rouge&quot;&gt;gunicorn&lt;/code&gt; and &l
 running locally you can go to &lt;a href=&quot;http://localhost:8080&quot;&gt;localhost:8080&lt;/a&gt; to see
 the default route.&lt;/p&gt;
 
-&lt;h3 id=&quot;generate-ssh-keypair&quot;&gt;Generate SSH keypair&lt;/h3&gt;
+&lt;h3 id=&quot;generate-ssh-key-pair&quot;&gt;Generate SSH key pair&lt;/h3&gt;
 
-&lt;p&gt;Create an SSH keypair to be used between Github and AWS. Personally I prefer to do this
+&lt;p&gt;Create an SSH key pair to be used between Github and AWS. Personally I prefer to do this
 locally on my machine using &lt;code class=&quot;highlighter-rouge&quot;&gt;ssh-keypair&lt;/code&gt;, but you can use any third party tool. Don’t
 include a passphrase.&lt;/p&gt;
 
-&lt;h3 id=&quot;copy-private-key-to-github&quot;&gt;Copy private key to Github&lt;/h3&gt;
+&lt;h4 id=&quot;copy-private-key-to-github&quot;&gt;Copy private key to Github&lt;/h4&gt;
 
 &lt;p&gt;Next you will need to copy and paste the &lt;em&gt;private&lt;/em&gt; key into the secrets for your new
 repository that you generated. To do that, go to the settings for your repository and
@@ -84,7 +83,7 @@ with a third-party.
 &lt;p&gt;&lt;img src=&quot;/images/github_actions/new_secret.png&quot; alt=&quot;&quot; title=&quot;Paste in your SSH
 private key here.&quot; /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;copy-public-key-to-aws-ec2&quot;&gt;Copy public key to AWS EC2&lt;/h3&gt;
+&lt;h4 id=&quot;copy-public-key-to-aws-ec2&quot;&gt;Copy public key to AWS EC2&lt;/h4&gt;
 
 &lt;p&gt;Next, copy the public key and import it into AWS. Go
 &lt;a href=&quot;https://console.aws.amazon.com/ec2/#KeyPairs:&quot;&gt;here&lt;/a&gt; and select the white “Actions”
@@ -108,7 +107,7 @@ Return here after you have created an instance and associated an Elastic IP with
 your Flask site yet, be sure to stop your EC2 instance when you are finished testing.
 &lt;/div&gt;
 
-&lt;h3 id=&quot;create-an-a-record-for-domain&quot;&gt;Create an A record for domain&lt;/h3&gt;
+&lt;h4 id=&quot;create-an-a-record-for-domain&quot;&gt;Create an A record for domain&lt;/h4&gt;
 
 &lt;p&gt;Create an A record for your domain or subdomain for the IP address. I personally use
 &lt;a href=&quot;https://namecheap.com&quot;&gt;namecheap.com&lt;/a&gt;. To add an A record for your domain or subdomain,
@@ -120,7 +119,7 @@ article&lt;/a&gt;. It may take a few minutes for DNS servers to be updated.&lt;/
 &lt;p&gt;Lastly, in your repository update &lt;code class=&quot;highlighter-rouge&quot;&gt;ansible/deploy/hosts&lt;/code&gt; for your own domain. In the
 file replace the instance of &lt;code class=&quot;highlighter-rouge&quot;&gt;test.barnett.science&lt;/code&gt; with your domain name (you could
 actually list several domain names if you wanted to deploy to several different
-servers). Note that although ansible allows IP addresses, the templates for this project
+servers). Note that although Ansible allows IP addresses, the templates for this project
 expect this to be a domain name. You can also change the &lt;code class=&quot;highlighter-rouge&quot;&gt;app_name&lt;/code&gt; from &lt;code class=&quot;highlighter-rouge&quot;&gt;flask-project&lt;/code&gt;
 to whatever you desire, but it is not necessary. This is used as the systemd unit name
 that runs gunicorn as well as the directory of where the repository will be cloned.&lt;/p&gt;
@@ -178,12 +177,12 @@ changes, merge with master and push.&lt;/p&gt;
 &lt;p&gt;If you make updates to the directory structure, like moving &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__.py&lt;/code&gt; to another
 location, you may break the Github action from working. It expects
 &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__.py&lt;/code&gt; to be under &lt;code class=&quot;highlighter-rouge&quot;&gt;application/app&lt;/code&gt;. If you want it elsewhere, you’ll need to
-modify the ansible templates yourself. Other than that, there shouldn’t be any
+modify the Ansible templates yourself. Other than that, there shouldn’t be any
 restrictions on what you can change or add to your flask server (templates, static
 files, etc.).&lt;/p&gt;
 
 &lt;p&gt;You can add additional Python packages to the top-level &lt;code class=&quot;highlighter-rouge&quot;&gt;requirements.txt&lt;/code&gt; and they will
-be installed automatically as part of the ansible provisioning.&lt;/p&gt;
+be installed automatically as part of the Ansible provisioning.&lt;/p&gt;
 
 &lt;p&gt;To learn more about how this repository is setup, see &lt;a href=&quot;https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html#flask-project-setup&quot;&gt;this
 section&lt;/a&gt;.&lt;/p&gt;
@@ -194,7 +193,7 @@ check the status of both the gunicorn service (&lt;code class=&quot;highlighter-
 nginx service (&lt;code class=&quot;highlighter-rouge&quot;&gt;nginx.service&lt;/code&gt;) using systemd. Note that if you make any changes to
 &lt;code class=&quot;highlighter-rouge&quot;&gt;flask-project.service&lt;/code&gt; or the nginx configuration you should do that in the ansible
 template in your repository, not in your instance directly; otherwise, any changes you
-make to those files will be overwritten by your ansible playbook when you push later.&lt;/p&gt;</content><author><name></name></author><summary type="html">In my previous post I covered how to setup an AWS EC2 instance with a barebones Flask project. At the end of the post we automated this by using Ansible. In this post, we take it one step further and let Github use Ansible to provision and configure our EC2 instance. If you haven’t read the last post, I recommend at least skimming through it to get an idea of what we’re setting up here.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://barnett.science/images/github_actions/diagram.png" /><media:content medium="image" url="https://barnett.science/images/github_actions/diagram.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Run a Flask app on AWS EC2</title><link href="https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html" rel="alternate" type="text/html" title="Run a Flask app on AWS EC2" /><published>2020-05-28T00:00:00-05:00</published><updated>2020-05-28T00:00:00-05:00</updated><id>https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask</id><content type="html" xml:base="https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html">&lt;p&gt;Let’s say you’ve created a &lt;a href=&quot;https://flask.palletsprojects.com/en/1.1.x/&quot;&gt;Flask&lt;/a&gt;
+make to those files will be overwritten by your ansible playbook when you push later.&lt;/p&gt;</content><author><name></name></author><summary type="html">In my previous post I covered how to setup an AWS EC2 instance with a bare bones Flask project. At the end of the post we automated this by using Ansible. In this post, we take it one step further and let Github use Ansible to provision and configure our EC2 instance. If you haven’t read the last post, I recommend at least skimming through it to get an idea of what we’re setting up here.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://barnett.science/images/github_actions/diagram.png" /><media:content medium="image" url="https://barnett.science/images/github_actions/diagram.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Run a Flask app on AWS EC2</title><link href="https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html" rel="alternate" type="text/html" title="Run a Flask app on AWS EC2" /><published>2020-05-28T00:00:00-05:00</published><updated>2020-05-28T00:00:00-05:00</updated><id>https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask</id><content type="html" xml:base="https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html">&lt;p&gt;Let’s say you’ve created a &lt;a href=&quot;https://flask.palletsprojects.com/en/1.1.x/&quot;&gt;Flask&lt;/a&gt;
 application and you’re ready to launch it to AWS. At this point you may not care about
 scaling yet, and you just want to get it in production so you can demo it to prospective
 clients or employers. How do you get that up and running quickly?&lt;/p&gt;
@@ -5363,10 +5362,10 @@ INFO:cmdstanpy:finish chain 1
 
 
 
-&lt;div id=&quot;0e8ea296-fb54-43b7-966c-b9e8085f0e5b&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;58edf6e3-bc04-4e1f-b2be-e35a33491b0d&quot;&gt;&lt;/div&gt;
 &lt;div class=&quot;output_subarea output_javascript &quot;&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
-var element = $('#0e8ea296-fb54-43b7-966c-b9e8085f0e5b');
+var element = $('#58edf6e3-bc04-4e1f-b2be-e35a33491b0d');
 new Promise(function(resolve, reject) {
 	var script = document.createElement(&quot;script&quot;);
 	script.onload = resolve;

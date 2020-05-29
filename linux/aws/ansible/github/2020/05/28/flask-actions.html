@@ -3,12 +3,12 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Continious deployment to EC2 with Github Actions | Wes Barnett, PhD</title>
+<title>Continuous deployment of Flask server with Github Actions | Wes Barnett, PhD</title>
 <meta name="generator" content="Jekyll v4.0.0" />
-<meta property="og:title" content="Continious deployment to EC2 with Github Actions" />
+<meta property="og:title" content="Continuous deployment of Flask server with Github Actions" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Building on the last post, we take it one step further and use Github Actions to automate everything. Just push and deploy." />
-<meta property="og:description" content="Building on the last post, we take it one step further and use Github Actions to automate everything. Just push and deploy." />
+<meta name="description" content="Use a Github Workflow and Action to continuously deploy a Flask server to an EC2 instance, or any other Linux server." />
+<meta property="og:description" content="Use a Github Workflow and Action to continuously deploy a Flask server to an EC2 instance, or any other Linux server." />
 <link rel="canonical" href="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html" />
 <meta property="og:url" content="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html" />
 <meta property="og:site_name" content="Wes Barnett, PhD" />
@@ -16,15 +16,15 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-05-28T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"Building on the last post, we take it one step further and use Github Actions to automate everything. Just push and deploy.","mainEntityOfPage":{"@type":"WebPage","@id":"https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html"},"@type":"BlogPosting","url":"https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html","headline":"Continious deployment to EC2 with Github Actions","dateModified":"2020-05-28T00:00:00-05:00","datePublished":"2020-05-28T00:00:00-05:00","image":"https://barnett.science/images/github_actions/diagram.png","@context":"https://schema.org"}</script>
+{"description":"Use a Github Workflow and Action to continuously deploy a Flask server to an EC2 instance, or any other Linux server.","mainEntityOfPage":{"@type":"WebPage","@id":"https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html"},"@type":"BlogPosting","url":"https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html","headline":"Continuous deployment of Flask server with Github Actions","dateModified":"2020-05-28T00:00:00-05:00","datePublished":"2020-05-28T00:00:00-05:00","image":"https://barnett.science/images/github_actions/diagram.png","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://barnett.science/feed.xml" title="Wes Barnett, PhD" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Continious deployment to EC2 with Github Actions | Wes Barnett, PhD</title>
+<title>Continuous deployment of Flask server with Github Actions | Wes Barnett, PhD</title>
 <meta name="generator" content="Jekyll v4.0.0" />
-<meta property="og:title" content="Continious deployment to EC2 with Github Actions" />
+<meta property="og:title" content="Continuous deployment of Flask server with Github Actions" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Building on the last post, we take it one step further and use Github Actions to automate everything. Just push and deploy." />
-<meta property="og:description" content="Building on the last post, we take it one step further and use Github Actions to automate everything. Just push and deploy." />
+<meta name="description" content="Use a Github Workflow and Action to continuously deploy a Flask server to an EC2 instance, or any other Linux server." />
+<meta property="og:description" content="Use a Github Workflow and Action to continuously deploy a Flask server to an EC2 instance, or any other Linux server." />
 <link rel="canonical" href="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html" />
 <meta property="og:url" content="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html" />
 <meta property="og:site_name" content="Wes Barnett, PhD" />
@@ -32,7 +32,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-05-28T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"Building on the last post, we take it one step further and use Github Actions to automate everything. Just push and deploy.","mainEntityOfPage":{"@type":"WebPage","@id":"https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html"},"@type":"BlogPosting","url":"https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html","headline":"Continious deployment to EC2 with Github Actions","dateModified":"2020-05-28T00:00:00-05:00","datePublished":"2020-05-28T00:00:00-05:00","image":"https://barnett.science/images/github_actions/diagram.png","@context":"https://schema.org"}</script>
+{"description":"Use a Github Workflow and Action to continuously deploy a Flask server to an EC2 instance, or any other Linux server.","mainEntityOfPage":{"@type":"WebPage","@id":"https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html"},"@type":"BlogPosting","url":"https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html","headline":"Continuous deployment of Flask server with Github Actions","dateModified":"2020-05-28T00:00:00-05:00","datePublished":"2020-05-28T00:00:00-05:00","image":"https://barnett.science/images/github_actions/diagram.png","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -103,7 +103,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Continious deployment to EC2 with Github Actions</h1><p class="page-description">Building on the last post, we take it one step further and use Github Actions to automate everything. Just push and deploy.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-05-28T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Continuous deployment of Flask server with Github Actions</h1><p class="page-description">Use a Github Workflow and Action to continuously deploy a Flask server to an EC2 instance, or any other Linux server.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-05-28T00:00:00-05:00" itemprop="datePublished">
         May 28, 2020
       </time>
        • <span class="read-time" title="Estimated read time">
@@ -134,37 +134,22 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul class="section-nav">
-<li class="toc-entry toc-h2"><a href="#setup">Setup</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#generate-repository">Generate repository</a></li>
-<li class="toc-entry toc-h3"><a href="#generate-ssh-keypair">Generate SSH keypair</a></li>
-<li class="toc-entry toc-h3"><a href="#copy-private-key-to-github">Copy private key to Github</a></li>
-<li class="toc-entry toc-h3"><a href="#copy-public-key-to-aws-ec2">Copy public key to AWS EC2</a></li>
-<li class="toc-entry toc-h3"><a href="#create-ec2-instance-and-associate-elastic-ip">Create EC2 instance and associate Elastic IP</a></li>
-<li class="toc-entry toc-h3"><a href="#create-an-a-record-for-domain">Create an A record for domain</a></li>
-<li class="toc-entry toc-h3"><a href="#update-ansible-configuration">Update Ansible configuration</a></li>
-<li class="toc-entry toc-h3"><a href="#ssl">SSL</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#next-steps">Next steps</a></li>
-</ul><p>In my <a href="https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html">previous
+    <p>In my <a href="https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html">previous
 post</a> I covered
-how to setup an AWS EC2 instance with a barebones Flask project. At the end of the post
+how to setup an AWS EC2 instance with a bare bones Flask project. At the end of the post
 we automated this by using Ansible. In this post, we take it one step further and let
 Github use Ansible to provision and configure our EC2 instance. If you haven’t read the
 last post, I recommend at least skimming through it to get an idea of what we’re setting
 up here.</p>
 
 <div class="flash flash-success">
-    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M16 8.5l-6 6-3-3L8.5 10l1.5 1.5L14.5 7 16 8.5zM5.7 12.2l.8.8H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h7c.55 0 1 .45 1 1v6.5l-.8-.8c-.39-.39-1.03-.39-1.42 0L5.7 10.8a.996.996 0 000 1.41v-.01zM4 4h5V3H4v1zm0 2h5V5H4v1zm0 2h3V7H4v1zM3 9H2v1h1V9zm0-2H2v1h1V7zm0-2H2v1h1V5zm0-2H2v1h1V3z"></path></svg>
+    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M16 8.5l-6 6-3-3L8.5 10l1.5 1.5L14.5 7 16 8.5zM5.7 12.2l.8.8H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h7c.55 0 1 .45 1 1v6.5l-.8-.8c-.39-.39-1.03-.39-1.42 0L5.7 10.8a.996.996 0 000 1.41v-.01zM4 4h5V3H4v1zm0 2h5V5H4v1zm0 2h3V7H4v1zM3 9H2v1h1V9zm0-2H2v1h1V7zm0-2H2v1h1V5zm0-2H2v1h1V3z"></path></svg>
     <strong>Tip: </strong>You can actually use this Github Workflow and Action with
 any cloud provider or your own personal Linux server. You just need to ensure ports 80
 and 443 are open and copy the public key to the remote server.
 </div>
 
-<p>We want to use an <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks.html">Ansible
-playbook</a> via Github
+<p>We want to use an <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks.html">Ansible playbook</a> via Github
 Actions to provision and configure everything in our EC2 instance automatically so that
 whenever we push the master branch to Github it updates our deployment. The Ansible
 playbook, <a href="https://github.com/wesbarnett/flask-project/blob/master/ansible/deploy.yaml">found
@@ -177,17 +162,15 @@ serving our Flask server—to port 80, the standard web server port.</p>
 
 <p><img src="/images/github_actions/diagram.png" alt="" title="We'll utilize a Github Workflow
 that consists of an Action that uses Ansible to configure our AWS EC2 instance to serve
-our Flask server."></p>
+our Flask server." /></p>
 
 <p>This is not intended as a large-scale solution, but if you’re running a small website or
 REST API that you would like to demo to people, this streamlines some of the process of
-continously deploying.</p>
+continuously deploying.</p>
 
-<h2 id="setup">
-<a class="anchor" href="#setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup</h2>
+<h2 id="setup">Setup</h2>
 
-<h3 id="generate-repository">
-<a class="anchor" href="#generate-repository" aria-hidden="true"><span class="octicon octicon-link"></span></a>Generate repository</h3>
+<h3 id="generate-repository">Generate repository</h3>
 
 <p>First, generate a new repository based on my template by clicking
 <a href="https://github.com/wesbarnett/flask-project/generate">here</a>. The contents of the flask
@@ -198,7 +181,7 @@ repository are discussed in the previous post
 Flask server later.</p>
 
 <p>To run the gunicorn server locally for testing, in it’s current state you need at least
-the <code class="highlighter-rouge">gunicorn</code> and <code class="highlighter-rouge">flask</code> packages. At the top level of the respository run:</p>
+the <code class="highlighter-rouge">gunicorn</code> and <code class="highlighter-rouge">flask</code> packages. At the top level of the repository run:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gunicorn <span class="nt">--chdir</span> application <span class="nt">-b</span> :8080 app:app
 </code></pre></div></div>
@@ -207,15 +190,13 @@ the <code class="highlighter-rouge">gunicorn</code> and <code class="highlighter
 running locally you can go to <a href="http://localhost:8080">localhost:8080</a> to see
 the default route.</p>
 
-<h3 id="generate-ssh-keypair">
-<a class="anchor" href="#generate-ssh-keypair" aria-hidden="true"><span class="octicon octicon-link"></span></a>Generate SSH keypair</h3>
+<h3 id="generate-ssh-key-pair">Generate SSH key pair</h3>
 
-<p>Create an SSH keypair to be used between Github and AWS. Personally I prefer to do this
+<p>Create an SSH key pair to be used between Github and AWS. Personally I prefer to do this
 locally on my machine using <code class="highlighter-rouge">ssh-keypair</code>, but you can use any third party tool. Don’t
 include a passphrase.</p>
 
-<h3 id="copy-private-key-to-github">
-<a class="anchor" href="#copy-private-key-to-github" aria-hidden="true"><span class="octicon octicon-link"></span></a>Copy private key to Github</h3>
+<h4 id="copy-private-key-to-github">Copy private key to Github</h4>
 
 <p>Next you will need to copy and paste the <em>private</em> key into the secrets for your new
 repository that you generated. To do that, go to the settings for your repository and
@@ -228,7 +209,7 @@ just be <code class="highlighter-rouge">SSH</code> in your implementation):</p>
 </code></pre></div></div>
 
 <div class="flash">
-    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg>
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg>
     <strong>Note: </strong>Your private key is encrypted before it reaches Github and
 not decrypted until it is used in a workflow <a href="https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets">according
 to Github</a>. Still, understand the security implications of sharing your private key
@@ -236,10 +217,9 @@ with a third-party.
 </div>
 
 <p><img src="/images/github_actions/new_secret.png" alt="" title="Paste in your SSH
-private key here."></p>
+private key here." /></p>
 
-<h3 id="copy-public-key-to-aws-ec2">
-<a class="anchor" href="#copy-public-key-to-aws-ec2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Copy public key to AWS EC2</h3>
+<h4 id="copy-public-key-to-aws-ec2">Copy public key to AWS EC2</h4>
 
 <p>Next, copy the public key and import it into AWS. Go
 <a href="https://console.aws.amazon.com/ec2/#KeyPairs:">here</a> and select the white “Actions”
@@ -248,10 +228,9 @@ or paste it in. It doesn’t matter what you name your key here as long as you k
 associated with your Github.</p>
 
 <p><img src="/images/github_actions/aws_public.png" alt="" title="Paste in your SSH
-public key here."></p>
+public key here." /></p>
 
-<h3 id="create-ec2-instance-and-associate-elastic-ip">
-<a class="anchor" href="#create-ec2-instance-and-associate-elastic-ip" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create EC2 instance and associate Elastic IP</h3>
+<h3 id="create-ec2-instance-and-associate-elastic-ip">Create EC2 instance and associate Elastic IP</h3>
 
 <p>After this create an EC2 instance and associate an Elastic IP address with this. If you
 don’t know how to do this, you can follow the section in my previous post
@@ -259,26 +238,24 @@ don’t know how to do this, you can follow the section in my previous post
 Return here after you have created an instance and associated an Elastic IP with it.</p>
 
 <div class="flash flash-error">
-    <svg class="octicon octicon-alert octicon octicon-alert octicon octicon-alert octicon octicon-alert octicon octicon-alert octicon octicon-alert" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 000 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 00.01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg>
+    <svg class="octicon octicon-alert octicon octicon-alert octicon octicon-alert octicon octicon-alert octicon octicon-alert octicon octicon-alert" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 000 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 00.01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg>
     <strong>Warning: </strong>If you're just testing this out and not wanting to run
 your Flask site yet, be sure to stop your EC2 instance when you are finished testing.
 </div>
 
-<h3 id="create-an-a-record-for-domain">
-<a class="anchor" href="#create-an-a-record-for-domain" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create an A record for domain</h3>
+<h4 id="create-an-a-record-for-domain">Create an A record for domain</h4>
 
 <p>Create an A record for your domain or subdomain for the IP address. I personally use
 <a href="https://namecheap.com">namecheap.com</a>. To add an A record for your domain or subdomain,
 follow <a href="https://www.namecheap.com/support/knowledgebase/article.aspx/319/2237/how-can-i-set-up-an-a-address-record-for-my-domain">this
 article</a>. It may take a few minutes for DNS servers to be updated.</p>
 
-<h3 id="update-ansible-configuration">
-<a class="anchor" href="#update-ansible-configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Update Ansible configuration</h3>
+<h3 id="update-ansible-configuration">Update Ansible configuration</h3>
 
 <p>Lastly, in your repository update <code class="highlighter-rouge">ansible/deploy/hosts</code> for your own domain. In the
 file replace the instance of <code class="highlighter-rouge">test.barnett.science</code> with your domain name (you could
 actually list several domain names if you wanted to deploy to several different
-servers). Note that although ansible allows IP addresses, the templates for this project
+servers). Note that although Ansible allows IP addresses, the templates for this project
 expect this to be a domain name. You can also change the <code class="highlighter-rouge">app_name</code> from <code class="highlighter-rouge">flask-project</code>
 to whatever you desire, but it is not necessary. This is used as the systemd unit name
 that runs gunicorn as well as the directory of where the repository will be cloned.</p>
@@ -299,14 +276,13 @@ SSL=False
 <p>Commit the change and push to your Github repository. You should now be able to visit
 your domain and see the text “It works!”.</p>
 
-<h3 id="ssl">
-<a class="anchor" href="#ssl" aria-hidden="true"><span class="octicon octicon-link"></span></a>SSL</h3>
+<h3 id="ssl">SSL</h3>
 
 <p>This step is optional for those who want to serve using HTTPS. Ensure that your site is
 served over HTTP before proceeding.</p>
 
 <div class="flash">
-    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg>
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg>
     <strong>Note: </strong>Although it is very simple to enable HTTPS, you can run
 into problems if trying to switch back to HTTP-only later. Specifically, web browsers
 that had been accessing the site via HTTPS will possibly now see the site as insecure
@@ -326,8 +302,7 @@ This is an important step, because if you do not change this variable the nginx
 configuration will be overwritten with one that only serves over HTTP the next time you
 push.</p>
 
-<h2 id="next-steps">
-<a class="anchor" href="#next-steps" aria-hidden="true"><span class="octicon octicon-link"></span></a>Next steps</h2>
+<h2 id="next-steps">Next steps</h2>
 
 <p>Now that you have it working, simply make updates to your code and push. It’s
 recommended you create another branch to for development and only merge to master when
@@ -338,12 +313,12 @@ changes, merge with master and push.</p>
 <p>If you make updates to the directory structure, like moving <code class="highlighter-rouge">__init__.py</code> to another
 location, you may break the Github action from working. It expects
 <code class="highlighter-rouge">__init__.py</code> to be under <code class="highlighter-rouge">application/app</code>. If you want it elsewhere, you’ll need to
-modify the ansible templates yourself. Other than that, there shouldn’t be any
+modify the Ansible templates yourself. Other than that, there shouldn’t be any
 restrictions on what you can change or add to your flask server (templates, static
 files, etc.).</p>
 
 <p>You can add additional Python packages to the top-level <code class="highlighter-rouge">requirements.txt</code> and they will
-be installed automatically as part of the ansible provisioning.</p>
+be installed automatically as part of the Ansible provisioning.</p>
 
 <p>To learn more about how this repository is setup, see <a href="https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html#flask-project-setup">this
 section</a>.</p>
