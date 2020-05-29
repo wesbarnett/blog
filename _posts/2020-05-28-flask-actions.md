@@ -155,6 +155,12 @@ section](https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html
 
 This step is optional for those who want to serve using HTTPS.
 
+{% include note.html content="Although it is very simple to enable HTTPS, you can run
+into problems if trying to switch back to HTTP-only later. Specifically, web browsers
+that had been accessing the site via HTTPS will possibly now see the site as insecure
+and may not be able to access content. In other words, if choosing to serve over HTTPS,
+stick with it."%}
+
 To enable SSL for your site, ensure that port 443 is open in your EC2 security group for
 inbound connections. Then SSH into your EC2 instance and follow the instructions to use
 Let's Encrypt's certbot [found
