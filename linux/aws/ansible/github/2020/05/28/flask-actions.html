@@ -107,7 +107,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      4 min read
+      5 min read
     
 </span></p>
 
@@ -145,6 +145,7 @@ window.onload = wrap_img;
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#usage">Usage</a></li>
+<li class="toc-entry toc-h2"><a href="#ssl">SSL</a></li>
 </ul><p>In my <a href="https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html">previous
 post</a> I covered
 how to setup an AWS EC2 instance with a barebones Flask project. At the end of the post
@@ -272,6 +273,7 @@ test.barnett.science
 domain_name=test.barnett.science
 app_name=flask-project
 ansible_ssh_user=ubuntu
+SSL=False
 </pre>
 
 <p>Commit the change and push to your Github repository. You should now be able to visit
@@ -297,6 +299,20 @@ be installed automatically as part of the ansible provisioning.</p>
 
 <p>To learn more about how this repository is setup, see <a href="https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html#flask-project-setup">this
 section</a>.</p>
+
+<h2 id="ssl">
+<a class="anchor" href="#ssl" aria-hidden="true"><span class="octicon octicon-link"></span></a>SSL</h2>
+
+<p>This step is optional for those who want to serve using HTTPS.</p>
+
+<p>To enable SSL for your site, ensure that port 443 is open in your EC2 security group for
+inbound connections. Then SSH into your EC2 instance and follow the instructions to use
+Let’s Encrypt’s certbot <a href="https://certbot.eff.org/lets-encrypt/ubuntubionic-nginx">found
+here</a>.</p>
+
+<p>After this is complete, simply change <code class="highlighter-rouge">SSL=True</code> in <code class="highlighter-rouge">ansible/deploy/hosts</code> and push.
+This sets a boolean variable such that the nginx configuration for your domain is
+changed to serve using HTTPS. Additionally all HTTP traffic will be redirected to HTTPS.</p>
 
   </div><!-- from https://github.com/utterance/utterances -->
 <script src="https://utteranc.es/client.js"
