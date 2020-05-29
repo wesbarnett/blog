@@ -113,9 +113,9 @@ article](https://www.namecheap.com/support/knowledgebase/article.aspx/319/2237/h
 
 Lastly, in your repository update `ansible/deploy/hosts` for your own domain. In the
 file replace every instance of `test.barnett.science` with your domain name. You can
-also change the `app_name` to whatever you desire, but it is not necessary. This is used
-as the systemd unit name that runs gunicorn as well as the directory of where the
-repository will be cloned.
+also change the `app_name` from `flask-project` to whatever you desire, but it is not
+necessary. This is used as the systemd unit name that runs gunicorn as well as the
+directory of where the repository will be cloned.
 
 {% include hc.html header="ansible/deploy/hosts" body="
 [webservers]
@@ -133,10 +133,10 @@ your domain and see the text "It works!".
 ## Usage
 
 Now that you have it working, simply make updates to your code and push. It's
-recommended you create another branch to work on development and only merge into master
-when it is ready for production. Anything pushed to the master branch will be
-automatically deployed to your EC2 instance, so be sure to test locally! When confident
-with the changes, merge with master and push.
+recommended you create another branch to for development and only merge to master when
+it is ready for production. Anything pushed to the master branch will be automatically
+deployed to your EC2 instance, so be sure to test locally! When confident with the
+changes, merge with master and push.
 
 If you make updates to the directory structure, like moving `__init__.py` to another
 location, you may break the Github action from working. It expects
