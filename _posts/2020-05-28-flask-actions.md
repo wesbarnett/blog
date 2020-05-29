@@ -49,7 +49,7 @@ continously deploying.
 
 First, generate a new repository based on my template by clicking
 [here](https://github.com/wesbarnett/flask-project/generate). The contents of the flask
-repository are discuess in the previous post
+repository are discussed in the previous post
 [here](https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html#flask-project-setup).
 
 Go ahead and clone your repository to your local machine so you can make changes to the
@@ -146,7 +146,26 @@ SSL=False
 Commit the change and push to your Github repository. You should now be able to visit
 your domain and see the text "It works!".
 
-## Usage
+### SSL
+
+This step is optional for those who want to serve using HTTPS.
+
+{% include note.html content="Although it is very simple to enable HTTPS, you can run
+into problems if trying to switch back to HTTP-only later. Specifically, web browsers
+that had been accessing the site via HTTPS will possibly now see the site as insecure
+and may not be able to access content. In other words, if choosing to serve over HTTPS,
+stick with it."%}
+
+To enable SSL for your site, ensure that port 443 is open in your EC2 security group for
+inbound connections. Then SSH into your EC2 instance and follow the instructions to use
+Let's Encrypt's certbot [found
+here](https://certbot.eff.org/lets-encrypt/ubuntubionic-nginx).
+
+After this is complete, simply change `SSL=True` in `ansible/deploy/hosts` and push.
+This sets a boolean variable such that the nginx configuration for your domain is
+changed to serve using HTTPS. Additionally all HTTP traffic will be redirected to HTTPS.
+
+## Next steps
 
 Now that you have it working, simply make updates to your code and push. It's
 recommended you create another branch to for development and only merge to master when
@@ -165,22 +184,3 @@ be installed automatically as part of the ansible provisioning.
 
 To learn more about how this repository is setup, see [this
 section](https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html#flask-project-setup).
-
-## SSL
-
-This step is optional for those who want to serve using HTTPS.
-
-{% include note.html content="Although it is very simple to enable HTTPS, you can run
-into problems if trying to switch back to HTTP-only later. Specifically, web browsers
-that had been accessing the site via HTTPS will possibly now see the site as insecure
-and may not be able to access content. In other words, if choosing to serve over HTTPS,
-stick with it."%}
-
-To enable SSL for your site, ensure that port 443 is open in your EC2 security group for
-inbound connections. Then SSH into your EC2 instance and follow the instructions to use
-Let's Encrypt's certbot [found
-here](https://certbot.eff.org/lets-encrypt/ubuntubionic-nginx).
-
-After this is complete, simply change `SSL=True` in `ansible/deploy/hosts` and push.
-This sets a boolean variable such that the nginx configuration for your domain is
-changed to serve using HTTPS. Additionally all HTTP traffic will be redirected to HTTPS.
