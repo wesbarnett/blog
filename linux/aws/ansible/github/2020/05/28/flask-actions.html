@@ -12,10 +12,11 @@
 <link rel="canonical" href="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html" />
 <meta property="og:url" content="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html" />
 <meta property="og:site_name" content="Wes Barnett, PhD" />
+<meta property="og:image" content="https://barnett.science/images/github_actions/diagram.png" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-05-28T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"Building on the last post, we take it one step further and use Github Actions to automate everything. Just push and deploy.","mainEntityOfPage":{"@type":"WebPage","@id":"https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html"},"@type":"BlogPosting","url":"https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html","headline":"Continious deployment to EC2 with Github Actions","dateModified":"2020-05-28T00:00:00-05:00","datePublished":"2020-05-28T00:00:00-05:00","@context":"https://schema.org"}</script>
+{"description":"Building on the last post, we take it one step further and use Github Actions to automate everything. Just push and deploy.","mainEntityOfPage":{"@type":"WebPage","@id":"https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html"},"@type":"BlogPosting","url":"https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html","headline":"Continious deployment to EC2 with Github Actions","dateModified":"2020-05-28T00:00:00-05:00","datePublished":"2020-05-28T00:00:00-05:00","image":"https://barnett.science/images/github_actions/diagram.png","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://barnett.science/feed.xml" title="Wes Barnett, PhD" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>Continious deployment to EC2 with Github Actions | Wes Barnett, PhD</title>
@@ -27,10 +28,11 @@
 <link rel="canonical" href="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html" />
 <meta property="og:url" content="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html" />
 <meta property="og:site_name" content="Wes Barnett, PhD" />
+<meta property="og:image" content="https://barnett.science/images/github_actions/diagram.png" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-05-28T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"Building on the last post, we take it one step further and use Github Actions to automate everything. Just push and deploy.","mainEntityOfPage":{"@type":"WebPage","@id":"https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html"},"@type":"BlogPosting","url":"https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html","headline":"Continious deployment to EC2 with Github Actions","dateModified":"2020-05-28T00:00:00-05:00","datePublished":"2020-05-28T00:00:00-05:00","@context":"https://schema.org"}</script>
+{"description":"Building on the last post, we take it one step further and use Github Actions to automate everything. Just push and deploy.","mainEntityOfPage":{"@type":"WebPage","@id":"https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html"},"@type":"BlogPosting","url":"https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html","headline":"Continious deployment to EC2 with Github Actions","dateModified":"2020-05-28T00:00:00-05:00","datePublished":"2020-05-28T00:00:00-05:00","image":"https://barnett.science/images/github_actions/diagram.png","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -161,11 +163,21 @@ any cloud provider or your own personal Linux server. You just need to ensure po
 and 443 are open and copy the public key to the remote server.
 </div>
 
-<p>Briefly, we want gunicorn running our flask server on port 8080. Then we want nginx to
-use a reverse proxy to serve that up to port 80 so people can visit our website like
-normal (or we can ping our REST API endpoints on port 80). We want to use Ansible via
-Github Actions to provision and configure everything in our EC2 instance automatically
-so that whenever we push the master branch to Github it updates our deployment.</p>
+<p>We want to use an <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks.html">Ansible
+playbook</a> via Github
+Actions to provision and configure everything in our EC2 instance automatically so that
+whenever we push the master branch to Github it updates our deployment. The Ansible
+playbook, <a href="https://github.com/wesbarnett/flask-project/blob/master/ansible/deploy.yaml">found
+here</a>,
+installs the Ubuntu packages we need (pip, gunicorn, nginx); clones our Github
+repository and installs anything in <code class="highlighter-rouge">requirements.txt</code>; creates a systemd unit to run
+gunicorn and starts it; and creates an nginx configuration and starts it. The nginx
+configuration is just a reverse proxy from <code class="highlighter-rouge">http://localhost:8080</code> where gunicorn is
+serving our Flask server to port 80, the standard web server port.</p>
+
+<p><img src="/images/github_actions/diagram.png" alt="" title="We'll utilize a Github Workflow
+that consists of an Action that uses Ansible to configure our AWS EC2 instance to serve
+our Flask server."></p>
 
 <p>This is not intended as a large-scale solution, but if you’re running a small website or
 REST API that you would like to demo to people, this streamlines some of the process of
