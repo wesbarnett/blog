@@ -81,7 +81,7 @@ repository that you generated. To do that, go to the settings for your repositor
 then go to "Secrets" on the left hand menu. Click "New Secret" and name your new secrets
 `AWS_EC2_KEY`. It must be named this since the value will be used in our Github Actions.
 Paste in the private key and save. The private key should begin with (`OPENSSH` might
-just be `SSH` in your implementation):
+be `SSH` or `RSA` in your implementation):
 
 ```
 -----BEGIN OPENSSH PRIVATE KEY-----
