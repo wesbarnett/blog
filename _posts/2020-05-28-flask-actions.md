@@ -182,10 +182,19 @@ If you make updates to the directory structure, like moving `__init__.py` to ano
 location, you may break the Github action from working. It expects
 `__init__.py` to be under `application/app`. If you want it elsewhere, you'll need to
 modify the ansible templates yourself. Other than that, there shouldn't be any
-restrictions on what you can change.
+restrictions on what you can change or add to your flask server (templates, static
+files, etc.).
 
 You can add additional Python packages to the top-level `requirements.txt` and they will
 be installed automatically as part of the ansible provisioning.
 
 To learn more about how this repository is setup, see [this
 section](https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html#flask-project-setup).
+
+Lastly, you can always check how the Github action performed by going to the "Actions"
+tab in your new repository. Additionally you can still ssh into your EC2 instance and
+check the status of both the gunicorn service (`flask-project.service` by default) and
+nginx service (`nginx.service`) using systemd. Note that if you make any changes to
+`flask-project.service` or the nginx configuration you should do that in the ansible
+template in your repository, not in your instance directly; otherwise, any changes you
+make to those files will be overwritten by your ansible playbook when you push later.
