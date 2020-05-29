@@ -144,10 +144,10 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#create-ec2-instance-and-associate-elastic-ip">Create EC2 instance and associate Elastic IP</a></li>
 <li class="toc-entry toc-h3"><a href="#create-an-a-record-for-domain">Create an A record for domain</a></li>
 <li class="toc-entry toc-h3"><a href="#update-ansible-configuration">Update Ansible configuration</a></li>
+<li class="toc-entry toc-h3"><a href="#ssl">SSL</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#usage">Usage</a></li>
-<li class="toc-entry toc-h2"><a href="#ssl">SSL</a></li>
+<li class="toc-entry toc-h2"><a href="#next-steps">Next steps</a></li>
 </ul><p>In my <a href="https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html">previous
 post</a> I covered
 how to setup an AWS EC2 instance with a barebones Flask project. At the end of the post
@@ -191,7 +191,7 @@ continously deploying.</p>
 
 <p>First, generate a new repository based on my template by clicking
 <a href="https://github.com/wesbarnett/flask-project/generate">here</a>. The contents of the flask
-repository are discuess in the previous post
+repository are discussed in the previous post
 <a href="https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html#flask-project-setup">here</a>.</p>
 
 <p>Go ahead and clone your repository to your local machine so you can make changes to the
@@ -298,29 +298,8 @@ SSL=False
 <p>Commit the change and push to your Github repository. You should now be able to visit
 your domain and see the text “It works!”.</p>
 
-<h2 id="usage">
-<a class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
-
-<p>Now that you have it working, simply make updates to your code and push. It’s
-recommended you create another branch to for development and only merge to master when
-it is ready for production. Anything pushed to the master branch will be automatically
-deployed to your EC2 instance, so be sure to test locally! When confident with the
-changes, merge with master and push.</p>
-
-<p>If you make updates to the directory structure, like moving <code class="highlighter-rouge">__init__.py</code> to another
-location, you may break the Github action from working. It expects
-<code class="highlighter-rouge">__init__.py</code> to be under <code class="highlighter-rouge">application/app</code>. If you want it elsewhere, you’ll need to
-modify the ansible templates yourself. Other than that, there shouldn’t be any
-restrictions on what you can change.</p>
-
-<p>You can add additional Python packages to the top-level <code class="highlighter-rouge">requirements.txt</code> and they will
-be installed automatically as part of the ansible provisioning.</p>
-
-<p>To learn more about how this repository is setup, see <a href="https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html#flask-project-setup">this
-section</a>.</p>
-
-<h2 id="ssl">
-<a class="anchor" href="#ssl" aria-hidden="true"><span class="octicon octicon-link"></span></a>SSL</h2>
+<h3 id="ssl">
+<a class="anchor" href="#ssl" aria-hidden="true"><span class="octicon octicon-link"></span></a>SSL</h3>
 
 <p>This step is optional for those who want to serve using HTTPS.</p>
 
@@ -341,6 +320,27 @@ here</a>.</p>
 <p>After this is complete, simply change <code class="highlighter-rouge">SSL=True</code> in <code class="highlighter-rouge">ansible/deploy/hosts</code> and push.
 This sets a boolean variable such that the nginx configuration for your domain is
 changed to serve using HTTPS. Additionally all HTTP traffic will be redirected to HTTPS.</p>
+
+<h2 id="next-steps">
+<a class="anchor" href="#next-steps" aria-hidden="true"><span class="octicon octicon-link"></span></a>Next steps</h2>
+
+<p>Now that you have it working, simply make updates to your code and push. It’s
+recommended you create another branch to for development and only merge to master when
+it is ready for production. Anything pushed to the master branch will be automatically
+deployed to your EC2 instance, so be sure to test locally! When confident with the
+changes, merge with master and push.</p>
+
+<p>If you make updates to the directory structure, like moving <code class="highlighter-rouge">__init__.py</code> to another
+location, you may break the Github action from working. It expects
+<code class="highlighter-rouge">__init__.py</code> to be under <code class="highlighter-rouge">application/app</code>. If you want it elsewhere, you’ll need to
+modify the ansible templates yourself. Other than that, there shouldn’t be any
+restrictions on what you can change.</p>
+
+<p>You can add additional Python packages to the top-level <code class="highlighter-rouge">requirements.txt</code> and they will
+be installed automatically as part of the ansible provisioning.</p>
+
+<p>To learn more about how this repository is setup, see <a href="https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html#flask-project-setup">this
+section</a>.</p>
 
   </div><!-- from https://github.com/utterance/utterances -->
 <script src="https://utteranc.es/client.js"
