@@ -1,9 +1,9 @@
 ---
-title: "Continious deployment to EC2 with Github Actions"
-description: "Building on the last post, we take it one step further and use Github
-Actions to automate everything. Just push and deploy."
+title: "Continuous deployment of Flask server with Github Actions"
+description: "Use a Github Workflow and Action to continuously deploy a Flask server to
+an EC2 instance, or any other Linux server."
 layout: post
-toc: true
+toc: false
 comments: true
 image: images/github_actions/diagram.png
 hide: false
@@ -13,7 +13,7 @@ categories: [linux,aws,ansible,github]
 
 In my [previous
 post](https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html) I covered
-how to setup an AWS EC2 instance with a barebones Flask project. At the end of the post
+how to setup an AWS EC2 instance with a bare bones Flask project. At the end of the post
 we automated this by using Ansible. In this post, we take it one step further and let
 Github use Ansible to provision and configure our EC2 instance. If you haven't read the
 last post, I recommend at least skimming through it to get an idea of what we're setting
@@ -23,8 +23,7 @@ up here.
 any cloud provider or your own personal Linux server. You just need to ensure ports 80
 and 443 are open and copy the public key to the remote server."%}
 
-We want to use an [Ansible
-playbook](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html) via Github
+We want to use an [Ansible playbook](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html) via Github
 Actions to provision and configure everything in our EC2 instance automatically so that
 whenever we push the master branch to Github it updates our deployment. The Ansible
 playbook, [found
@@ -41,7 +40,7 @@ our Flask server.")
 
 This is not intended as a large-scale solution, but if you're running a small website or
 REST API that you would like to demo to people, this streamlines some of the process of
-continously deploying.
+continuously deploying.
 
 ## Setup
 
@@ -56,7 +55,7 @@ Go ahead and clone your repository to your local machine so you can make changes
 Flask server later.
 
 To run the gunicorn server locally for testing, in it's current state you need at least
-the `gunicorn` and `flask` packages. At the top level of the respository run:
+the `gunicorn` and `flask` packages. At the top level of the repository run:
 
 ```bash
 gunicorn --chdir application -b :8080 app:app
@@ -66,13 +65,13 @@ The Flask application only has one route at `/` that simply prints "It works!". 
 running locally you can go to <a href="http://localhost:8080">localhost:8080</a> to see
 the default route.
 
-### Generate SSH keypair
+### Generate SSH key pair
 
-Create an SSH keypair to be used between Github and AWS. Personally I prefer to do this
+Create an SSH key pair to be used between Github and AWS. Personally I prefer to do this
 locally on my machine using `ssh-keypair`, but you can use any third party tool. Don't
 include a passphrase.
 
-### Copy private key to Github
+#### Copy private key to Github
 
 Next you will need to copy and paste the *private* key into the secrets for your new
 repository that you generated. To do that, go to the settings for your repository and
@@ -95,7 +94,7 @@ with a third-party."
 ![]({{ site.baseurl }}/images/github_actions/new_secret.png "Paste in your SSH
 private key here.")
 
-### Copy public key to AWS EC2
+#### Copy public key to AWS EC2
 
 Next, copy the public key and import it into AWS. Go
 [here](https://console.aws.amazon.com/ec2/#KeyPairs:) and select the white "Actions"
@@ -117,7 +116,7 @@ Return here after you have created an instance and associated an Elastic IP with
 your Flask site yet, be sure to stop your EC2 instance when you are finished testing."
 %}
 
-### Create an A record for domain
+#### Create an A record for domain
 
 Create an A record for your domain or subdomain for the IP address. I personally use
 [namecheap.com](https://namecheap.com). To add an A record for your domain or subdomain,
@@ -129,7 +128,7 @@ article](https://www.namecheap.com/support/knowledgebase/article.aspx/319/2237/h
 Lastly, in your repository update `ansible/deploy/hosts` for your own domain. In the
 file replace the instance of `test.barnett.science` with your domain name (you could
 actually list several domain names if you wanted to deploy to several different
-servers). Note that although ansible allows IP addresses, the templates for this project
+servers). Note that although Ansible allows IP addresses, the templates for this project
 expect this to be a domain name. You can also change the `app_name` from `flask-project`
 to whatever you desire, but it is not necessary. This is used as the systemd unit name
 that runs gunicorn as well as the directory of where the repository will be cloned.
@@ -181,12 +180,12 @@ changes, merge with master and push.
 If you make updates to the directory structure, like moving `__init__.py` to another
 location, you may break the Github action from working. It expects
 `__init__.py` to be under `application/app`. If you want it elsewhere, you'll need to
-modify the ansible templates yourself. Other than that, there shouldn't be any
+modify the Ansible templates yourself. Other than that, there shouldn't be any
 restrictions on what you can change or add to your flask server (templates, static
 files, etc.).
 
 You can add additional Python packages to the top-level `requirements.txt` and they will
-be installed automatically as part of the ansible provisioning.
+be installed automatically as part of the Ansible provisioning.
 
 To learn more about how this repository is setup, see [this
 section](https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html#flask-project-setup).
