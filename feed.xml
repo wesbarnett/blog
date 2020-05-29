@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-28T20:03:08-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>© 2020 Wes Barnett</subtitle><entry><title type="html">Continious deployment to EC2 with Github Actions</title><link href="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html" rel="alternate" type="text/html" title="Continious deployment to EC2 with Github Actions" /><published>2020-05-28T00:00:00-05:00</published><updated>2020-05-28T00:00:00-05:00</updated><id>https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions</id><content type="html" xml:base="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html">&lt;p&gt;In my &lt;a href=&quot;https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html&quot;&gt;previous
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-28T20:18:00-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>© 2020 Wes Barnett</subtitle><entry><title type="html">Continious deployment to EC2 with Github Actions</title><link href="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html" rel="alternate" type="text/html" title="Continious deployment to EC2 with Github Actions" /><published>2020-05-28T00:00:00-05:00</published><updated>2020-05-28T00:00:00-05:00</updated><id>https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions</id><content type="html" xml:base="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html">&lt;p&gt;In my &lt;a href=&quot;https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html&quot;&gt;previous
 post&lt;/a&gt; I covered
 how to setup an AWS EC2 instance with a barebones Flask project. At the end of the post
 we automated this by using Ansible. In this post, we take it one step further and let
@@ -102,9 +102,9 @@ article&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Lastly, in your repository update &lt;code class=&quot;highlighter-rouge&quot;&gt;ansible/deploy/hosts&lt;/code&gt; for your own domain. In the
 file replace every instance of &lt;code class=&quot;highlighter-rouge&quot;&gt;test.barnett.science&lt;/code&gt; with your domain name. You can
-also change the &lt;code class=&quot;highlighter-rouge&quot;&gt;app_name&lt;/code&gt; to whatever you desire, but it is not necessary. This is used
-as the systemd unit name that runs gunicorn as well as the directory of where the
-repository will be cloned.&lt;/p&gt;
+also change the &lt;code class=&quot;highlighter-rouge&quot;&gt;app_name&lt;/code&gt; from &lt;code class=&quot;highlighter-rouge&quot;&gt;flask-project&lt;/code&gt; to whatever you desire, but it is not
+necessary. This is used as the systemd unit name that runs gunicorn as well as the
+directory of where the repository will be cloned.&lt;/p&gt;
 
 &lt;pre style=&quot;margin-bottom: 0 !important; border-bottom:none;
            padding-bottom:0.8em;&quot;&gt;ansible/deploy/hosts&lt;/pre&gt;
@@ -125,10 +125,10 @@ your domain and see the text “It works!”.&lt;/p&gt;
 &lt;h2 id=&quot;usage&quot;&gt;Usage&lt;/h2&gt;
 
 &lt;p&gt;Now that you have it working, simply make updates to your code and push. It’s
-recommended you create another branch to work on development and only merge into master
-when it is ready for production. Anything pushed to the master branch will be
-automatically deployed to your EC2 instance, so be sure to test locally! When confident
-with the changes, merge with master and push.&lt;/p&gt;
+recommended you create another branch to for development and only merge to master when
+it is ready for production. Anything pushed to the master branch will be automatically
+deployed to your EC2 instance, so be sure to test locally! When confident with the
+changes, merge with master and push.&lt;/p&gt;
 
 &lt;p&gt;If you make updates to the directory structure, like moving &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__.py&lt;/code&gt; to another
 location, you may break the Github action from working. It expects
@@ -5309,10 +5309,10 @@ INFO:cmdstanpy:finish chain 1
 
 
 
-&lt;div id=&quot;fe0d2d76-9e4f-477b-a809-fdaf92986881&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;5ee78a23-2f36-4484-adb9-5494d1d6d68b&quot;&gt;&lt;/div&gt;
 &lt;div class=&quot;output_subarea output_javascript &quot;&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
-var element = $('#fe0d2d76-9e4f-477b-a809-fdaf92986881');
+var element = $('#5ee78a23-2f36-4484-adb9-5494d1d6d68b');
 new Promise(function(resolve, reject) {
 	var script = document.createElement(&quot;script&quot;);
 	script.onload = resolve;

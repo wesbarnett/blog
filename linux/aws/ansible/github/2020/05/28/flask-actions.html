@@ -257,9 +257,9 @@ article</a>.</p>
 
 <p>Lastly, in your repository update <code class="highlighter-rouge">ansible/deploy/hosts</code> for your own domain. In the
 file replace every instance of <code class="highlighter-rouge">test.barnett.science</code> with your domain name. You can
-also change the <code class="highlighter-rouge">app_name</code> to whatever you desire, but it is not necessary. This is used
-as the systemd unit name that runs gunicorn as well as the directory of where the
-repository will be cloned.</p>
+also change the <code class="highlighter-rouge">app_name</code> from <code class="highlighter-rouge">flask-project</code> to whatever you desire, but it is not
+necessary. This is used as the systemd unit name that runs gunicorn as well as the
+directory of where the repository will be cloned.</p>
 
 <pre style="margin-bottom: 0 !important; border-bottom:none;
            padding-bottom:0.8em;">ansible/deploy/hosts</pre>
@@ -281,10 +281,10 @@ your domain and see the text “It works!”.</p>
 <a class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
 
 <p>Now that you have it working, simply make updates to your code and push. It’s
-recommended you create another branch to work on development and only merge into master
-when it is ready for production. Anything pushed to the master branch will be
-automatically deployed to your EC2 instance, so be sure to test locally! When confident
-with the changes, merge with master and push.</p>
+recommended you create another branch to for development and only merge to master when
+it is ready for production. Anything pushed to the master branch will be automatically
+deployed to your EC2 instance, so be sure to test locally! When confident with the
+changes, merge with master and push.</p>
 
 <p>If you make updates to the directory structure, like moving <code class="highlighter-rouge">__init__.py</code> to another
 location, you may break the Github action from working. It expects
