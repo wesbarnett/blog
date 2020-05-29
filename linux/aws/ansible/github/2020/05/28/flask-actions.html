@@ -140,7 +140,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#copy-private-key-to-github">Copy private key to Github</a></li>
 <li class="toc-entry toc-h3"><a href="#copy-public-key-to-aws-ec2">Copy public key to AWS EC2</a></li>
 <li class="toc-entry toc-h3"><a href="#create-ec2-instance-and-associate-elastic-ip">Create EC2 instance and associate Elastic IP</a></li>
-<li class="toc-entry toc-h3"><a href="#create-a-record-for-domain">Create A record for domain</a></li>
+<li class="toc-entry toc-h3"><a href="#create-an-a-record-for-domain">Create an A record for domain</a></li>
 <li class="toc-entry toc-h3"><a href="#update-ansible-configuration">Update Ansible configuration</a></li>
 </ul>
 </li>
@@ -175,9 +175,17 @@ repository are discuess in the previous post
 <a href="https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html#flask-project-setup">here</a>.</p>
 
 <p>Go ahead and clone your repository to your local machine so you can make changes to the
-Flask server.</p>
+Flask server later.</p>
 
-<p>The Flask application only has one route at <code class="highlighter-rouge">/</code> that simply prints “It works!”.</p>
+<p>To run the gunicorn server locally for testing, in it’s current state you need at least
+the <code class="highlighter-rouge">gunicorn</code> and <code class="highlighter-rouge">flask</code> packages. At the top level of the respository run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gunicorn <span class="nt">--chdir</span> application <span class="nt">-b</span> :8080 app:app
+</code></pre></div></div>
+
+<p>The Flask application only has one route at <code class="highlighter-rouge">/</code> that simply prints “It works!”. If
+running locally you can go to <a href="http://localhost:8080">localhost:8080</a> to see
+the default route.</p>
 
 <h3 id="generate-ssh-keypair">
 <a class="anchor" href="#generate-ssh-keypair" aria-hidden="true"><span class="octicon octicon-link"></span></a>Generate SSH keypair</h3>
@@ -236,8 +244,8 @@ Return here after you have created an instance and associated an Elastic IP with
 your Flask site yet, be sure to stop your EC2 instance when you are finished testing.
 </div>
 
-<h3 id="create-a-record-for-domain">
-<a class="anchor" href="#create-a-record-for-domain" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create A record for domain</h3>
+<h3 id="create-an-a-record-for-domain">
+<a class="anchor" href="#create-an-a-record-for-domain" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create an A record for domain</h3>
 
 <p>Create an A record for your domain or subdomain for the IP address. I personally use
 <a href="https://namecheap.com">namecheap.com</a>. To add an A record for your domain or subdomain,
@@ -275,15 +283,17 @@ your domain and see the text “It works!”.</p>
 <p>Now that you have it working, simply make updates to your code and push. It’s
 recommended you create another branch to work on development and only merge into master
 when it is ready for production. Anything pushed to the master branch will be
-automatically deployed to your EC2 instance, so be sure to test locally! To do that, you can install
-gunicorn and flask, as well as other necessary packages and run the following at the top
-level of your local copy of the repository:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gunicorn <span class="nt">--chdir</span> application <span class="nt">-b</span> :8080 app:app
-</code></pre></div></div>
-
-<p>You can then visit <code class="highlighter-rouge">http://localhost:8080</code> to see how it works locally. When confident
+automatically deployed to your EC2 instance, so be sure to test locally! When confident
 with the changes, merge with master and push.</p>
+
+<p>If you make updates to the directory structure, like moving <code class="highlighter-rouge">__init__.py</code> to another
+location, you may break the Github action from working. It expects
+<code class="highlighter-rouge">__init__.py</code> to be under <code class="highlighter-rouge">application/app</code>. If you want it elsewhere, you’ll need to
+modify the ansible templates yourself. Other than that, there shouldn’t be any
+restrictions on what you can change.</p>
+
+<p>You can add additional Python packages to the top-level <code class="highlighter-rouge">requirements.txt</code> and they will
+be installed automatically as part of the ansible provisioning.</p>
 
 <p>To learn more about how this repository is setup, see <a href="https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html#flask-project-setup">this
 section</a>.</p>
