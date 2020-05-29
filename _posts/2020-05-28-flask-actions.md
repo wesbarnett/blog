@@ -5,6 +5,7 @@ Actions to automate everything. Just push and deploy."
 layout: post
 toc: true
 comments: true
+image: images/github_actions/diagram.png
 hide: false
 search_exclude: false
 categories: [linux,aws,ansible,github]
@@ -22,11 +23,21 @@ up here.
 any cloud provider or your own personal Linux server. You just need to ensure ports 80
 and 443 are open and copy the public key to the remote server."%}
 
-Briefly, we want gunicorn running our flask server on port 8080. Then we want nginx to
-use a reverse proxy to serve that up to port 80 so people can visit our website like
-normal (or we can ping our REST API endpoints on port 80). We want to use Ansible via
-Github Actions to provision and configure everything in our EC2 instance automatically
-so that whenever we push the master branch to Github it updates our deployment.
+We want to use an [Ansible
+playbook](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html) via Github
+Actions to provision and configure everything in our EC2 instance automatically so that
+whenever we push the master branch to Github it updates our deployment. The Ansible
+playbook, [found
+here](https://github.com/wesbarnett/flask-project/blob/master/ansible/deploy.yaml),
+installs the Ubuntu packages we need (pip, gunicorn, nginx); clones our Github
+repository and installs anything in `requirements.txt`; creates a systemd unit to run
+gunicorn and starts it; and creates an nginx configuration and starts it. The nginx
+configuration is just a reverse proxy from `http://localhost:8080` where gunicorn is
+serving our Flask server to port 80, the standard web server port.
+
+![]({{ site.baseurl }}/images/github_actions/diagram.png "We'll utilize a Github Workflow
+that consists of an Action that uses Ansible to configure our AWS EC2 instance to serve
+our Flask server.")
 
 This is not intended as a large-scale solution, but if you're running a small website or
 REST API that you would like to demo to people, this streamlines some of the process of
