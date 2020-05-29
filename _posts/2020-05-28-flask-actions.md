@@ -122,22 +122,23 @@ your Flask site yet, be sure to stop your EC2 instance when you are finished tes
 Create an A record for your domain or subdomain for the IP address. I personally use
 [namecheap.com](https://namecheap.com). To add an A record for your domain or subdomain,
 follow [this
-article](https://www.namecheap.com/support/knowledgebase/article.aspx/319/2237/how-can-i-set-up-an-a-address-record-for-my-domain).
+article](https://www.namecheap.com/support/knowledgebase/article.aspx/319/2237/how-can-i-set-up-an-a-address-record-for-my-domain). It may take a few minutes for DNS servers to be updated.
 
 ### Update Ansible configuration
 
 Lastly, in your repository update `ansible/deploy/hosts` for your own domain. In the
-file replace every instance of `test.barnett.science` with your domain name. You can
-also change the `app_name` from `flask-project` to whatever you desire, but it is not
-necessary. This is used as the systemd unit name that runs gunicorn as well as the
-directory of where the repository will be cloned.
+file replace the instance of `test.barnett.science` with your domain name (you could
+actually list several domain names if you wanted to deploy to several different
+servers). Note that although ansible allows IP addresses, the templates for this project
+expect this to be a domain name. You can also change the `app_name` from `flask-project`
+to whatever you desire, but it is not necessary. This is used as the systemd unit name
+that runs gunicorn as well as the directory of where the repository will be cloned.
 
 {% include hc.html header="ansible/deploy/hosts" body="
 [webservers]
 test.barnett.science
 
 [webservers:vars]
-domain_name=test.barnett.science
 app_name=flask-project
 ansible_ssh_user=ubuntu
 SSL=False
