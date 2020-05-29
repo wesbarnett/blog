@@ -1,5 +1,5 @@
 ---
-title: "Continuous deployment of Flask server with Github Actions"
+title: "Continuous deployment of a Flask server with Github Actions"
 description: "Use a Github Workflow and Action to continuously deploy a Flask server to
 an EC2 instance, or any other Linux server."
 layout: post
