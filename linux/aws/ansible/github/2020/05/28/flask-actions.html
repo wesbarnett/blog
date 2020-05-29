@@ -172,8 +172,8 @@ here</a>,
 installs the Ubuntu packages we need (pip, gunicorn, nginx); clones our Github
 repository and installs anything in <code class="highlighter-rouge">requirements.txt</code>; creates a systemd unit to run
 gunicorn and starts it; and creates an nginx configuration and starts it. The nginx
-configuration is just a reverse proxy from <code class="highlighter-rouge">http://localhost:8080</code> where gunicorn is
-serving our Flask server to port 80, the standard web server port.</p>
+configuration is just a reverse proxy from <code class="highlighter-rouge">http://localhost:8080</code>—where gunicorn is
+serving our Flask server—to port 80, the standard web server port.</p>
 
 <p><img src="/images/github_actions/diagram.png" alt="" title="We'll utilize a Github Workflow
 that consists of an Action that uses Ansible to configure our AWS EC2 instance to serve

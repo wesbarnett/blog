@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-29T08:17:39-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>© 2020 Wes Barnett</subtitle><entry><title type="html">Continious deployment to EC2 with Github Actions</title><link href="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html" rel="alternate" type="text/html" title="Continious deployment to EC2 with Github Actions" /><published>2020-05-28T00:00:00-05:00</published><updated>2020-05-28T00:00:00-05:00</updated><id>https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions</id><content type="html" xml:base="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html">&lt;p&gt;In my &lt;a href=&quot;https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html&quot;&gt;previous
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-29T08:28:06-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>© 2020 Wes Barnett</subtitle><entry><title type="html">Continious deployment to EC2 with Github Actions</title><link href="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html" rel="alternate" type="text/html" title="Continious deployment to EC2 with Github Actions" /><published>2020-05-28T00:00:00-05:00</published><updated>2020-05-28T00:00:00-05:00</updated><id>https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions</id><content type="html" xml:base="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html">&lt;p&gt;In my &lt;a href=&quot;https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html&quot;&gt;previous
 post&lt;/a&gt; I covered
 how to setup an AWS EC2 instance with a barebones Flask project. At the end of the post
 we automated this by using Ansible. In this post, we take it one step further and let
@@ -22,8 +22,8 @@ here&lt;/a&gt;,
 installs the Ubuntu packages we need (pip, gunicorn, nginx); clones our Github
 repository and installs anything in &lt;code class=&quot;highlighter-rouge&quot;&gt;requirements.txt&lt;/code&gt;; creates a systemd unit to run
 gunicorn and starts it; and creates an nginx configuration and starts it. The nginx
-configuration is just a reverse proxy from &lt;code class=&quot;highlighter-rouge&quot;&gt;http://localhost:8080&lt;/code&gt; where gunicorn is
-serving our Flask server to port 80, the standard web server port.&lt;/p&gt;
+configuration is just a reverse proxy from &lt;code class=&quot;highlighter-rouge&quot;&gt;http://localhost:8080&lt;/code&gt;—where gunicorn is
+serving our Flask server—to port 80, the standard web server port.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/github_actions/diagram.png&quot; alt=&quot;&quot; title=&quot;We'll utilize a Github Workflow
 that consists of an Action that uses Ansible to configure our AWS EC2 instance to serve
@@ -5353,10 +5353,10 @@ INFO:cmdstanpy:finish chain 1
 
 
 
-&lt;div id=&quot;53d7830a-7335-401b-8f54-304d15e5d25e&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;033c60b3-43dd-4584-b1e7-2ec81e7840c6&quot;&gt;&lt;/div&gt;
 &lt;div class=&quot;output_subarea output_javascript &quot;&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
-var element = $('#53d7830a-7335-401b-8f54-304d15e5d25e');
+var element = $('#033c60b3-43dd-4584-b1e7-2ec81e7840c6');
 new Promise(function(resolve, reject) {
 	var script = document.createElement(&quot;script&quot;);
 	script.onload = resolve;
