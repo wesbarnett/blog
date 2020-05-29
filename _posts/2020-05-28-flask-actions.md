@@ -37,8 +37,10 @@ First, generate a new repository based on my template by clicking
 repository are discuess in the previous post
 [here](https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html#flask-project-setup).
 
-Go ahead an clone your repository to your local machine so you can make changes to the
+Go ahead and clone your repository to your local machine so you can make changes to the
 Flask server.
+
+The Flask application only has one route at `/` that simply prints "It works!".
 
 ### Generate SSH keypair
 
@@ -121,10 +123,10 @@ your domain and see the text "It works!".
 
 ## Usage
 
-Now that you have it working, simply make updates to your code locally. It's recommended
-you create another branch to work on development and only merge into master when it is
-ready for production. Anything pushed to the master branch will be automatically
-deployed to your EC2 instance, so be sure to test locally! To do that, you can install
+Now that you have it working, simply make updates to your code and push. It's
+recommended you create another branch to work on development and only merge into master
+when it is ready for production. Anything pushed to the master branch will be
+automatically deployed to your EC2 instance, so be sure to test locally! To do that, you can install
 gunicorn and flask, as well as other necessary packages and run the following at the top
 level of your local copy of the repository:
 
