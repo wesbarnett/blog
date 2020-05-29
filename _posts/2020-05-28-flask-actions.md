@@ -148,7 +148,8 @@ your domain and see the text "It works!".
 
 ### SSL
 
-This step is optional for those who want to serve using HTTPS.
+This step is optional for those who want to serve using HTTPS. Ensure that your site is
+served over HTTP before proceeding.
 
 {% include note.html content="Although it is very simple to enable HTTPS, you can run
 into problems if trying to switch back to HTTP-only later. Specifically, web browsers
@@ -164,6 +165,9 @@ here](https://certbot.eff.org/lets-encrypt/ubuntubionic-nginx).
 After this is complete, simply change `SSL=True` in `ansible/deploy/hosts` and push.
 This sets a boolean variable such that the nginx configuration for your domain is
 changed to serve using HTTPS. Additionally all HTTP traffic will be redirected to HTTPS.
+This is an important step, because if you do not change this variable the nginx
+configuration will be overwritten with one that only serves over HTTP the next time you
+push.
 
 ## Next steps
 
