@@ -21,7 +21,8 @@ up here.
 
 {% include tip.html content="You can actually use this Github Workflow and Action with
 any cloud provider or your own personal Linux server. You just need to ensure ports 80
-and 443 are open and copy the public key to the remote server."%}
+and 443 are open and copy the public key to the remote server. Additionally you may need
+to change the ansible user."%}
 
 We want to use an [Ansible playbook](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html) via Github
 Actions to provision and configure everything in our EC2 instance automatically so that
