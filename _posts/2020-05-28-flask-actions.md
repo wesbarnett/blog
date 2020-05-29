@@ -18,6 +18,10 @@ Github use Ansible to provision and configure our EC2 instance. If you haven't r
 last post, I recommend at least skimming through it to get an idea of what we're setting
 up here.
 
+{% include tip.html content="You can actually use this Github Workflow and Action with
+any cloud provider or your own personal Linux server. You just need to ensure ports 80
+and 443 are open and copy the public key to the remote server."%}
+
 Briefly, we want gunicorn running our flask server on port 8080. Then we want nginx to
 use a reverse proxy to serve that up to port 80 so people can visit our website like
 normal (or we can ping our REST API endpoints on port 80). We want to use Ansible via
