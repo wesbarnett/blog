@@ -66,8 +66,8 @@ The Flask application only has one route at `/` that simply prints "It works!". 
 running locally you can go to <a href="http://localhost:8080">localhost:8080</a> to see
 the default route.
 
-{% include tip.html content="After you generate a new repository from the template, an
-issue will be opened in the new repository also outlining these steps."%}
+{% include tip.html content="After you generate a new repository from the template, a
+pull request will be opened in the new repository also outlining these steps."%}
 
 ### Generate SSH key pair
 
