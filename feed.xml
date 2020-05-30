@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-29T16:11:29-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>© 2020 Wes Barnett</subtitle><entry><title type="html">Continuous deployment of a Flask server with Github Actions</title><link href="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html" rel="alternate" type="text/html" title="Continuous deployment of a Flask server with Github Actions" /><published>2020-05-28T00:00:00-05:00</published><updated>2020-05-28T00:00:00-05:00</updated><id>https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions</id><content type="html" xml:base="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html">&lt;p&gt;In my &lt;a href=&quot;https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html&quot;&gt;previous
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://barnett.science/feed.xml" rel="self" type="application/atom+xml" /><link href="https://barnett.science/" rel="alternate" type="text/html" /><updated>2020-05-30T16:08:24-05:00</updated><id>https://barnett.science/feed.xml</id><title type="html">Wes Barnett, PhD</title><subtitle>© 2020 Wes Barnett</subtitle><entry><title type="html">Continuous deployment of a Flask server with Github Actions</title><link href="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html" rel="alternate" type="text/html" title="Continuous deployment of a Flask server with Github Actions" /><published>2020-05-28T00:00:00-05:00</published><updated>2020-05-28T00:00:00-05:00</updated><id>https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions</id><content type="html" xml:base="https://barnett.science/linux/aws/ansible/github/2020/05/28/flask-actions.html">&lt;p&gt;In my &lt;a href=&quot;https://barnett.science/linux/aws/ansible/2020/05/28/ansible-flask.html&quot;&gt;previous
 post&lt;/a&gt; I covered
 how to setup an AWS EC2 instance with a bare bones Flask project. At the end of the post
 we automated this by using Ansible. In this post, we take it one step further and let
@@ -57,8 +57,8 @@ the default route.&lt;/p&gt;
 
 &lt;div class=&quot;flash flash-success&quot;&gt;
     &lt;svg class=&quot;octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; height=&quot;16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M16 8.5l-6 6-3-3L8.5 10l1.5 1.5L14.5 7 16 8.5zM5.7 12.2l.8.8H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h7c.55 0 1 .45 1 1v6.5l-.8-.8c-.39-.39-1.03-.39-1.42 0L5.7 10.8a.996.996 0 000 1.41v-.01zM4 4h5V3H4v1zm0 2h5V5H4v1zm0 2h3V7H4v1zM3 9H2v1h1V9zm0-2H2v1h1V7zm0-2H2v1h1V5zm0-2H2v1h1V3z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;
-    &lt;strong&gt;Tip: &lt;/strong&gt;After you generate a new repository from the template, an
-issue will be opened in the new repository also outlining these steps.
+    &lt;strong&gt;Tip: &lt;/strong&gt;After you generate a new repository from the template, a
+pull request will be opened in the new repository also outlining these steps.
 &lt;/div&gt;
 
 &lt;h3 id=&quot;generate-ssh-key-pair&quot;&gt;Generate SSH key pair&lt;/h3&gt;
@@ -5369,10 +5369,10 @@ INFO:cmdstanpy:finish chain 1
 
 
 
-&lt;div id=&quot;fa57c3f5-1838-4091-86e0-e3ddd1cc9b10&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;85c2a8e9-b961-46b5-9c9a-26042aa58a35&quot;&gt;&lt;/div&gt;
 &lt;div class=&quot;output_subarea output_javascript &quot;&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
-var element = $('#fa57c3f5-1838-4091-86e0-e3ddd1cc9b10');
+var element = $('#85c2a8e9-b961-46b5-9c9a-26042aa58a35');
 new Promise(function(resolve, reject) {
 	var script = document.createElement(&quot;script&quot;);
 	script.onload = resolve;
