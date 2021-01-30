@@ -10,8 +10,9 @@ categories: [linux,gromacs,fortran,julia]
 ---
 
 I recently archived several projects on Github that I no longer have the attention to
-maintain. These all relate to GROMACS and LAMMPS, Molecular Dynamics programs, that I used in
-graduate school and in my postdoctoral research. I had  
+maintain. These all relate to [GROMACS](http://www.gromacs.org/) and
+[LAMMPS](https://lammps.sandia.gov/), Molecular Dynamics programs, that I used in
+graduate school and in my postdoctoral research.
 
 Here's a list of the archived repositories:
 
@@ -31,10 +32,12 @@ would probably focus more on learning Julia and see how far that would get me si
 language is now stable.
 
 I hope that the above libraries were useful for those who analyze Molecular Dynamics
-output and need to use Fortran. I learned a lot about creating a system library, how to
-link Fortran to C libraries, as well as cmake, ninja, make, and other build tools. In
-addition I learned a whole lot about object-oriented programming in both Fortran and
-C++.
+output and need to use Fortran. I'm actually surprised so many ended up using the
+Fortran libraries. My guess is it made it easier to interact with legacy coce.
+
+I learned a lot about creating a system library, how to link Fortran to C libraries, as
+well as cmake, ninja, make, and other build tools. In addition I learned a whole lot
+about object-oriented programming in both Fortran and C++.
 
 I'd like to encourage anyone to fork these libraries and continue development if they
 seem useful.
