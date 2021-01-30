@@ -26,6 +26,11 @@ Here's a list of the archived repositories:
   library for analyzing the output of GROMACS simulations. I actually didn't end up
   using it much. Julia has changed a whole lot since I wrote this!
 
+I had also written a few tutorials for getting started in GROMACS a few years ago.
+Another research group that I am not affiliated with asked to host them after I could no
+longer support them. [They are located
+here](https://www.svedruziclab.com/tutorials/gromacs/).
+
 Most of my graduate and research work used Fortran at the time given it's ability to
 parallelize calculations easily with OpenMP. If I was still in the academic world I
 would probably focus more on learning Julia and see how far that would get me since the
