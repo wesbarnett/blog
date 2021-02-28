@@ -16,7 +16,7 @@ I have a BS in Mechanical Engineering from Mississippi State University, an MDiv
 New Orleans Baptist Theological Seminary, and a PhD in Chemical & Molecular Engineering
 from Tulane University.
 
-![]({{ site.baseurl }}/images/nature-chem.png "Cover of Nature Chemistry where one of my publications is featured ('Molecular design leaves water out of pocket'))
+![]({{ site.baseurl }}/images/nature-chem.png "Cover of Nature Chemistry where one of my publications is featured - 'Molecular design leaves water out of pocket'")
 
 My graduate research utilized programming, data science, and
 molecular simulations to study self-assembling molecules. After receiving my PhD, I
