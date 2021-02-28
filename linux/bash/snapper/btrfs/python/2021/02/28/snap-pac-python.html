@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>snap-pac moving to Python | Wes Barnett, PhD</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="snap-pac moving to Python" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I’m rewriting the main script from bash to Python for a few reason" />
+<meta property="og:description" content="I’m rewriting the main script from bash to Python for a few reason" />
+<link rel="canonical" href="https://barnett.science/linux/bash/snapper/btrfs/python/2021/02/28/snap-pac-python.html" />
+<meta property="og:url" content="https://barnett.science/linux/bash/snapper/btrfs/python/2021/02/28/snap-pac-python.html" />
+<meta property="og:site_name" content="Wes Barnett, PhD" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-02-28T00:00:00-06:00" />
+<script type="application/ld+json">
+{"url":"https://barnett.science/linux/bash/snapper/btrfs/python/2021/02/28/snap-pac-python.html","@type":"BlogPosting","headline":"snap-pac moving to Python","dateModified":"2021-02-28T00:00:00-06:00","datePublished":"2021-02-28T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://barnett.science/linux/bash/snapper/btrfs/python/2021/02/28/snap-pac-python.html"},"description":"I’m rewriting the main script from bash to Python for a few reason","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://barnett.science/feed.xml" title="Wes Barnett, PhD" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Wes Barnett, PhD</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">snap-pac moving to Python</h1><p class="page-description">I'm rewriting the main script from bash to Python for a few reason</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-02-28T00:00:00-06:00" itemprop="datePublished">
+        Feb 28, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      4 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#linux">linux</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#bash">bash</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#snapper">snapper</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#btrfs">btrfs</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#python">python</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#stdlib-modules">stdlib modules</a></li>
+<li class="toc-entry toc-h1"><a href="#object-oriented-code">Object-oriented code</a></li>
+<li class="toc-entry toc-h1"><a href="#tests-with-pytest">Tests with pytest</a></li>
+<li class="toc-entry toc-h1"><a href="#installation">Installation</a></li>
+<li class="toc-entry toc-h1"><a href="#conclusion">Conclusion</a></li>
+</ul><p>snap-pac is a set of pacman hooks and a bash script on Arch Linux that helps automate
+pre/post snappper snapshotting. It’s allows a user to easily rollback upgrades or any
+pacman transaction using snapper.</p>
+
+<p>For a few years now the script has been written in bash. That’s been fine, but in my
+opinion it makes it very difficult to add new features or even adequetly test the code.
+Thus, I started transitioning the project to Python.</p>
+
+<p>You can see the changes on the master branch in the repository. I’ve also add a Github
+Workflow to automatically test the code every time master is updated either through a
+push or a pull request.</p>
+
+<h1 id="stdlib-modules">
+<a class="anchor" href="#stdlib-modules" aria-hidden="true"><span class="octicon octicon-link"></span></a>stdlib modules</h1>
+
+<p>The code itself doesn’t require anything outside of the Python standard library. Some of
+the stdlib modules that have made things really nice are argparse, configparser, and
+pathlib. Below I describe a couple of nice things these add to the code.</p>
+
+<p>Since this script needs to be called on both the pre and post snapshot via the pacman
+hooks, I’ve made a command line argument to pass which snapshot type is intended, which
+can either be “pre” or “post”. Previously I had an if statement checking that the
+argument is one of those two, but now with argparse I can simply add <code class="language-plaintext highlighter-rouge">choices</code> to
+<code class="language-plaintext highlighter-rouge">add_argument</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">parser</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s">"Script for taking pre/post snapper snapshots. Used with pacman hooks."</span><span class="p">)</span>
+<span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="n">dest</span><span class="o">=</span><span class="s">"type"</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s">"pre"</span><span class="p">,</span> <span class="s">"post"</span><span class="p">])</span>
+<span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="p">.</span><span class="n">parse_args</span><span class="p">()</span>
+</code></pre></div></div>
+<p>No extra logic needs to be written to check the arguments.</p>
+
+<p>Another nice feature is being able to add default arguments for the ini file. Here i add
+a few defaults first and then read the ini file which can override them:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
+<span class="n">config</span><span class="p">[</span><span class="s">"DEFAULT"</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"snapshot"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="s">"cleanup_algorithm"</span><span class="p">:</span> <span class="s">"number"</span><span class="p">,</span>
+    <span class="s">"pre_description"</span><span class="p">:</span> <span class="n">parent_cmd</span><span class="p">,</span>
+    <span class="s">"post_description"</span><span class="p">:</span> <span class="n">packages</span><span class="p">,</span>
+    <span class="s">"desc_limit"</span><span class="p">:</span> <span class="mi">72</span>
+<span class="p">}</span>
+<span class="n">config</span><span class="p">[</span><span class="s">"root"</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"snapshot"</span><span class="p">:</span> <span class="bp">True</span>
+<span class="p">}</span>
+<span class="n">config</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">ini_file</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Each snapper configuration has its own section in the ini file. If a snapper
+configruation does not have a section I can just use the default settings by adding the
+section myself:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">snapper_config</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
+    <span class="n">config</span><span class="p">.</span><span class="n">add_section</span><span class="p">(</span><span class="n">snapper_config</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>With pathlib I can use the <code class="language-plaintext highlighter-rouge">read_text</code> and <code class="language-plaintext highlighter-rouge">write_text</code> methods to automatically open,
+read/write, and then close the file. For example, this:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">prefile</span><span class="p">,</span> <span class="s">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>can be replaced with this:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">prefile</span><span class="p">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">prefile</code> is a <code class="language-plaintext highlighter-rouge">pathlib.Path</code> object.</p>
+
+<h1 id="object-oriented-code">
+<a class="anchor" href="#object-oriented-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Object-oriented code</h1>
+
+<p>A second major advantage of python over bash is that I can write object-oriented code to
+populate the snapper command. In the bash version I had to try to create the command
+dynamically as a string. This made it difficult when the command itself has string
+arguments that had to be quoted. Here’s the Python class:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">SnapperCmd</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">snapshot_type</span><span class="p">,</span> <span class="n">cleanup_algorithm</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s">""</span><span class="p">,</span> <span class="n">nodbus</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">pre_number</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s">"snapper"</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">nodbus</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">cmd</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">"--no-dbus"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">cmd</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">f"--config </span><span class="si">{</span><span class="n">config</span><span class="si">}</span><span class="s"> create"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">cmd</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">f"--type </span><span class="si">{</span><span class="n">snapshot_type</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">cmd</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">f"--cleanup-algorithm </span><span class="si">{</span><span class="n">cleanup_algorithm</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">cmd</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">"--print-number"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">description</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">cmd</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">f"--description </span><span class="se">\"</span><span class="si">{</span><span class="n">description</span><span class="si">}</span><span class="se">\"</span><span class="s">"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">snapshot_type</span> <span class="o">==</span> <span class="s">"post"</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">pre_number</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="p">.</span><span class="n">cmd</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">f"--pre-number </span><span class="si">{</span><span class="n">pre_number</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="nb">ValueError</span><span class="p">(</span><span class="s">"snapshot type specified as 'post' but no pre snapshot number passed."</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">os</span><span class="p">.</span><span class="n">popen</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">__str__</span><span class="p">()).</span><span class="n">read</span><span class="p">().</span><span class="n">rstrip</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">" "</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">cmd</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>After the object is initialized, the list containing the arguments is joined together as
+a string and then run with <code class="language-plaintext highlighter-rouge">os.popen</code>.</p>
+
+<h1 id="tests-with-pytest">
+<a class="anchor" href="#tests-with-pytest" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tests with pytest</h1>
+
+<p>As I mentioned above, another advantage is that tests can actually be run. I’m not aware
+of any simple way to write unit tests for a bash script. In my case I am using <code class="language-plaintext highlighter-rouge">pytest</code>
+to run the tests in the Github workflow. Unfortunately I can’t easily test the actual
+snapshotting since that requires snapper and btrfs, but I can do that manually myself.</p>
+
+<p>One note is that simply running <code class="language-plaintext highlighter-rouge">pytest</code> does not work correctly since the path of the
+script is not added. Instead one must run <code class="language-plaintext highlighter-rouge">python -m pytest</code>.</p>
+
+<p>In addition to using <code class="language-plaintext highlighter-rouge">pytest</code> I am using <code class="language-plaintext highlighter-rouge">flake8</code> to check code formatting
+automatically.</p>
+
+<h1 id="installation">
+<a class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h1>
+
+<p>One thing I have not really changed is how the script is installed. It is a single
+Python script that needs to reside under <code class="language-plaintext highlighter-rouge">/usr/share/libalpm/scripts</code>. I did look into
+using <code class="language-plaintext highlighter-rouge">setup.py</code> to create a Python module but it does not seem worth the effort in
+getting things right since it is a single Python file.</p>
+
+<h1 id="conclusion">
+<a class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h1>
+
+<p>Although I have the Python code in the master branch, I am doing further testing to
+ensure that nothing breaks for users before making a release. Discussion of the code
+changes is <a href="https://github.com/wesbarnett/snap-pac/issues/39">in this issue</a>.</p>
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="wesbarnett/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/linux/bash/snapper/btrfs/python/2021/02/28/snap-pac-python.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>© 2020 Wes Barnett</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/wesbarnett" title="wesbarnett"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/wesbarnett" title="wesbarnett"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg></a></li><li><a rel="me" href="https://twitter.com/WesBarnettPhD" title="WesBarnettPhD"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
