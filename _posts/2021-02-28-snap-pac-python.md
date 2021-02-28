@@ -6,6 +6,7 @@ toc: true
 comments: true
 hide: false
 search_exclude: false
+image: images/python-powered.png
 categories: [linux,bash,snapper,btrfs,python]
 ---
 
